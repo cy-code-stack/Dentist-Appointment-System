@@ -1,0 +1,33 @@
+:root {
+    --navbar-color: #FEF5E7;
+    --dominant-color: #fff;
+    --primary-color: #50b8e7;
+    --secondary-color: #84cdee;
+    --third-color: #b9e2f5;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'poppins';
+}
+h1, h2, h3, h4, h5, h6, p, span, strong, label {
+    padding: 0;
+    margin: 0;
+}
+a{
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: black;
+}
+
+.main-div{
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #fff;
+}
+
+

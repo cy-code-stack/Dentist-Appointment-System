@@ -1,0 +1,33 @@
+.logo-txt img{
+    max-width: 250px;
+    max-height: 250px;
+}
+.logo-txt{
+    height: 100vh;
+}
+.col{
+    height: 55vh;
+}
+.forgot{
+    height: 30vh;
+    padding: 0px 7rem !important;
+    margin: 7rem 0px;
+}
+.input-icon i{
+    font-size: 1.5rem;
+}
+.forgot-container{
+    height: 100vh;
+}
+.forgot img{
+    max-width: 250px;
+    max-height: 250px;
+}
+.active-btn button[type=button]{
+    min-width: 200px;
+    min-height: 50px;
+}
+.sign-in-btn button[type=button]{
+    min-height: 50px;
+    background-color: blue;
+}

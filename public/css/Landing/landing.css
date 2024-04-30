@@ -1,0 +1,87 @@
+.container-fluid{
+    margin: 0;
+    padding: 0;
+}
+.main-container {
+    height: 60vh;
+}
+.navbar-brand img {
+    max-width: 70px;
+    max-height: 70px;
+}
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.about-us {
+    height: 50vh;
+}
+.about-us img{
+    max-width: 400px;
+    max-height: 400px;
+}
+.about-logo{
+    flex-direction: column;
+}
+.section-procedure{
+    margin-bottom: 3rem !important;
+}
+.step-icon{
+    position: relative;
+    min-width: 130px;
+    min-height: 130px;
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 23px 23px 40px #8a8a8a, -23px -23px 47px #ffffff;
+}
+.step-icon i{
+    font-size: 5rem;
+}
+.banner{
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.container{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.section-procedure-icon{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center !important;
+    margin-bottom: 5rem;
+}
+.footer{
+    background-color: var(--primary-color);
+}
+.logo-icon img {
+    max-width: 150px;
+    max-height: 150px;
+    margin-bottom: 5px;
+}
+.icon-text{
+    padding: 2rem 10px;
+}
+.last-footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    max-width: 20rem;
+    border-radius: 20px;
+    border: none;
+    background: #ffffff;
+    box-shadow:  14px 14px 28px #d9d9d9,
+             -14px -14px 28px #ffffff;
+}
