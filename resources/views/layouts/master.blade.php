@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <div class="main-div container-fluid" id="app">
+    <div class="main-div container-fluid">
         @yield('navBar')
         @yield('content')
     </div>

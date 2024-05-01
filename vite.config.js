@@ -14,6 +14,7 @@ export default defineConfig({
         vue({
             template: {
                 transformAssetUrls: {
+                    sourcemap: true,
                     base: null,
                     includeAbsolute: false,
                 },

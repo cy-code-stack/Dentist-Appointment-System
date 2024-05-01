@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Authentication;
+use App\Http\Controllers\Patient\PatientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +21,6 @@ Route::get('/', function () {
 // Authentication Part
     Route::get('/staff/signin', [Authentication::class, 'index'])->name('signin');
     Route::get('/staff/forgot', [Authentication::class, 'indexForgot'])->name('forgot');
+
+//Patient Part
+    Route::get('/appointment/booking', [PatientController::class, 'indexPatient'])->name('appointment');

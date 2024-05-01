@@ -26,6 +26,7 @@
 .active-btn button[type=button]{
     min-width: 200px;
     min-height: 50px;
+    margin-top: .5rem;
 }
 .sign-in-btn button[type=button]{
     min-height: 50px;

@@ -7,14 +7,14 @@
 @section('content')
     <div class="container-fluid min-vh-100">
         <div class="logo-txt container d-flex justify-content-center align-items-center">
-            <div class="col col-lg-4 d-flex flex-column d-flex justify-content-center align-items-center bg-white rounded-start-4">
+            <div class="col col-lg-4 d-flex flex-column d-flex justify-content-center align-items-center bg-white">
                 <img src="{{ asset('images/sign-in.png') }}" class="image-fluid mx-auto d-block" alt="login-logo">
                 <p class="fs-2 fw-medium text-center">Sign in</p>
                 <p class="fs-6 text-center">Make certain that your account is verified by the admin before entering your credentials.</p>
             </div>
-            <div class="col col-lg-5 bg-info rounded-end-4 p-5">
+            <div class="col col-lg-5 bg-info rounded-end-4 p-4">
                 <form action="" method="get">
-                    <div class="input-container mt-5">
+                    <div class="input-container mt-3">
                         <div class="input-item mb-2">
                             <label for="" class="form-label text-white">Username</label>
                             <div class="input-icon d-flex align-items-center">

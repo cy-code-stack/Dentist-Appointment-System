@@ -3,7 +3,8 @@
     padding: 0;
 }
 .main-container {
-    height: 60vh;
+    height: 80vh;
+    margin-bottom: 3rem !important;
 }
 .navbar-brand img {
     max-width: 70px;
@@ -16,6 +17,7 @@
     width: 100%;
 }
 .about-us {
+    margin-bottom: 5rem !important;
     height: 50vh;
 }
 .about-us img{
