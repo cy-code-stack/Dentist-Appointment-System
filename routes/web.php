@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Authentication;
 use App\Http\Controllers\Patient\PatientController;
+use App\Http\Controllers\Staff\StaffController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +25,9 @@ Route::get('/', function () {
 
 //Patient Part
     Route::get('/appointment/booking', [PatientController::class, 'indexPatient'])->name('appointment');
+    
+//Staff Part
+    Route::get('/staff/dashboard', [StaffController::class, 'index'])->name('staff');
+
+    
+    Route::get('{path}',[App\Http\Controllers\HomeController::class, 'index'])->where('any','^(?!js/).*')->where( 'path', '([A-z\d\-/_.]+)?' );

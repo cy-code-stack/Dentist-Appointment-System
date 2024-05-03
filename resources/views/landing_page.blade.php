@@ -140,7 +140,7 @@
                 </div>
             </div>
             <div class="card m-2">
-                <img src="{{ asset('images/services/tooth_extraction.png') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/services/tooth_extraction.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Tooth Extraction</h5>
                     <p class="card-text">Safe and professional removal of damaged or problematic teeth to alleviate pain
@@ -158,7 +158,7 @@
         </div>
         <div class="container-fluid d-flex justify-content-center">
             <div class="card m-2">
-                <img src="{{ asset('images/services/root_canal.png') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/services/root_canal.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Root Canal Treatment</h5>
                     <p class="card-text">Specialized treatment to save and repair infected or damaged teeth, typically
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="card m-2">
-                <img src="{{ asset('images/services/jacket_crowns.png') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/services/jacket_crowns.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Jacket Crowns</h5>
                     <p class="card-text">Custom-made crowns to cover and protect damaged teeth, restoring their shape,
