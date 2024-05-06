@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('images/logo.png') }}" rel="icon">
-    <title>Staff Appointment</title>
+    <title>Admin</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -34,12 +34,12 @@
                             class="fas fa-bars"></i></a>
                 </li> --}}
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/staff/dashboard" class="nav-link ms-4">Staff Dashboard</a>
+                    <a href="/admin/dashboard" class="nav-link ms-4">Admin Dashboard</a>
                 </li>
             </ul>
         </nav>
         <aside class="main-sidebar sidebar-light-primary elevation-1 fixed-start">
-            <a href="/staff/dashboard" class="brand-link text-decoration-none">
+            <a href="/admin/dashboard" class="brand-link text-decoration-none">
                 <img src="{{ asset('images/logo.png') }}" alt="school logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span
@@ -52,52 +52,70 @@
                             alt="school logo" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <span class="fw-medium">Staff Name</span> <br>
-                        <span style="color:#a5a5a5"><small>Staff Position</small></span>
+                        <span class="fw-medium">Admin Name</span> <br>
+                        <span style="color:#a5a5a5"><small>Admin</small></span>
                     </div>
                 </div>
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <router-link to="/staff/dashboard" class="nav-link">
+                            <router-link to="/admin/dashboard" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </router-link>
                         </li>
-                            <li class="nav-item">
-                                <router-link to="/staff/appointment" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-calendar-check"></i>
-                                    <p>
-                                        Appointments
-                                    </p>
-                                </router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link to="/staffservice" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-list-check"></i>
-                                    <p>
-                                        Services
-                                    </p>
-                                </router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link to="/staffprofile" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-id-badge"></i>
-                                    <p>
-                                        Profile
-                                    </p>
-                                </router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link to="/" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-right-from-bracket"></i>
-                                    <p>
-                                        Logout
-                                    </p>
-                                </router-link>
-                            </li>
-                    </ul>
+                        <li class="nav-item">
+                            <router-link to="/admin/patient" class="nav-link">
+                                <i class="nav-icon fa-solid fa-people-roof"></i>
+                                <p>Manage Patient</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/admin/staff" class="nav-link">
+                                <i class="nav-icon fa-solid fa-user-nurse"></i>
+                                <p>Manage Staff</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/admin/services" class="nav-link">
+                                <i class="nav-icon fa-solid fa-list-check"></i>
+                                <p>Manage Services</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/admin/trasanction" class="nav-link">
+                                <i class="nav-icon fa-solid fa-notes-medical"></i>
+                                <p>Transaction History</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/admin/sales" class="nav-link">
+                                <i class="nav-icon fa-solid fa-chart-bar"></i>
+                                <p>Sales Reports</p>
+                            </router-link>
+                        </li>
+                        {{-- <li class="nav-item">
+                            <router-link to="/admin/logs" class="nav-link">
+                                <i class="nav-icon fa-regular fa-folder-open"></i>
+                                <p>Logs</p>
+                            </router-link>
+                        </li> --}}
+                        <li class="nav-item">
+                            <router-link to="/admin/profile" class="nav-link">
+                                <i class="nav-icon fa-solid fa-id-badge"></i>
+                                <p>
+                                    Profile
+                                </p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="//" class="nav-link">
+                                <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+                                <p>Logout</p>
+                            </router-link>
+                        </li>
+                    </ul> 
                 </nav>
             </div>
         </aside>

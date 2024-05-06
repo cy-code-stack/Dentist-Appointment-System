@@ -5,7 +5,7 @@
             style="min-width: 300px; border: none"
         >
             <div class="card-title">
-                <p class="fs-5 fw-semibold mb-1">Patient Catered</p>
+                <p class="fs-5 fw-semibold mb-1">Patient</p>
             </div>
             <div
                 class="card-icon d-flex justify-content-around align-items-center"
@@ -15,7 +15,7 @@
                 </div>
                 <div class="col col-md-8">
                     <p class="fs-2 fw-semibold mb-0">100</p>
-                    <p class="fs-6 fw-medium mb-0">Total Catered</p>
+                    <p class="fs-6 fw-medium mb-0">Patient Total</p>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
             style="min-width: 300px; border: none"
         >
             <div class="card-title">
-                <p class="fs-5 fw-semibold mb-1">Ongoing Appointments</p>
+                <p class="fs-5 fw-semibold mb-1">Trasaction History</p>
             </div>
             <div
                 class="card-icon d-flex justify-content-around align-items-center"
@@ -53,26 +53,26 @@
                 </div>
                 <div class="col col-md-8">
                     <p class="fs-2 fw-semibold mb-0">20</p>
-                    <p class="fs-6 fw-medium mb-0">Total Appointments</p>
+                    <p class="fs-6 fw-medium mb-0">Total Trasaction</p>
                 </div>
             </div>
         </div>
         <div
-            class="main-card card p-3 bg-danger bg-gradient"
+            class="main-card card p-3 bg-warning bg-gradient text-white"
             style="min-width: 300px; border: none"
         >
             <div class="card-title">
-                <p class="fs-5 fw-semibold mb-1">Patient Decline</p>
+                <p class="fs-5 fw-semibold mb-1">Staff</p>
             </div>
             <div
                 class="card-icon d-flex justify-content-around align-items-center"
             >
                 <div class="col col-lg-3">
-                    <i class="fa-solid fa-ban fs-1"></i>
+                    <i class="fs-1 fa-solid fa-user-nurse"></i>
                 </div>
                 <div class="col col-md-8">
                     <p class="fs-2 fw-semibold mb-0">20</p>
-                    <p class="fs-6 fw-medium mb-0">Total Decline</p>
+                    <p class="fs-6 fw-medium mb-0">Total Staff</p>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
 
     <div class="container-fluid">
         <div class="d-flex justify-content-center">
-            <div class="col">
+            <div class="col col-lg-9">
                 <div class="active-card card p-3">
                     <div
                         class="d-flex justify-content-between align-items-center mb-3"
@@ -313,6 +313,78 @@
                                 </ul>
                             </nav>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-lg-3">
+                <div class="active-card card p-2">
+                    <div class="d-flex mb-3">
+                        <p class="fs-5 fw-semibold mb-0">
+                            Active Staffs
+                        </p>
+                    </div>
+                    <div class="staff-card card p-2">
+                        <div class="d-flex justify-content-center align-items-center rounded-5">
+                            <div>
+                                <img src="../../../../public/images/logo.png" class="img-fluid img-lg" alt="" srcset="">
+                            </div>
+                            <div class="col col-md-7">
+                                <p class="fs-5 fw-medium mb-0 ">John Doe</p>
+                                <p class="fs-6 fw-normal text-black-50 mb-0">Dentist Assistant</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="staff-card card p-2">
+                        <div class="d-flex justify-content-center align-items-center rounded-5">
+                            <div>
+                                <img src="../../../../public/images/logo.png" class="img-fluid img-lg" alt="" srcset="">
+                            </div>
+                            <div class="col col-md-7">
+                                <p class="fs-5 fw-medium mb-0 ">John Doe</p>
+                                <p class="fs-6 fw-normal text-black-50 mb-0">Dentist Assistant</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="staff-card card p-2">
+                        <div class="d-flex justify-content-center align-items-center rounded-5">
+                            <div>
+                                <img src="../../../../public/images/logo.png" class="img-fluid img-lg" alt="" srcset="">
+                            </div>
+                            <div class="col col-md-7">
+                                <p class="fs-5 fw-medium mb-0 ">John Doe</p>
+                                <p class="fs-6 fw-normal text-black-50 mb-0">Dentist Assistant</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="staff-card card p-3">
+                        <div class="d-flex justify-content-center align-items-center rounded-5">
+                            <div>
+                                <img src="../../../../public/images/logo.png" class="img-fluid img-lg" alt="" srcset="">
+                            </div>
+                            <div class="col col-md-7">
+                                <p class="fs-5 fw-medium mb-0 ">John Doe</p>
+                                <p class="fs-6 fw-normal text-black-50 mb-0">Dentist Assistant</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

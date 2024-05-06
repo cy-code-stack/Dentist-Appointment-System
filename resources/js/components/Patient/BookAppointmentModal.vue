@@ -38,8 +38,8 @@
                                         <input type="text" class="form-control" placeholder="Enter your lastname">
                                     </div>
                                     <div class="form-group mb-1">
-                                        <label class="form-label mb-1">Middle Name </label>
-                                        <input type="text" class="form-control" placeholder="Optional">
+                                        <label class="form-label mb-1">Home Address </label>
+                                        <input type="text" class="form-control" placeholder="Complete Home Address">
                                     </div>
                                     <div class="form-group mb-1">
                                         <label class="form-label mb-1">Email <span class="text-danger">*</span></label>

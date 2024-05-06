@@ -59,13 +59,13 @@
                         </div>
                     </div>
                     <div class="form-floating">
-                        <button type="submit" class="btn btn-info text-white" @click="bookAppointment">Book Appointment</button>
+                        <button type="submit" class="btn btn-info text-white">Book Appointment</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- <appointment-modal></appointment-modal> -->
-        <book-appointment-modal></book-appointment-modal>
+        <!-- <book-appointment-modal></book-appointment-modal> -->
     </div>
 </template>
 
@@ -81,9 +81,7 @@ export default {
         }
     },
     methods :{
-        bookAppointment(){
-            $("#book-appointment-modal").modal("show");
-        },
+       
     },
     mounted(){
         console.log('Component loaded');

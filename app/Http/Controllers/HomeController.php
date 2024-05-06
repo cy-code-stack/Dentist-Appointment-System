@@ -23,4 +23,8 @@ class HomeController extends Controller
     {
         return view('Staff.staff');
     }
+
+    public function adminIndex(){
+        return view('admin.AdminDashboard');
+    }
 }

@@ -23,7 +23,7 @@
                         we've got you covered.</p>
                 </div>
                 <div class="d-flex align-items-start">
-                    <a href="{{ route('appointment') }}"><div class="btn btn-light btn-lg me-2">Get your appointment</div></a>
+                    <a href="{{ route('signin') }}"><div class="btn btn-light btn-lg me-2">Get your appointment</div></a>
                 </div>
             </div>
             <div class="col mt-3">
@@ -42,7 +42,7 @@
                 walk-in patients, ensuring that everyone receives the care they need promptly and efficiently. Whether you
                 book online or drop by spontaneously, expect top-notch care and minimal wait times at Grace's Dental Clinic.
             </p>
-            <a href="{{ route('appointment') }}"><div class="btn btn-info text-white btn-lg me-2">Get your appointment</div></a>
+            <a href="{{ route('signin') }}"><div class="btn btn-info text-white btn-lg me-2">Get your appointment</div></a>
         </div>
         <div class="about-logo col col-lg-5 d-flex justify-content-center align-items-center">
             <img src="{{ asset('images/logo.png') }}" class="image-fluid" alt="brand-logo">
@@ -197,7 +197,7 @@
             <div class="logo-icon container row justify-content-center align-items-center col col-lg-2">
                 <img src="{{ asset('images/logo.png') }}" alt="logo-icon">
                 <h4 class="text-center text-white">Graces Dental Clinic</h4>
-                <p class="fs-6 fw-light text-white text-center lh-sm">Office Hrs: Monday to Saturday 8 am to 5 pm </p>
+                <p class="fs-6 fw-light text-white text-center lh-sm">Office Hours: Monday to Saturday 8 am to 5 pm </p>
             </div>
             <div class="col col-md-3">
                 <div class="icon-text">

@@ -16,9 +16,9 @@
                 <form action="" method="get">
                     <div class="input-container mt-3">
                         <div class="input-item mb-2">
-                            <label for="" class="form-label text-white">Username</label>
+                            <label for="" class="form-label text-white">Email</label>
                             <div class="input-icon d-flex align-items-center">
-                                <input type="text" name="username" id="username" class="form-control p-3" placeholder="username">
+                                <input type="email" name="email" id="email" class="form-control p-3" placeholder="yourregisteredemail@gmail.com">
                             </div>
                         </div>
                         <div class="input-item mb-2">
@@ -34,11 +34,15 @@
                             </div>
                             <a href="{{ route('forgot') }}"><p class="text-white fs-6">Forgot Password</p></a>
                         </div>
-                        <div class="sign-in-btn">
-                            <button type="button" class="btn btn-md w-100 text-white fs-5 mt-2">Sign in</button>
+                        <div class="sign-in-btn mb-2">
+                            <button type="button" class="btn w-100 text-white fs-5 mt-2">Sign in</button>
                         </div>
                     </div>
                 </form>
+                <div class="sign-in-btn">
+                    <p class="fs-6 mb-1 fw-medium text-dark text-center">Don't have an account?</p>
+                    <a href="{{ route('signup') }}"><button class="btn btn-outline-primary  w-100 text-white fs-5 mt-2">Sign up</button></a>
+                </div>
             </div>
         </div>
     </div>
