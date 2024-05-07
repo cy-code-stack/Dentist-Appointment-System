@@ -59,7 +59,7 @@
                         </div>
                         <div class="text-center col-lg-3">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Available
+                                Available
                             </p>
                         </div>
                         <div
@@ -67,13 +67,24 @@
                         >
                             <button
                                 type="button"
-                                class=" rounded-1 btn btn-info text-white"
+                                class="me-1 rounded-1 btn btn-info btn-sm text-white"
                             >
                                 <div
                                     class="d-flex justify-content-center align-items-center"
                                 >
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>More information</span>
+                                    <i class="fa-solid fa-user-pen me-2"></i>
+                                    <span>Edit</span>
+                                </div>
+                            </button>
+                            <button
+                                type="button"
+                                class="rounded-1 btn btn-danger btn-sm"
+                            >
+                                <div
+                                    class="d-flex justify-content-center align-items-center"
+                                >
+                                    <i class="fa-solid fa-trash me-2"></i>
+                                    <span>Delete</span>
                                 </div>
                             </button>
                         </div>
@@ -95,21 +106,32 @@
                         </div>
                         <div class="text-center col-lg-3">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Available
+                                Available
                             </p>
                         </div>
                         <div
                             class="text-center d-flex justify-content-center col-lg-3"
                         >
-                            <button
+                        <button
                                 type="button"
-                                class=" rounded-1 btn btn-info text-white"
+                                class="me-1 rounded-1 btn btn-info btn-sm text-white"
                             >
                                 <div
                                     class="d-flex justify-content-center align-items-center"
                                 >
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>More information</span>
+                                    <i class="fa-solid fa-user-pen me-2"></i>
+                                    <span>Edit</span>
+                                </div>
+                            </button>
+                            <button
+                                type="button"
+                                class="rounded-1 btn btn-danger btn-sm"
+                            >
+                                <div
+                                    class="d-flex justify-content-center align-items-center"
+                                >
+                                    <i class="fa-solid fa-trash me-2"></i>
+                                    <span>Delete</span>
                                 </div>
                             </button>
                         </div>
