@@ -72,7 +72,7 @@
                                 <div
                                     class="d-flex justify-content-center align-items-center"
                                 >
-                                    <i class="fa-solid fa-user-pen me-2"></i>
+                                <i class="fa-solid fa-pen-to-square me-2"></i>
                                     <span>Edit</span>
                                 </div>
                             </button>
@@ -119,7 +119,7 @@
                                 <div
                                     class="d-flex justify-content-center align-items-center"
                                 >
-                                    <i class="fa-solid fa-user-pen me-2"></i>
+                                <i class="fa-solid fa-pen-to-square me-2"></i>
                                     <span>Edit</span>
                                 </div>
                             </button>

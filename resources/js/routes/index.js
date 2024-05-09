@@ -22,71 +22,71 @@ import IndexAdminProfile from "../components/Admin/Profile/IndexAdminProfile.vue
 
 const routes = [
     {
-        path: '/user/appointment/booking',
+        path: '/user/patient/booking',
         name: 'booking',
         component: PatientIndexPage
     },
     //-----Start of Staff Page ---- ///
     {
-        path: '/staff/dashboard',
+        path: '/user/staff/dashboard',
         name: 'dashboard',
         component: StaffIndexPage,
     },
     {
-        path: '/staff/appointment',
+        path: '/user/staff/appointment',
         name: 'appointment',
         component: IndexStaffAppointment,
     },
     {
-        path: '/staffservice',
-        name: 'staffservice',
+        path: '/user/staff/service',
+        name: 'staff-services',
         component: IndexStaffServices,
     },
     {
-        path: '/staffprofile',
-        name: 'staffprofile',
+        path: '/user/staff/profile',
+        name: 'staff-profile',
         component: IndexStaffProfile,
     },
     // End  of Staff Page
     // Start of Admin Page
     {
         path: '/admin/dashboard',
-        name: 'admin',
+        name: 'admin-dashboard',
         component: IndexAdminPage,
     },
     {
         path: '/admin/patient',
-        name: 'patient',
+        name: 'admin-patient',
         component: IndexManagePatient,
     },
     {
         path: '/admin/staff',
-        name: 'staff',
+        name: 'admin-staff',
         component: IndexManageStaff,
     },
     {
         path: '/admin/services',
-        name: 'services',
+        name: 'admin-services',
         component: IndexManageServices,
     },
     {
         path: '/admin/trasanction',
-        name: 'trasanction',
+        name: 'admin-transaction',
         component: IndexTransaction,
     },
     {
         path: '/admin/sales',
-        name: 'sales',
+        name: 'admin-sales',
         component: IndexSales,
     },
     {
         path: '/admin/logs',
-        name: 'logs',
+        name: 'admin-logs',
         component: IndexLogs,
     },
     {
         path: '/admin/profile',
-        name: 'profile',
+        name: 'admin-profile',
         component: IndexAdminProfile,
     },
 

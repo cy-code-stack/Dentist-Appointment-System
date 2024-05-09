@@ -34,3 +34,7 @@
 .sign-in-btn button[type=button]{
     background-color: blue;
 }
+.text-danger{
+    font-size: 12px;
+    font-weight: 600;
+}

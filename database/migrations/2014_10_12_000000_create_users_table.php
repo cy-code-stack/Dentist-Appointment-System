@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname');
+            $table->string('home_address');
             $table->string('middle_initial')->nullable();
+            $table->bigInteger('phone_number');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('ss_id');
+            // $table->string('ss_id')->nullable();
+            $table->string('status')->default('unverified');
             $table->string('role')->default('patient');
             $table->timestamps();
         });

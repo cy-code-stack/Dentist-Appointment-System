@@ -41,12 +41,18 @@
                         <div class="d-flex justify-content-center align-items-center me-2">
                             <span class="nav-link fw-medium text-white">Patient Name</span>
                             <div class="dropstart">
-                                <img src="{{ asset('images/logo.png') }}" alt="prof-img" class="profile-img img-fluid rounded-5 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ asset('images/logo.png') }}" alt="prof-img"
+                                    class="profile-img img-fluid rounded-5 dropdown-toggle" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Profile</a></li>
-                                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li>
+                                        <a href="{{ route('logout') }}" class="dropdown-item">
+                                            <span class="name">Logout</span>
+                                        </a>
+                                    </li>
                                 </ul>
-                              </div>
+                            </div>
                         </div>
                     </li>
                 </ul>
@@ -59,6 +65,7 @@
 
     @vite('resources/js/app.js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @include('sweetalert::alert')
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
         integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
@@ -73,15 +80,17 @@
 
 
 <style>
-    .profile-img{
+    .profile-img {
         max-width: 50px;
         max-height: 50px;
         cursor: pointer;
         border: 1.5px solid white;
     }
-    .dropdown-menu{
+
+    .dropdown-menu {
         margin-top: 4rem !important;
         margin-left: 1rem !important;
     }
 </style>
+
 </html>

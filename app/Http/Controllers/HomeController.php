@@ -27,4 +27,8 @@ class HomeController extends Controller
     public function adminIndex(){
         return view('admin.AdminDashboard');
     }
+
+    public function indexuserPatient(){
+        return view('Patient.Booking_Appointment');
+    }
 }
