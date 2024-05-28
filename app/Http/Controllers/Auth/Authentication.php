@@ -95,13 +95,23 @@ class Authentication extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+        
+            // Check if the user is unverified
+            if ($user->status == 'unverified') {
+                Alert::error('Login Failed', 'Your account is not verified.')->persistent(true);
+                return redirect()->back()->withErrors(['email' => 'Your account is not verified.']);
+            }
+        
             switch ($user->role) {
-                case 'admin':
-                    Alert::success('Login Successful', 'Welcome back! Admin')->persistent(true);
+                case 'Admin':
+                    Alert::success('Login Successful', 'Welcome back Admin ' . $user->firstname)->persistent(true);
+                    $request->session()->put('ss_id', $user->id);
                     return redirect(route('admin'));
-                case 'staff':
+                case 'Staff':
+                    $request->session()->put('ss_id', $user->id);
                     return redirect(route('staff'));
-                case 'patient':
+                case 'Patient':
+                    $request->session()->put('ss_id', $user->id);
                     return redirect(route('appointment'));
                 default:
                     break;
@@ -115,8 +125,7 @@ class Authentication extends Controller
     public function logout(Request $request)
     {
         Session::flush();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        Session::pull('ss_id');
         Alert::success('Logged Out', 'You have been successfully logged out.')->persistent(true);
         return redirect(route('signin'));
     }

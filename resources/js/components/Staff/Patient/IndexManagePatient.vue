@@ -15,7 +15,7 @@
                 </form>
                 <button class="btn btn-info btn-sm text-white" @click="addUser">
                     <i class="fa-solid fa-plus me-2"></i>
-                    <span>Add Staff</span>
+                    <span>Add User</span>
                 </button>
             </div>
         </div>
@@ -120,8 +120,8 @@
 
 <script>
 import AddModalVue from './AddModal.vue';
-import EditUserVue from './EditStaff.vue';
-import ViewUserModal from './VerifyStaffModal.vue';
+import EditUserVue from './EditUser.vue';
+import ViewUserModal from './IndexViewUserModal.vue';
 export default {
     components: {
         ViewUserModal,
@@ -138,7 +138,7 @@ export default {
     methods: {
         displayUsers() {
             axios
-                .get("/user/admin/manage/user")
+                .get("/user/staff/manage/user")
                 .then((response) => {
                     this.listofUsers = response.data.map((user) => ({
                         ...user,
@@ -175,7 +175,7 @@ export default {
                 .then((data) => {
                     if (data.isConfirmed) {
                         axios
-                            .delete("/user/admin/user/delete/" + id)
+                            .delete("/user/staff/user/delete/" + id)
                             .then((response) => {
                                 Swal.fire("Removed!", "User has been removed.", "success");
                                 this.displayUsers();

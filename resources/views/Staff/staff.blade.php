@@ -56,8 +56,10 @@
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <span class="fw-medium">Staff Name</span> <br>
-                        <span style="color:#a5a5a5"><small>Staff Position</small></span>
+                        @if (Auth::check())
+                            <span class="fw-medium">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span> <br>
+                            <span style="color:#a5a5a5"><small>{{ Auth::user()->role }}</small></span>
+                        @endif
                     </div>
                 </div>
                 <nav class="mt-2">
@@ -67,6 +69,12 @@
                             <router-link to="/user/staff/dashboard" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/user/staff/patient" class="nav-link">
+                                <i class="nav-icon fa-solid fa-people-roof"></i>
+                                <p>Manage Patient</p>
                             </router-link>
                         </li>
                         <li class="nav-item">

@@ -39,7 +39,9 @@
                 <ul class="navbar-nav">
                     <li class="nav-item d-none d-sm-inline-block">
                         <div class="d-flex justify-content-center align-items-center me-2">
-                            <span class="nav-link fw-medium text-white">Patient Name</span>
+                            @if (Auth::check())
+                            <span class="nav-link fw-medium text-white">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
+                            @endif
                             <div class="dropstart">
                                 <img src="{{ asset('images/logo.png') }}" alt="prof-img"
                                     class="profile-img img-fluid rounded-5 dropdown-toggle" data-bs-toggle="dropdown"

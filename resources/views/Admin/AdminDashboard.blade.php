@@ -34,12 +34,12 @@
                             class="fas fa-bars"></i></a>
                 </li> --}}
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/admin/dashboard" class="nav-link ms-4">Admin Dashboard</a>
+                    <a href="/user/admin/dashboard" class="nav-link ms-4">Admin Dashboard</a>
                 </li>
             </ul>
         </nav>
         <aside class="main-sidebar sidebar-light-primary elevation-1 fixed-start">
-            <a href="/admin/dashboard" class="brand-link text-decoration-none">
+            <a href="/user/admin/dashboard" class="brand-link text-decoration-none">
                 <img src="{{ asset('images/logo.png') }}" alt="school logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span
@@ -52,45 +52,59 @@
                             alt="school logo" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <span class="fw-medium">Admin Name</span> <br>
-                        <span style="color:#a5a5a5"><small>Admin</small></span>
+                        @if (Auth::check())
+                            <span class="fw-medium">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span> <br>
+                            <span style="color:#a5a5a5"><small>{{ Auth::user()->role }}</small></span>
+                        @endif
                     </div>
                 </div>
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <router-link to="/admin/dashboard" class="nav-link">
+                            <router-link to="/user/admin/dashboard" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/admin/patient" class="nav-link">
-                                <i class="nav-icon fa-solid fa-people-roof"></i>
-                                <p>Manage Patient</p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/admin/staff" class="nav-link">
-                                <i class="nav-icon fa-solid fa-user-nurse"></i>
+                            <router-link to="/user/admin/staff" class="nav-link">
+                                <i class="nav-icon fa-solid fa-clipboard-user"></i>
                                 <p>Manage Staff</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/admin/services" class="nav-link">
+                            <router-link to="" class="nav-link">
+                                <i class="nav-icon fa-solid fa-hospital-user"></i>
+                                <p>Refer Patients</p>
+                            </router-link>
+                        </li>
+                        {{-- <li class="nav-item">
+                            <router-link to="/admin/patient" class="nav-link">
+                                <i class="nav-icon fa-solid fa-people-roof"></i>
+                                <p>Manage Users</p>
+                            </router-link>
+                        </li> --}}
+                        {{-- <li class="nav-item">
+                            <router-link to="/admin/staff" class="nav-link">
+                                <i class="nav-icon fa-solid fa-user-nurse"></i>
+                                <p>Manage Staff</p>
+                            </router-link>
+                        </li> --}}
+                        <li class="nav-item">
+                            <router-link to="/user/admin/services" class="nav-link">
                                 <i class="nav-icon fa-solid fa-list-check"></i>
                                 <p>Manage Services</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/admin/trasanction" class="nav-link">
+                            <router-link to="/user/admin/trasanction" class="nav-link">
                                 <i class="nav-icon fa-solid fa-notes-medical"></i>
                                 <p>Transaction History</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/admin/sales" class="nav-link">
+                            <router-link to="/user/admin/sales" class="nav-link">
                                 <i class="nav-icon fa-solid fa-chart-bar"></i>
                                 <p>Sales Reports</p>
                             </router-link>
@@ -102,7 +116,7 @@
                             </router-link>
                         </li> --}}
                         <li class="nav-item">
-                            <router-link to="/admin/profile" class="nav-link">
+                            <router-link to="/user/admin/profile" class="nav-link">
                                 <i class="nav-icon fa-solid fa-id-badge"></i>
                                 <p>
                                     Profile
@@ -110,10 +124,12 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="//" class="nav-link">
-                                <i class="nav-icon fa-solid fa-right-from-bracket"></i>
-                                <p>Logout</p>
-                            </router-link>
+                            <a href="{{ route('logout') }}" class="nav-link">
+                                <div class="linknav">
+                                    <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+                                    <span class="name">Logout</span>
+                                </div>
+                            </a>
                         </li>
                     </ul> 
                 </nav>

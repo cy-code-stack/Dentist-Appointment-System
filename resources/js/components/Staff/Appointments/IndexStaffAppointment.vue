@@ -39,27 +39,27 @@
                 </div>
             </div>
             <div class="main-table-body">
-                <div class="table-row card mb-2">
+                <div class="table-row card mb-2" v-for="appoint in listofAppointment" :key="appoint.id">
                     <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
                         <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul Petter
+                                {{ appoint?.patient?.firstname }} {{ appoint?.patient?.lastname }}
                             </p>
                         </div>
                         <div class="text-center col-lg-3">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                May 4 2024 10:30 AM - 11:30 AM
+                                {{ appoint.sched_time }}
                             </p>
                         </div>
                         <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Services 2
+                                {{ appoint.services?.services_name }}
                             </p>
                         </div>
                         <div
                             class="text-center justify-content-center col-lg-2">
                             <p class="fs-6 fw-medium mb-0 text-success">
-                                Completed
+                                {{ appoint.appnt_status }}
                             </p>
                         </div>
                         <div class="text-center d-flex justify-content-center col-lg-3">
@@ -69,89 +69,7 @@
                                     <span>View</span>
                                 </div>
                             </button>
-                            <button type="button" class=" rounded-1 btn btn-danger">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul Petter
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-3">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                May 4 2024 10:30 AM - 11:30 AM
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Services 2
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-2">
-                            <p class="fs-6 fw-medium mb-0 text-warning">
-                                Pending
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-primary">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-bell-concierge me-2"></i>
-                                    <span>Cater</span>
-                                </div>
-                            </button>
-                            <button type="button" class=" rounded-1 btn btn-danger">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-ban me-2"></i>
-                                    <span>Decline</span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul Petter
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-3">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                May 4 2024 10:30 AM - 11:30 AM
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Services 2
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-2">
-                            <p class="fs-6 fw-medium mb-0 text-danger">
-                                Decline
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
-                            <button type="button" class=" rounded-1 btn btn-danger">
+                            <button type="button" class=" rounded-1 btn btn-danger" @click="deleteAppointment(appoint.id)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-trash me-2"></i>
                                     <span>Delete</span>
@@ -191,10 +109,56 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    setup() {
-        return {};
+    data() {
+        return {
+            listofAppointment:[],
+        };
     },
+    methods:{
+        displayAppointment(){
+            axios.get('/user/staff/appointment/display').then((response)=>{
+                console.log(response);
+                this.listofAppointment = response.data;
+            }).catch((error)=>{
+                console.log(error);
+            });
+        },
+
+        deleteAppointment(id){
+             Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            })
+                .then((data) => {
+                    if (data.isConfirmed) {
+                        axios
+                            .delete("/user/staff/delete/appointment/" + id)
+                            .then((response) => {
+                                Swal.fire("Removed!", "Appointment has been removed.", "success");
+                                this.displayAppointment();
+                            });
+                    }
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        text: "Something went wrong!",
+                    });
+                    console.log(error);
+                });
+        }
+    },
+    mounted(){
+        this.displayAppointment();
+    }
 };
 </script>
 

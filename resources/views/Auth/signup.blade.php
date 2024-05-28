@@ -69,7 +69,7 @@
                             <label for="" class="form-label text-white mb-1">Email</label>
                             <div class="input-icon d-flex align-items-center">
                                 <input type="email" name="email" id="email" class="form-control"
-                                    placeholder="youremail@gmail.com">
+                                    placeholder="email@gmail.com">
                             </div>
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
@@ -80,6 +80,7 @@
                             <div class="input-icon d-flex align-items-center">
                                 <input type="password" name="password" id="password" class="form-control"
                                     placeholder="password">
+                                <i class="fa-regular fa-eye text-black-50" id="togglePassword"></i>
                             </div>
                             @error('password')
                                 <div class="text-danger">{{ $message }}</div>
@@ -103,4 +104,19 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+    
+        togglePassword.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye icon class
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 @endsection

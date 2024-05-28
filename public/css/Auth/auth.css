@@ -16,8 +16,14 @@
     padding: 0px 7rem !important;
     margin: 7rem 0px;
 }
+.input-icon{
+    position: relative !important;
+}
 .input-icon i{
     font-size: 1.5rem;
+    position: absolute !important;
+    right: 15px;
+    cursor: pointer;
 }
 .forgot-container{
     height: 100vh;

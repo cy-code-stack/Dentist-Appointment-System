@@ -5,13 +5,13 @@ import PatientIndexPage from "../components/Patient/PatientIndex.vue";
 
 //Staff View
 import StaffIndexPage from "../components/Staff/StaffIndex.vue";
+import IndexManagePatient from "../components/Staff/Patient/IndexManagePatient.vue"
 import IndexStaffAppointment from "../components/Staff/Appointments/IndexStaffAppointment.vue";
 import IndexStaffServices from "../components/Staff/Services/IndexStaffServices.vue";
 import IndexStaffProfile from "../components/Staff/Profile/IndexStaffProfile.vue";
 
 // Admin View
 import IndexAdminPage from "../components/Admin/IndexAdmin.vue"
-import IndexManagePatient from "../components/Admin/Patient/IndexManagePatient.vue"
 import IndexManageStaff from "../components/Admin/Staff/IndexManageStaff.vue"
 import IndexManageServices from "../components/Admin/Services/IndexManageServices.vue";
 import IndexTransaction from "../components/Admin/Transaction/IndexTransaction.vue";
@@ -33,6 +33,11 @@ const routes = [
         component: StaffIndexPage,
     },
     {
+        path: '/user/staff/patient',
+        name: 'staff-patient',
+        component: IndexManagePatient,
+    },
+    {
         path: '/user/staff/appointment',
         name: 'appointment',
         component: IndexStaffAppointment,
@@ -50,42 +55,37 @@ const routes = [
     // End  of Staff Page
     // Start of Admin Page
     {
-        path: '/admin/dashboard',
+        path: '/user/admin/dashboard',
         name: 'admin-dashboard',
         component: IndexAdminPage,
     },
     {
-        path: '/admin/patient',
-        name: 'admin-patient',
-        component: IndexManagePatient,
-    },
-    {
-        path: '/admin/staff',
+        path: '/user/admin/staff',
         name: 'admin-staff',
         component: IndexManageStaff,
     },
     {
-        path: '/admin/services',
+        path: '/user/admin/services',
         name: 'admin-services',
         component: IndexManageServices,
     },
     {
-        path: '/admin/trasanction',
+        path: '/user/admin/trasanction',
         name: 'admin-transaction',
         component: IndexTransaction,
     },
     {
-        path: '/admin/sales',
+        path: '/user/admin/sales',
         name: 'admin-sales',
         component: IndexSales,
     },
     {
-        path: '/admin/logs',
+        path: '/user/admin/logs',
         name: 'admin-logs',
         component: IndexLogs,
     },
     {
-        path: '/admin/profile',
+        path: '/user/admin/profile',
         name: 'admin-profile',
         component: IndexAdminProfile,
     },

@@ -12,6 +12,8 @@
                 <p class="fs-2 fw-medium text-center">Sign in</p>
                 <p class="fs-6 text-center">Make certain that your account is verified by the admin before entering your
                     credentials.</p>
+                <p class="fs-6 text-center">Don't have an account? <a href="{{ route('signup') }}"
+                        class="fw-semibold text-info">Sign up</a></p>
             </div>
             <div class="col col-lg-5 bg-info rounded-end-4 p-4">
                 <form action="{{ route('authenticate') }}" method="POST">
@@ -21,7 +23,7 @@
                             <label for="" class="form-label text-white">Email</label>
                             <div class="input-icon d-flex align-items-center">
                                 <input type="email" name="email" id="email" class="form-control p-3"
-                                    placeholder="yourregisteredemail@gmail.com">
+                                    placeholder="E-mail">
                             </div>
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
@@ -31,7 +33,8 @@
                             <label for="" class="form-label text-white">Password</label>
                             <div class="input-icon d-flex align-items-center">
                                 <input type="password" name="password" id="password" class="form-control p-3"
-                                    placeholder="password">
+                                    placeholder="Password">
+                                <i class="fa-regular fa-eye text-black-50" id="togglePassword"></i>
                             </div>
                             @error('password')
                                 <div class="text-danger">{{ $message }}</div>
@@ -51,14 +54,22 @@
                         </div>
                     </div>
                 </form>
-                <div class="sign-in-btn">
-                    <p class="fs-6 mb-1 fw-medium text-dark text-center">Don't have an account?</p>
-                    <a href="{{ route('signup') }}"><button class="btn btn-outline-primary  w-100 text-white fs-5 mt-2">Sign
-                            up</button></a>
-                </div>
             </div>
         </div>
     </div>
 
-
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+    
+        togglePassword.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye icon class
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+    
 @endsection
