@@ -426,7 +426,6 @@
             fill: false
           }]
         },
-        
       };
     },
     methods: {

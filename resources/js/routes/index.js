@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 //Patient View
 import PatientIndexPage from "../components/Patient/PatientIndex.vue";
-
+import IndexCalendarEventPage from "../components/Patient/Calendar/IndexCalendarEvent.vue"
 //Staff View
 import StaffIndexPage from "../components/Staff/StaffIndex.vue";
 import IndexManagePatient from "../components/Staff/Patient/IndexManagePatient.vue"
@@ -13,6 +13,7 @@ import IndexStaffProfile from "../components/Staff/Profile/IndexStaffProfile.vue
 // Admin View
 import IndexAdminPage from "../components/Admin/IndexAdmin.vue"
 import IndexManageStaff from "../components/Admin/Staff/IndexManageStaff.vue"
+import IndexReferPatients from "../components/Admin/Refer/IndexRefer.vue"
 import IndexManageServices from "../components/Admin/Services/IndexManageServices.vue";
 import IndexTransaction from "../components/Admin/Transaction/IndexTransaction.vue";
 import IndexSales from "../components/Admin/Sales/IndexSales.vue";
@@ -23,8 +24,13 @@ import IndexAdminProfile from "../components/Admin/Profile/IndexAdminProfile.vue
 const routes = [
     {
         path: '/user/patient/booking',
-        name: 'booking',
+        name: 'patient-booking',
         component: PatientIndexPage
+    },
+    {
+        path: '/user/patient/calendar/event',
+        name: 'calendar-event',
+        component: IndexCalendarEventPage
     },
     //-----Start of Staff Page ---- ///
     {
@@ -53,6 +59,7 @@ const routes = [
         component: IndexStaffProfile,
     },
     // End  of Staff Page
+
     // Start of Admin Page
     {
         path: '/user/admin/dashboard',
@@ -63,6 +70,11 @@ const routes = [
         path: '/user/admin/staff',
         name: 'admin-staff',
         component: IndexManageStaff,
+    },
+    {
+        path: '/user/admin/refer',
+        name: 'admin-refer',
+        component: IndexReferPatients,
     },
     {
         path: '/user/admin/services',

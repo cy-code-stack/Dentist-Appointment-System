@@ -30,9 +30,16 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function recoAppointment(Request $request, $id)
     {
-        //
+        $appoint = Appointment::findOrFail($id);
+        $request['appnt_status'] = 'Ongoing';
+        $appoint->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Appointment updated successfully',  $appoint,
+        ], 200);
     }
 
     /**
@@ -45,6 +52,17 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Appointment deleted successfully',
+        ], 200);
+    }
+
+    public function abortAppointment(Request $request, $id){
+        $appoint = Appointment::findOrFail($id);
+        $request['appnt_status'] = 'Declined';
+        $appoint->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Appointment updated successfully',  $appoint,
         ], 200);
     }
 }

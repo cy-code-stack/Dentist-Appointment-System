@@ -29,9 +29,11 @@
         <nav class="main-header navbar navbar-expand bg-info sticky-md-top">
             <div class="header-nav col-lg-4">
                 <ul class="navbar-nav">
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{ route('appointment') }}" class="nav-link ms-4 fw-medium text-white">Appointment
-                            Booking</a>
+                    <li class="nav-item d-flex justify-content-start">
+                        <a href="{{ route('appointment') }}" class="nav-link ms-4 fw-medium text-white">Appointment Booking</a>
+                        <router-link to="/user/patient/calendar/event" class="nav-link">
+                            <p class="ms-4 fw-medium text-white calendar-link mb-0">Callendar Events</p> 
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -92,6 +94,9 @@
     .dropdown-menu {
         margin-top: 4rem !important;
         margin-left: 1rem !important;
+    }
+    .calendar-link:active{
+        color: var(--secondary-color);
     }
 </style>
 

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('status')->default('unverified');
             $table->string('role')->default('Patient');
-            $table->string('services_id')->nullable();
             $table->timestamps();
         });
     }

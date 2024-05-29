@@ -74,23 +74,11 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="" class="nav-link">
+                            <router-link to="/user/admin/refer" class="nav-link">
                                 <i class="nav-icon fa-solid fa-hospital-user"></i>
                                 <p>Refer Patients</p>
                             </router-link>
                         </li>
-                        {{-- <li class="nav-item">
-                            <router-link to="/admin/patient" class="nav-link">
-                                <i class="nav-icon fa-solid fa-people-roof"></i>
-                                <p>Manage Users</p>
-                            </router-link>
-                        </li> --}}
-                        {{-- <li class="nav-item">
-                            <router-link to="/admin/staff" class="nav-link">
-                                <i class="nav-icon fa-solid fa-user-nurse"></i>
-                                <p>Manage Staff</p>
-                            </router-link>
-                        </li> --}}
                         <li class="nav-item">
                             <router-link to="/user/admin/services" class="nav-link">
                                 <i class="nav-icon fa-solid fa-list-check"></i>
@@ -109,12 +97,6 @@
                                 <p>Sales Reports</p>
                             </router-link>
                         </li>
-                        {{-- <li class="nav-item">
-                            <router-link to="/admin/logs" class="nav-link">
-                                <i class="nav-icon fa-regular fa-folder-open"></i>
-                                <p>Logs</p>
-                            </router-link>
-                        </li> --}}
                         <li class="nav-item">
                             <router-link to="/user/admin/profile" class="nav-link">
                                 <i class="nav-icon fa-solid fa-id-badge"></i>

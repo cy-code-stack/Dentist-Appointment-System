@@ -9,6 +9,7 @@ use App\Http\Controllers\Staff\StaffController;
 use App\Http\Controllers\Admin\AdminDashboardController; 
 use App\Http\Controllers\Admin\Manage_Services\ManageServicesController; 
 use App\Http\Controllers\Admin\Managing_Staff\ManageStaffController; 
+use App\Http\Controllers\Admin\Refer\AdminReferPatientsController; 
 //End of Admin
 
 //Staff
@@ -67,6 +68,10 @@ Route::middleware(['guest'])->group(function () {
             Route::put('/admin/services/edit/{id}', [ManageServicesController::class, 'updateServices']);
         //End of Managing Services
 
+        //Refer Patients
+            Route::get('/admin/patients/refer', [AdminReferPatientsController::class, 'getVerifiedPatients']);
+        //End of Refer Patients
+
     //End of Admin  Controller
 
     //Staff Users
@@ -83,6 +88,8 @@ Route::middleware(['guest'])->group(function () {
         //Start of Appointment Routes
             Route::get('/user/staff/appointment/display', [AppointmentController::class, 'showAppointment']);
             Route::delete('/user/staff/delete/appointment/{id}', [AppointmentController::class, 'destroyAppointment']);
+            Route::put('/user/staff/recomend/doctor/{id}', [AppointmentController::class, 'recoAppointment']);
+            Route::put('/user/staff/appointment/declined/{id}', [AppointmentController::class, 'abortAppointment']);
         //End of Appointment Routes
 
     //End of Staff Controller
