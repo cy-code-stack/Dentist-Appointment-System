@@ -70,6 +70,8 @@ class ManageUserController extends Controller
             'name' => $response->firstname . ' ' . $response->lastname,
             'email' => $response->email,
             'password' => $plainPassword,
+            'time' => $response->created_at,
+            'status' => $response->status,
             'link' => 'http://127.0.0.1:8000/user/signin',
         ];
     
@@ -111,6 +113,8 @@ class ManageUserController extends Controller
                         Thank you for choosing Graces Dental Clinic.',
             'name' => $user->firstname . ' ' . $user->lastname,
             'email' => $user->email,
+            'time' => $user->created_at,
+            'status' => $user->status,
             'link' => 'http://127.0.0.1:8000/user/signin',
         ];
 

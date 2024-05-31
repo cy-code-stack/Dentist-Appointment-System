@@ -73,8 +73,8 @@ class Authentication extends Controller
         $response = User::create($data);
 
         if ($response) {
-            Alert::success('Registered Successfully', 'Verification will be sent directly to your registered email. Just wait for it.')->persistent(true);
-            return redirect(route('signin'))->with('success', 'Registered Successfully');
+            Alert::success('Account Registered Verified', 'Verification will be sent directly to your registered email. Just wait for it.')->persistent(true);
+            return redirect(route('signin'))->with('success', 'Account Registered Verified');
         } else {
             Alert::error('Error', 'Registration Failed')->persistent(true);
             return redirect(route('signup'))->with('error', 'Registration Failed');

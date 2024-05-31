@@ -230,7 +230,7 @@ export default {
                     position: "center",
                     icon: "error",
                     title: "Error adding user",
-                    text: error.message || "An error occurred while adding the user.",
+                    text: "An error occurred while adding the user.",
                     showConfirmButton: true,
                 });
             }

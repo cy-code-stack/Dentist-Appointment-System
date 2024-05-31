@@ -65,11 +65,50 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="input-item mb-1 me-2" style="width: 50%">
+                                <label for="phone_number" class="form-label text-white mb-1">Age</label>
+                                <div class="input-icon d-flex align-items-center">
+                                    <input type="text" name="age" id="age" class="form-control" placeholder="Enter your age">
+                                </div>
+                                @error('phone_number')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="input-item mb-1" style="width: 50%">
+                                <label for="gender" class="form-label text-white mb-1">Gender</label>
+                                <select class="form-select" name="gender" id="gender" aria-label="Gender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="prefer_not_to_say">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="input-item mb-1 me-2" style="width: 50%">
+                                <label for="phone_number" class="form-label text-white mb-1">Occupation(Optional)</label>
+                                <div class="input-icon d-flex align-items-center">
+                                    <input type="text" name="age" id="age" class="form-control" placeholder="Enter your occupation">
+                                </div>
+                                @error('phone_number')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="input-item mb-1" style="width: 50%">
+                                <label for="gender" class="form-label text-white mb-1">Marital Status</label>
+                                <select class="form-select" name="gender" id="gender" aria-label="Gender">
+                                    <option value="single">Single</option>
+                                    <option value="single">Married</option>
+                                    <option value="widow">Widow</option>
+                                    <option value="prefer_not_to_say">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="input-item mb-1">
                             <label for="" class="form-label text-white mb-1">Email</label>
                             <div class="input-icon d-flex align-items-center">
                                 <input type="email" name="email" id="email" class="form-control"
-                                    placeholder="email@gmail.com">
+                                    placeholder="Email@gmail.com">
                             </div>
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
@@ -79,7 +118,7 @@
                             <label for="" class="form-label text-white mb-1">Password</label>
                             <div class="input-icon d-flex align-items-center">
                                 <input type="password" name="password" id="password" class="form-control"
-                                    placeholder="password">
+                                    placeholder="Password">
                                 <i class="fa-regular fa-eye text-black-50" id="togglePassword"></i>
                             </div>
                             @error('password')
@@ -90,7 +129,7 @@
                             <label for="" class="form-label text-white mb-1">Confirm Password</label>
                             <div class="input-icon d-flex align-items-center">
                                 <input type="password" name="password_confirmation" id="password_confirmation"
-                                    class="form-control" placeholder="confirm password">
+                                    class="form-control" placeholder="Confirm password">
                             </div>
                             @error('password_confirmation')
                                 <div class="text-danger">{{ $message }}</div>
