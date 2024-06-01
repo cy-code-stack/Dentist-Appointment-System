@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="view-appointment-modal">
+    <div class="modal fade" id="view-appointment-modal" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
@@ -15,37 +15,37 @@
                                 <div class="form-group mb-1 d-flex justify-content-start w-100">
                                     <div class="me-1">
                                         <label class="form-label mb-0">Firstname</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" v-model="patientDiag.firstname"/>
                                     </div>
                                     <div class="me-1">
                                         <label class="form-label mb-0">Lastname</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" v-model="patientDiag.lastname"/>
                                     </div>
                                     <div class="me-1">
                                         <label class="form-label mb-0">Home Address</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" v-model="patientDiag.home_address"/>
                                     </div>
                                     <div>
                                         <label class="form-label mb-0">Contact</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" v-model="patientDiag.phone_number"/>
                                     </div>
                                 </div>
                                 <div class="form-group mb-2 d-flex justify-content-start align-items-center w-100">
                                     <div class="me-1">
                                         <label class="form-label mb-0">Age</label>
-                                        <input type="text" class="form-control"  />
+                                        <input type="text" class="form-control"  v-model="patientDiag.age"/>
                                     </div>
                                     <div class="me-1">
                                         <label class="form-label mb-0">Sex</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" v-model="patientDiag.sex"/>
                                     </div>
                                     <div class="me-1">
                                         <label class="form-label mb-0">Marital Status</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" v-model="patientDiag.marital_status"/>
                                     </div>
                                     <div class="me-1">
                                         <label class="form-label mb-0">Occupation</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" v-model="patientDiag.occupation"/>
                                     </div>
                                     <div>
                                         <label class="form-label mb-0">Date</label>
@@ -737,13 +737,14 @@
                                     </div>
                                 </div>
                                 <div class="active-btn">
-                                    <button type="submit" class="btn btn-success text-white mt-2 btn-md-1 w-100">Done</button>
+                                    <button type="submit" class="btn btn-success text-white mt-2 btn-md-1 w-100" @click="paymentModal()">Done</button>
                                 </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <payment-modal></payment-modal>
     </div>
 </template>
 
@@ -752,36 +753,54 @@
 </style>
 
 <script>
-
+import PaymentModal from './IndexPayment.vue';
 export default {
-    // props: ["selected_user"],
+    props: ["selected_patient"],
+components:{
+    PaymentModal,
+},
 data() {
     return {
-
+        patientDiag: {
+            id:'',
+            firstname:'',
+            lastname:'',
+            home_address:'',
+            phone_number:'',
+            email:'',
+            marital_status:'',
+            occupation:'',
+            age:'',
+            sex:'',
+        }
     };
 },
 methods: {
+    paymentModal(){
+        // $('#view-appointment-modal').modal('hide');
+        $('#diagnose-payment-modal').modal('show');
+    },
 },
 watch:{
-    // selected_user: {
-    //     handler(val) {
-    //         console.log(val);
-    //         this.user.id = val.id;
-    //         this.user.firstname = val.patient?.firstname;
-    //         this.user.lastname = val.patient?.lastname;
-    //         this.user.home_address = val.patient?.home_address;
-    //         this.user.email = val.patient?.email;
-    //         this.user.phone_number = val.patient?.phone_number;
-    //         this.user.age = val.patient?.age;
-    //         this.user.sex = val.patient?.sex;
-    //         this.user.marital_status = val.patient?.marital_status;
-    //         this.user.occupation = val.patient?.occupation;
-    //     },
-    //     deep: true,
-    // },
+    selected_patient: {
+        handler(val) {
+            // console.log(val);
+            this.patientDiag.id = val.id;
+            this.patientDiag.firstname = val.patient?.firstname;
+            this.patientDiag.lastname = val.patient?.lastname;
+            this.patientDiag.home_address = val.patient?.home_address;
+            this.patientDiag.email = val.patient?.email;
+            this.patientDiag.phone_number = val.patient?.phone_number;
+            this.patientDiag.age = val.patient?.age;
+            this.patientDiag.sex = val.patient?.sex;
+            this.patientDiag.marital_status = val.patient?.marital_status;
+            this.patientDiag.occupation = val.patient?.occupation;
+        },
+        deep: true,
+    },
 },
 mounted() {
-    // console.log("Component loaded");
+    console.log("Component loaded");
 },
 };
 </script>

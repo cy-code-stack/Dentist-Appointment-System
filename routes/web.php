@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Refer\AdminReferPatientsController;
 //Staff
 use App\Http\Controllers\Staff\Managing_User\ManageUserController;
 use App\Http\Controllers\Staff\Appointment\AppointmentController;
+use App\Http\Controllers\Staff\Archieve\ArchieveController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,15 +83,21 @@ Route::middleware(['guest'])->group(function () {
             Route::post('/user/staff/user/add', [ManageUserController::class,'storeUser']);
             Route::put('/user/staff/user/verify/{id}', [ManageUserController::class,'verifyUser']);
             Route::put('/user/staff/user/update/{id}', [ManageUserController::class,'updateUser']);
-            Route::delete('/user/staff/user/delete/{id}' , [ManageUserController::class,'destroy']);
+            Route::put('/user/staff/user/archieve/{id}' , [ManageUserController::class,'archieveUser']);
         //End of Manage User Routes
 
         //Start of Appointment Routes
             Route::get('/user/staff/appointment/display', [AppointmentController::class, 'showAppointment']);
-            Route::delete('/user/staff/delete/appointment/{id}', [AppointmentController::class, 'destroyAppointment']);
+            // Route::delete('/user/staff/delete/appointment/{id}', [AppointmentController::class, 'destroyAppointment']);
             Route::put('/user/staff/recomend/doctor/{id}', [AppointmentController::class, 'recoAppointment']);
-            Route::put('/user/staff/appointment/declined/{id}', [AppointmentController::class, 'abortAppointment']);
+            Route::put('/user/staff/appointment/abort/{id}', [AppointmentController::class, 'abortAppointment']);
         //End of Appointment Routes
+
+        //Archieve Section
+            Route::get('/user/staff/archieve/display', [ArchieveController::class, 'showArchieve']);
+            Route::put('/user/staff/archieve/restore/{id}', [ArchieveController::class, 'updateArchieve']);
+            Route::get('/user/staff/appointment/declined', [ArchieveController::class, 'showAppointmentDeclined']);
+        //End of Archieve Section
 
     //End of Staff Controller
 });

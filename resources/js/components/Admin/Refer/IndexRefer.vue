@@ -101,7 +101,7 @@
             </div>
         </div>
     </div>
-    <view-patient-modal></view-patient-modal>
+    <view-patient-modal :selected_patient="selected_patient"></view-patient-modal>
 </div>
 </template>
 
@@ -115,6 +115,7 @@ export default {
     data() {
         return {
             listofVerfiedPatients:[],
+            selected_patient: {},
         };
     },
 
@@ -127,8 +128,9 @@ export default {
                 console.log(error);
             });
         },
-        patientModalShow(){
+        patientModalShow(selected_patient){
             // console.log("clicked");
+            this.selected_patient = selected_patient;
             $('#view-appointment-modal').modal('show');
         },
     },

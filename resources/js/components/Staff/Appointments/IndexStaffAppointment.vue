@@ -48,7 +48,7 @@
                         </div>
                         <div class="text-center col-lg-3">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ appoint.sched_time }}
+                                {{ appoint.sched_date }} {{ appoint.sched_time }}
                             </p>
                         </div>
                         <div class="text-center col-lg-2">
@@ -66,21 +66,21 @@
                             <button type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm" v-if="appoint.Pending || appoint.Completed" @click="recomendDentist(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-eye me-2"></i>
-                                    <span>Verify</span>
+                                    <span>Confirm</span>
                                 </div>
                             </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending" @click="abortAppointment(appoint.id)">
+                            <button type="button" class="me-1 rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending" @click="abortPatient(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-close me-2"></i>
-                                    <span>Abort</span>
+                                    <i class="fa-solid fa-box-archive me-2"></i>
+                                    <span>Archieve</span>
                                 </div>
                             </button>
-                            <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending || appoint.Declined" @click="deleteAppointment(appoint.id)">
+                            <!-- <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending || appoint.Declined" @click="deleteAppointment(appoint.id)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
+                                    <i class="fa-solid fa-box-archive me-2"></i>
+                                    <span>Archieve</span>
                                 </div>
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -112,20 +112,24 @@
             </div>
         </div>
         <verify-appointment-modal :selected_user="selected_user" @displayOngoingPatient="displayAppointment"></verify-appointment-modal>
+        <abort-patient-modal-vue :selected_abort="selected_abort" @displayAbortApp="displayAppointment"></abort-patient-modal-vue>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import VerifyAppointmentModal from './VerifyUserModal.vue';
+    import AbortPatientModalVue from './AbortPatientModal.vue';
 export default {
     components:{
         VerifyAppointmentModal,
+        AbortPatientModalVue,
     },
     data() {
         return {
             listofAppointment:[],
             selected_user: {},
+            selected_abort: {},
         };
     },
     methods:{
@@ -150,59 +154,64 @@ export default {
             $("#verify-appointment-modal").modal("show");
         },
 
-        deleteAppointment(id){
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
-            }).then((data) => {
-                if (data.isConfirmed) {
-                    axios
-                        .delete("/user/staff/delete/appointment/" + id)
-                        .then((response) => {
-                            Swal.fire("Removed!", "Appointment has been removed.", "success");
-                            this.displayAppointment();
-                        });
-                }
-            }).catch((error) => {
-                Swal.fire({
-                    icon: "error",
-                    text: "Something went wrong!",
-                });
-                console.log(error);
-            });
-        },
+        abortPatient(selected_abort){
+            this.selected_abort = selected_abort;
+            $('#abort-appointment-modal').modal("show");
+        }
 
-        abortAppointment(id){
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, decline it!",
-            }).then((data) => {
-                if (data.isConfirmed) {
-                    axios
-                        .put("/user/staff/appointment/declined/" + id)
-                        .then((response) => {
-                            Swal.fire("Declined!", "Appointment has been decline.", "success");
-                            this.displayAppointment();
-                        });
-                }
-            }).catch((error) => {
-                Swal.fire({
-                    icon: "error",
-                    text: "Something went wrong!",
-                });
-                console.log(error);
-            });
-        },
+        // deleteAppointment(id){
+        //     Swal.fire({
+        //         title: "Are you sure?",
+        //         text: "You won't be able to revert this!",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonColor: "#3085d6",
+        //         cancelButtonColor: "#d33",
+        //         confirmButtonText: "Yes, delete it!",
+        //     }).then((data) => {
+        //         if (data.isConfirmed) {
+        //             axios
+        //                 .delete("/user/staff/delete/appointment/" + id)
+        //                 .then((response) => {
+        //                     Swal.fire("Removed!", "Appointment has been removed.", "success");
+        //                     this.displayAppointment();
+        //                 });
+        //         }
+        //     }).catch((error) => {
+        //         Swal.fire({
+        //             icon: "error",
+        //             text: "Something went wrong!",
+        //         });
+        //         console.log(error);
+        //     });
+        // },
+
+        // abortAppointment(id){
+        //     Swal.fire({
+        //         title: "Are you sure?",
+        //         text: "You won't be able to revert this!",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonColor: "#3085d6",
+        //         cancelButtonColor: "#d33",
+        //         confirmButtonText: "Yes, decline it!",
+        //     }).then((data) => {
+        //         if (data.isConfirmed) {
+        //             axios
+        //                 .put("/user/staff/appointment/declined/" + id)
+        //                 .then((response) => {
+        //                     Swal.fire("Declined!", "Appointment has been decline.", "success");
+        //                     this.displayAppointment();
+        //                 });
+        //         }
+        //     }).catch((error) => {
+        //         Swal.fire({
+        //             icon: "error",
+        //             text: "Something went wrong!",
+        //         });
+        //         console.log(error);
+        //     });
+        // },
     },
     mounted(){
         this.displayAppointment();

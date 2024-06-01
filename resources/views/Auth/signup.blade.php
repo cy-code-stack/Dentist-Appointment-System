@@ -67,48 +67,56 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="input-item mb-1 me-2" style="width: 50%">
-                                <label for="phone_number" class="form-label text-white mb-1">Age</label>
+                                <label for="age" class="form-label text-white mb-1">Age</label>
                                 <div class="input-icon d-flex align-items-center">
                                     <input type="text" name="age" id="age" class="form-control" placeholder="Enter your age">
                                 </div>
-                                @error('phone_number')
-                                <div class="text-danger">{{ $message }}</div>
+                                @error('age')
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="input-item mb-1" style="width: 50%">
-                                <label for="gender" class="form-label text-white mb-1">Gender</label>
-                                <select class="form-select" name="gender" id="gender" aria-label="Gender">
+                                <label for="sex" class="form-label text-white mb-1">Gender</label>
+                                <select class="form-select" name="sex" id="sex" aria-label="sex">
+                                    <option selected>Choose</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                     <option value="prefer_not_to_say">Prefer not to say</option>
                                 </select>
                             </div>
+                            @error('sex')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="input-item mb-1 me-2" style="width: 50%">
-                                <label for="phone_number" class="form-label text-white mb-1">Occupation(Optional)</label>
+                                <label for="occupation" class="form-label text-white mb-1">Occupation(Optional)</label>
                                 <div class="input-icon d-flex align-items-center">
-                                    <input type="text" name="age" id="age" class="form-control" placeholder="Enter your occupation">
+                                    <input type="text" name="occupation" id="occupation" class="form-control" placeholder="Enter your occupation">
                                 </div>
-                                @error('phone_number')
-                                <div class="text-danger">{{ $message }}</div>
+                                @error('occupation')
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="input-item mb-1" style="width: 50%">
-                                <label for="gender" class="form-label text-white mb-1">Marital Status</label>
-                                <select class="form-select" name="gender" id="gender" aria-label="Gender">
+                                <label for="marital_status" class="form-label text-white mb-1">Marital Status</label>
+                                <select class="form-select" name="marital_status" id="marital_status" aria-label="Gender">
+                                    <option selected>Choose</option>
                                     <option value="single">Single</option>
                                     <option value="single">Married</option>
                                     <option value="widow">Widow</option>
                                     <option value="prefer_not_to_say">Prefer not to say</option>
                                 </select>
                             </div>
+                            @error('marital_status')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="input-item mb-1">
                             <label for="" class="form-label text-white mb-1">Email</label>
                             <div class="input-icon d-flex align-items-center">
-                                <input type="email" name="email" id="email" class="form-control"
-                                    placeholder="Email@gmail.com">
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Email@gmail.com">
                             </div>
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
@@ -150,10 +158,8 @@
         const password = document.querySelector('#password');
     
         togglePassword.addEventListener('click', function(e) {
-            // toggle the type attribute
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
-            // toggle the eye icon class
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
         });

@@ -9,6 +9,7 @@ import IndexManagePatient from "../components/Staff/Patient/IndexManagePatient.v
 import IndexStaffAppointment from "../components/Staff/Appointments/IndexStaffAppointment.vue";
 import IndexStaffServices from "../components/Staff/Services/IndexStaffServices.vue";
 import IndexStaffProfile from "../components/Staff/Profile/IndexStaffProfile.vue";
+import IndexArchieve from '../components/Staff/Archieve/IndexArchieve.vue';
 
 // Admin View
 import IndexAdminPage from "../components/Admin/IndexAdmin.vue"
@@ -57,6 +58,11 @@ const routes = [
         path: '/user/staff/profile',
         name: 'staff-profile',
         component: IndexStaffProfile,
+    },
+    {
+        path: '/user/staff/archieve',
+        name: 'staff-archieve',
+        component: IndexArchieve,
     },
     // End  of Staff Page
 

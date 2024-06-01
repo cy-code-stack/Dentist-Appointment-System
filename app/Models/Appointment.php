@@ -20,6 +20,7 @@ class Appointment extends Model
         'sched_date',
         'sched_time',
         'appnt_status',
+        'abort_reason',
     ];
 
     public function services(){

@@ -77,8 +77,8 @@
                             </button>
                             <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="deleteUser(user.id)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
+                                    <i class="fa-solid fa-box-archive me-2"></i>
+                                    <span>Archieve</span>
                                 </div>
                             </button>
                         </div>
@@ -170,14 +170,14 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Yes, remove it!",
             })
                 .then((data) => {
                     if (data.isConfirmed) {
                         axios
-                            .delete("/user/staff/user/delete/" + id)
+                            .put("/user/staff/user/archieve/" + id)
                             .then((response) => {
-                                Swal.fire("Removed!", "User has been removed.", "success");
+                                Swal.fire("Removed!", "Patient has been removed.", "success");
                                 this.displayUsers();
                             });
                     }

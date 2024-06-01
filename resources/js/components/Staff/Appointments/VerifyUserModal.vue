@@ -95,7 +95,7 @@ methods: {
         Swal.fire({
             position: "center",
             icon: "success",
-            title: "Patient has been verified!",
+            title: "Patient has been confirm!",
             showConfirmButton: false,
             timer: 2000,
         });

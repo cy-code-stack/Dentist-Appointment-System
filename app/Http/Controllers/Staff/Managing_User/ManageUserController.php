@@ -90,7 +90,15 @@ class ManageUserController extends Controller
      */
     public function showUser()
     {
-        $user = User::whereNotIn("role", ['Admin', 'Staff'])->get();
+        $user = User::whereNotIn("role", ['Admin', 'Staff'])
+                        ->where('status', '<>', 'archieve')
+                        ->get();
+        
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'User display successfully', $user,
+        // ], 200);
+
         return $user;
     }
 
@@ -150,13 +158,14 @@ class ManageUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function archieveUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
+        $request['status']= 'archieve';
+        $user->update($request->all());
         return response()->json([
             'status' => 'success',
-            'message' => 'User deleted successfully',
+            'message' => 'User update successfully',
         ], 200);
     }
 }

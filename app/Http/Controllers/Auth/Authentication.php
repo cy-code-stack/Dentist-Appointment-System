@@ -39,6 +39,10 @@ class Authentication extends Controller
             'home_address' => 'required',
             'phone_number' => ['required', 'numeric', 'digits_between:1,11'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
+            'age' => ['required', 'numeric'],
+            'sex' => 'required',
+            'marital_status' => 'required',
+            'occupation' => 'required',
             'password' => [
                 'required',
                 'min:8',
@@ -56,6 +60,11 @@ class Authentication extends Controller
             'email.email' => 'Please enter a valid email address.',
             'email.max' => 'Email address must not exceed 255 characters.',
             'email.unique' => 'This email address is already taken.',
+            'occupation.required' => 'Please enter your occupation.',
+            'marital_status.required' => 'Please enter your marital status.',
+            'sex.required' => 'Please enter your gender.',
+            'age.required' => 'Please enter your age.',
+            'age.numeric' => 'Phone number must contain only numbers.',
             'password.required' => 'Please enter your password.',
             'password.min' => 'Password must be at least 8 characters long.',
             'password.regex' => 'Password must contain at least one letter, one number, one special character, and one uppercase letter.',
@@ -73,8 +82,8 @@ class Authentication extends Controller
         $response = User::create($data);
 
         if ($response) {
-            Alert::success('Account Registered Verified', 'Verification will be sent directly to your registered email. Just wait for it.')->persistent(true);
-            return redirect(route('signin'))->with('success', 'Account Registered Verified');
+            Alert::success('Account Registered Done', 'Verification will be sent directly to your registered email. Just wait for it.')->persistent(true);
+            return redirect(route('signin'))->with('success', 'Account Registered Done');
         } else {
             Alert::error('Error', 'Registration Failed')->persistent(true);
             return redirect(route('signup'))->with('error', 'Registration Failed');
@@ -97,7 +106,7 @@ class Authentication extends Controller
             $user = Auth::user();
         
             // Check if the user is unverified
-            if ($user->status == 'unverified') {
+            if ($user->status == 'unverified' || $user->status == 'archieve') {
                 Alert::error('Login Failed', 'Your account is not verified.')->persistent(true);
                 return redirect()->back()->withErrors(['email' => 'Your account is not verified.']);
             }
