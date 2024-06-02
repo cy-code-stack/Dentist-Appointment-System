@@ -69,6 +69,8 @@ class ManageStaffController extends Controller
                         Thank you for choosing Graces Dental Clinic.',
             'name' => $response->firstname . ' ' . $response->lastname,
             'email' => $response->email,
+            'time' => $response->created_at,
+            'status' => $response->status,
             'password' => $plainPassword,
             'link' => 'http://127.0.0.1:8000/user/signin',
         ];

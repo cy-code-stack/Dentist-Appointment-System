@@ -138,7 +138,7 @@
                                         class="form-control"
                                         v-model="user.role"
                                     >
-                                        <option value="assistant" selected>Assistant</option>
+                                        <option value="Assistant" selected>Assistant</option>
                                     </select>
                                 </div>
                             </div>
