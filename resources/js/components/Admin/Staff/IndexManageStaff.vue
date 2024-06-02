@@ -58,7 +58,7 @@
                             </p>
                         </div>
                         <div class="text-center col-lg-1">
-                            <p :class="{'fs-6 fw-semibold mb-0 text-primary': user.staff, 'fs-6 fw-semibold mb-0 text-success': user.patient}">
+                            <p :class="{'fs-6 fw-semibold mb-0 text-primary': user.assistant, 'fs-6 fw-semibold mb-0 text-success': user.patient}">
                                 {{ user.role }}
                             </p>
                         </div>
@@ -75,10 +75,10 @@
                                     <span>View</span>
                                 </div>
                             </button>
-                            <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="deleteUser(user.id)">
+                            <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="archiveUser(user.id)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
+                                    <i class="fa-solid fa-box-archive me-2"></i>
+                                    <span>Archive</span>
                                 </div>
                             </button>
                         </div>
@@ -144,7 +144,7 @@ export default {
                         ...user,
                         verified: user.status === "verified",
                         patient: user.role === "Patient",
-                        staff: user.role === "Staff",
+                        assistant: user.role === "Assistant",
                     }));
                 })
                 .catch((error) => {
@@ -162,7 +162,7 @@ export default {
             this.edited_select_user = edited_select_user;
             $("#edit-user-modal").modal("show");
         },
-        deleteUser(id) {
+        archiveUser(id) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -170,14 +170,14 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Yes, archive it!",
             })
                 .then((data) => {
                     if (data.isConfirmed) {
                         axios
-                            .delete("/user/admin/user/delete/" + id)
+                            .put("/user/admin/staff/archive/" + id)
                             .then((response) => {
-                                Swal.fire("Removed!", "User has been removed.", "success");
+                                Swal.fire("Archive!", "Staff has been archive.", "success");
                                 this.displayUsers();
                             });
                     }

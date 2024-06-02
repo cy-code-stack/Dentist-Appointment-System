@@ -20,6 +20,7 @@ import IndexTransaction from "../components/Admin/Transaction/IndexTransaction.v
 import IndexSales from "../components/Admin/Sales/IndexSales.vue";
 import IndexLogs from "../components/Admin/Logs/IndexLogs.vue";
 import IndexAdminProfile from "../components/Admin/Profile/IndexAdminProfile.vue";
+import IndexAdminArchive from '../components/Admin/Archive/IndexAdminArchive.vue';
 
 
 const routes = [
@@ -106,6 +107,11 @@ const routes = [
         path: '/user/admin/profile',
         name: 'admin-profile',
         component: IndexAdminProfile,
+    },
+    {
+        path: '/user/admin/archive',
+        name: 'admin-archive',
+        component: IndexAdminArchive,
     },
 
 ]

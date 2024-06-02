@@ -6,8 +6,8 @@
                 Welcome to Graces Dental Clinic, where scheduling appointments
                 is simple and convenient. Whether you're a individual, or anyone
                 in needs our service, we've got you covered. <br>The appointment is simple yet effective. Choose your service you
-                want, Choose doctor, Pick a date and time, and Put your credentials.
-                <br>Note: Wait and present the confirmation email to your desired doctor at Graces Dental Clinic.
+                want, Pick a date and time, and Book your Appointment.
+                <br>Note: Please wait for the confirmation email and present it to the Assistant at Graces Dental Clinic for confirmation. This is <b>FIRST COME FIRST SERVE BASIS</b>.
             </p>
             <div class="container-md mt-5">
                 <div class="container-fluid d-flex justify-content-center mb-3">
@@ -74,26 +74,46 @@ export default {
         }
     },
     methods :{
-       submitAppointment(){
-        let formData = new FormData();
+        submitAppointment() {
+            let formData = new FormData();
 
             formData.append('services_id', this.selectedServices?.id);
             formData.append('sched_date', this.appointmentData?.sched_date);
             formData.append('sched_time', this.appointmentData?.sched_time);
 
-            axios.post('/user/patient/setAppoitment', formData).then((response)=>{
-                this.appointmentData.sched_date = "",
-                this.appointmentData.sched_time = "",
-                this.selectedServices = "",
+            // Show the waiting alert
+            Swal.fire({
+                title: 'Please wait...',
+                text: 'Booking your appointment.',
+                allowOutsideClick: false,
+                icon: 'warning',
+                showLoaderOnConfirm: true,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            axios.post('/user/patient/setAppoitment', formData).then((response) => {
+                this.appointmentData.sched_date = "";
+                this.appointmentData.sched_time = "";
+                this.selectedServices = "";
+
+                // Close the waiting alert and show the success alert
                 Swal.fire({
                     icon: 'success',
-                    title: 'Booking Appointment Successfully',
+                    title: 'Booking Appointment Done',
                     text: 'You may check your registered email address for confirmation.',
                 });
-            }).catch((error) =>{
+            }).catch((error) => {
                 console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong! Please try again later.',
+                });
             });
-       },
+        },
 
 
        displayServices(){

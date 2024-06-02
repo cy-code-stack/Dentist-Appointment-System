@@ -85,14 +85,14 @@
                                 </p>
                             </router-link>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <router-link to="/user/staff/service" class="nav-link">
                                 <i class="nav-icon fa-solid fa-list-check"></i>
                                 <p>
                                     Services
                                 </p>
                             </router-link>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <router-link to="/user/staff/profile" class="nav-link">
                                 <i class="nav-icon fa-solid fa-id-badge"></i>
@@ -105,7 +105,7 @@
                             <router-link to="/user/staff/archieve" class="nav-link">
                                 <i class="nav-icon fa-solid fa-box-archive"></i>
                                 <p>
-                                    Archieve
+                                    Archive
                                 </p>
                             </router-link>
                         </li>

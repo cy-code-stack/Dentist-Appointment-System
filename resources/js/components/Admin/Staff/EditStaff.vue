@@ -77,7 +77,7 @@
                                     v-model="user.role"
                                 >
                                     <!-- <option value="Patient">Patient</option> -->
-                                    <option value="Staff" selected>Staff</option>
+                                    <option value="assistant" selected>Assistant</option>
                                 </select>
                                 <!-- <p class="mt-2 fs-6 fw-medium">Current Role: <span class="text-success">{{ user.role }}</span></p> -->
                             </div>

@@ -22,6 +22,7 @@ class ManageServicesController extends Controller
     public function storeService(Request $request)
     {
         $services = $request->all();
+        $request['serv_status'] = 'Verified';
         $response = Services::create($services);
         return response()->json([
             'status' => 'success',
@@ -34,7 +35,7 @@ class ManageServicesController extends Controller
      */
     public function showServices()
     {
-        return Services::all();
+        return Services::where('serv_status', '=', 'Verified')->get();
     }
 
     /**
@@ -53,13 +54,25 @@ class ManageServicesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroyServices($id)
+
+    public function archiveServices(Request $request, $id)
     {
         $services = Services::findOrFail($id);
-        $services->delete();
+        $request['serv_status'] = 'Archive';
+        $services->update($request->all());
         return response()->json([
             'status' => 'success',
-            'message' => 'Services deleted successfully',
-        ], 200);
+            'data' => $services,
+        ], 200); 
     }
+
+    // public function destroyServices($id)
+    // {
+    //     $services = Services::findOrFail($id);
+    //     $services->delete();
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'message' => 'Services deleted successfully',
+    //     ], 200);
+    // }
 }

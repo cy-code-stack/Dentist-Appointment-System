@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Manage_Services\ManageServicesController; 
 use App\Http\Controllers\Admin\Managing_Staff\ManageStaffController; 
 use App\Http\Controllers\Admin\Refer\AdminReferPatientsController; 
+use App\Http\Controllers\Admin\Archive\AdminArchiveController;
 //End of Admin
 
 //Staff
@@ -59,19 +60,31 @@ Route::middleware(['guest'])->group(function () {
             Route::post('/user/admin/user/add', [ManageStaffController::class,'storeUser']);
             Route::put('/user/admin/user/verify/{id}', [ManageStaffController::class,'verifyUser']);
             Route::put('/user/admin/user/update/{id}', [ManageStaffController::class,'updateUser']);
-            Route::delete('/user/admin/user/delete/{id}' , [ManageStaffController::class,'destroy']);
+            // Route::delete('/user/admin/user/delete/{id}' , [ManageStaffController::class,'destroy']);
+            Route::put('/user/admin/staff/archive/{id}', [ManageStaffController::class, 'archiveStaff']);
         //End of Manage User Routes
     
         //Manage Services
             Route::post('/admin/services/add', [ManageServicesController::class, 'storeService']);
             Route::get('/admin/display/data', [ManageServicesController::class, 'showServices']);
-            Route::delete('/admin/services/delete/{id}', [ManageServicesController::class, 'destroyServices']);
+            // Route::delete('/admin/services/delete/{id}', [ManageServicesController::class, 'destroyServices']);
             Route::put('/admin/services/edit/{id}', [ManageServicesController::class, 'updateServices']);
+            Route::put('/admin/services/archive/{id}', [ManageServicesController::class, 'archiveServices']);
         //End of Managing Services
 
         //Refer Patients
             Route::get('/admin/patients/refer', [AdminReferPatientsController::class, 'getVerifiedPatients']);
+            Route::put('/admin/patient/archive/{id}', [AdminReferPatientsController::class, 'archiveReferPatients']);
         //End of Refer Patients
+
+        //Archive Page Section
+            Route::get('/admin/staff/archive/display', [AdminArchiveController::class, 'showStaffArchive']);
+            Route::get('/admin/refer/archive', [AdminArchiveController::class, 'showReferArchive']);
+            Route::get('/admin/services/archive', [AdminArchiveController::class, 'showServicesArchive']);
+            Route::put('/admin/staff/restore/{id}', [AdminArchiveController::class, 'restoreArchiveStaff']);
+            Route::put('/admin/services/restore/{id}', [AdminArchiveController::class, 'restoreArchiveServices']);
+            Route::put('/admin/refer/restore/{id}', [AdminArchiveController::class, 'restoreArchiveRefer']);
+        //End of Archive Page Section
 
     //End of Admin  Controller
 

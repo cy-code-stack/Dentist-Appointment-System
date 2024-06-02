@@ -90,8 +90,8 @@ class ManageUserController extends Controller
      */
     public function showUser()
     {
-        $user = User::whereNotIn("role", ['Admin', 'Staff'])
-                        ->where('status', '<>', 'archieve')
+        $user = User::whereNotIn("role", ['Dentist', 'Assistant'])
+                        ->where('status', '<>', 'archive')
                         ->get();
         
         // return response()->json([
@@ -161,11 +161,11 @@ class ManageUserController extends Controller
     public function archieveUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $request['status']= 'archieve';
+        $request['status']= 'archive';
         $user->update($request->all());
         return response()->json([
             'status' => 'success',
-            'message' => 'User update successfully',
+            'message' => 'User archive successfully',
         ], 200);
     }
 }

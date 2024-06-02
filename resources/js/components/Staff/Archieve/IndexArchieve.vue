@@ -1,10 +1,10 @@
 <template>
     <div class="container-fluid">
-        <p class="fs-5 fw-semibold mb-0 p-2">Archieve Page</p>
+        <p class="fs-5 fw-semibold mb-0 p-2">Archive Page</p>
 
         <div class="container mt-4">
-            <table class="table table-hover text-center caption-top">
-                <caption>List of Archive Patients</caption>
+            <p class="fs-5 text-black-50">List of Archive Patients</p>
+            <table class="table table-hover text-center mb-1">
                 <thead>
                     <tr>
                         <th scope="col">Patient No.</th>
@@ -43,11 +43,36 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="container-fluid d-flex justify-content-end align-items-center mb-0 p-0">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
 
         <div class="container mt-2">
-            <table class="table table-hover text-center caption-top">
-                <caption>List of Declined Appointments</caption>
+            <p class="fs-5 text-black-50">List of Declined Appointments</p>
+            <table class="table table-hover text-center mb-1">
                 <thead>
                     <tr>
                         <th scope="col">Appointment No.</th>
@@ -69,7 +94,33 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="container-fluid d-flex justify-content-end align-items-center mb-0 p-0">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
+        
     </div>
 </template>
 

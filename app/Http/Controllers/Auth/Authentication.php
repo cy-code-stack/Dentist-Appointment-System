@@ -112,11 +112,11 @@ class Authentication extends Controller
             }
         
             switch ($user->role) {
-                case 'Admin':
+                case 'Dentist':
                     Alert::success('Login Successful', 'Welcome back Admin ' . $user->firstname)->persistent(true);
                     $request->session()->put('ss_id', $user->id);
                     return redirect(route('admin'));
-                case 'Staff':
+                case 'Assistant':
                     $request->session()->put('ss_id', $user->id);
                     return redirect(route('staff'));
                 case 'Patient':

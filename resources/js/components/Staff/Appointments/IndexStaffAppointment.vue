@@ -72,7 +72,7 @@
                             <button type="button" class="me-1 rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending" @click="abortPatient(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-box-archive me-2"></i>
-                                    <span>Archieve</span>
+                                    <span>Archive</span>
                                 </div>
                             </button>
                             <!-- <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending || appoint.Declined" @click="deleteAppointment(appoint.id)">

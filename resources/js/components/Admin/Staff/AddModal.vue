@@ -138,7 +138,7 @@
                                         class="form-control"
                                         v-model="user.role"
                                     >
-                                        <option value="Staff" selected>Staff</option>
+                                        <option value="assistant" selected>Assistant</option>
                                     </select>
                                 </div>
                             </div>
@@ -173,7 +173,7 @@ export default {
                 email: "",
                 password: "",
                 phone_number: "",
-                role: "Patient", // Set a default role if desired
+                role: "Assistant", // Set a default role if desired
             },
             errors: {}, // Object to store validation errors
         };
@@ -188,9 +188,9 @@ export default {
                     icon: "warning",
                     showLoaderOnConfirm: true,
                     showConfirmButton: false,
-                    onRender: () => {
+                    didOpen: () => {
                         Swal.showLoading();
-                    },
+                    }
                 });
 
                 if (!this.user.password) {

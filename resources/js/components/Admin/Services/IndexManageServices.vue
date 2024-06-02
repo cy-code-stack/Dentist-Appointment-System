@@ -73,8 +73,8 @@
                             </button>
                             <button type="button" class=" rounded-1 btn btn-danger btn-sm" @click="deleteServices(items.id)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
+                                    <i class="fa-solid fa-box-archive me-2"></i>
+                                    <span>Archive</span>
                                 </div>
                             </button>
                         </div>
@@ -155,14 +155,14 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Yes, archive it!",
             })
                 .then((data) => {
                     if (data.isConfirmed) {
                         axios
-                            .delete("/admin/services/delete/" + id)
+                            .put("/admin/services/archive/" + id)
                             .then((response) => {
-                                Swal.fire("Removed!", "Services has been removed.", "success");
+                                Swal.fire("Archive!", "Services has been archive.", "success");
                                 this.displayAllServices();
                             });
                     }

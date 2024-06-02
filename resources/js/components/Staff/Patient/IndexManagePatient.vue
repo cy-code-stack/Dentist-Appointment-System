@@ -58,7 +58,7 @@
                             </p>
                         </div>
                         <div class="text-center col-lg-1">
-                            <p :class="{'fs-6 fw-semibold mb-0 text-primary': user.staff, 'fs-6 fw-semibold mb-0 text-success': user.patient}">
+                            <p :class="{'fs-6 fw-semibold mb-0 text-primary': user.assistant, 'fs-6 fw-semibold mb-0 text-success': user.patient}">
                                 {{ user.role }}
                             </p>
                         </div>
@@ -78,7 +78,7 @@
                             <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="deleteUser(user.id)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-box-archive me-2"></i>
-                                    <span>Archieve</span>
+                                    <span>Archive</span>
                                 </div>
                             </button>
                         </div>
@@ -144,7 +144,7 @@ export default {
                         ...user,
                         verified: user.status === "verified",
                         patient: user.role === "Patient",
-                        staff: user.role === "Staff",
+                        assistant: user.role === "Assistant",
                     }));
                 })
                 .catch((error) => {
@@ -170,14 +170,14 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, remove it!",
+                confirmButtonText: "Yes, archive it!",
             })
                 .then((data) => {
                     if (data.isConfirmed) {
                         axios
                             .put("/user/staff/user/archieve/" + id)
                             .then((response) => {
-                                Swal.fire("Removed!", "Patient has been removed.", "success");
+                                Swal.fire("Archive!", "Patient has been archive.", "success");
                                 this.displayUsers();
                             });
                     }

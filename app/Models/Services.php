@@ -19,6 +19,7 @@ class Services extends Model
         'services_requirements',
         'services_duration',
         'services_price',
+        'serv_status',
     ];
 
 }

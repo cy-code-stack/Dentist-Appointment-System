@@ -64,10 +64,10 @@
                                     <span>View</span>
                                 </div>
                             </button>
-                            <button type="button" class="rounded-1 btn btn-danger btn-sm">
+                            <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="archiveReferPatients(item.id)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
+                                    <i class="fa-solid fa-box-archive me-2"></i>
+                                    <span>Archive</span>
                                 </div>
                             </button>
                         </div>
@@ -132,6 +132,34 @@ export default {
             // console.log("clicked");
             this.selected_patient = selected_patient;
             $('#view-appointment-modal').modal('show');
+        },
+        archiveReferPatients(id){
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, archive it!",
+            })
+                .then((data) => {
+                    if (data.isConfirmed) {
+                        axios
+                            .put("/admin/patient/archive/" + id)
+                            .then((response) => {
+                                Swal.fire("Archive!", "Patient has been archive.", "success");
+                                this.diplayVerfiedPatients();
+                            });
+                    }
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        text: "Something went wrong!",
+                    });
+                    console.log(error);
+                });
         },
     },
     mounted(){

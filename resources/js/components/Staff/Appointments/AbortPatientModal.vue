@@ -5,7 +5,7 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="d-flex justify-content-between w-100">
-                            <p class="fs-5 fw-medium">Abort Appointment</p>
+                            <p class="fs-5 fw-medium">Archive Appointment</p>
                             <button type="button" class="btn-close btn-black" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="company-serv card w-100 mb-3 d-flex align-items-between justify-content-between p-3">
@@ -60,7 +60,7 @@ export default {
                 this.abortApp.firstname = '',
                 this.abortApp.lastname = '',
                 this.abortApp.abort_reason = '',
-                Swal.fire("Declined!", "Appointment has been decline.", "success");
+                Swal.fire("Archive!", "Appointment has been archive.", "success");
                 // Swal.fire("Declined!", "Appointment has been declined.", "success").then(() => {location.reload();});
                 this.$emit("displayAbortApp");
             }).catch((error)=>{

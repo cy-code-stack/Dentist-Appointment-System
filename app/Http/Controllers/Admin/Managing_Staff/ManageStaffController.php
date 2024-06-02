@@ -88,7 +88,9 @@ class ManageStaffController extends Controller
      */
     public function showUser()
     {
-        $user = User::whereNotIn("role", ['Admin', 'Patient'])->get();
+        $user = User::whereNotIn("role", ['Dentist', 'Patient'])
+                        ->where('status', '<>', 'archive')
+                        ->get();
         return $user;
     }
 
@@ -143,16 +145,27 @@ class ManageStaffController extends Controller
         ], 200);
     }
 
+    public function archiveStaff(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $request['status'] = 'archive';
+        $user->update($request->all());
+        return response()->json([
+            'status' => 'success',
+            'data' => $user,
+        ], 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User deleted successfully',
-        ], 200);
-    }
+    // public function destroy($id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     $user->delete();
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'message' => 'User deleted successfully',
+    //     ], 200);
+    // }
 }

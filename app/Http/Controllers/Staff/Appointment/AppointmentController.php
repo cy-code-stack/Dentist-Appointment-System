@@ -24,7 +24,7 @@ class AppointmentController extends Controller
     public function showAppointment()
     {
         $appointment = Appointment::with('patient', 'services')
-                        ->whereNotIn('appnt_status', ['Ongoing', 'Declined'])
+                        ->whereNotIn('appnt_status', ['Ongoing', 'Declined', 'Archive'])
                         ->get();
         return $appointment;
     }

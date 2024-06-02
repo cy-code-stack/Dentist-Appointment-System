@@ -30,7 +30,7 @@ class ArchieveController extends Controller
      */
     public function showArchieve()
     {
-        $user = User::whereNotIn("role", ['Admin', 'Staff'])
+        $user = User::whereNotIn("role", ['Dentist', 'Assistant'])
                         ->where('status', '<>', 'verified')
                         ->get();
         return $user;
