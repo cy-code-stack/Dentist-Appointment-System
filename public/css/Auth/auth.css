@@ -9,7 +9,7 @@
     height: 60vh;
 }
 .sign-up-cont{
-    height: 85vh;
+    height: 90%;
 }
 .forgot{
     height: 30vh;
@@ -43,4 +43,22 @@
 .text-danger{
     font-size: 12px;
     font-weight: 600;
+}
+.main-verify-container{
+    display: flex;
+    min-height: 80vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.verify-card{
+    min-width: 40rem !important;
+    min-height: 20rem;
+    border-radius: 15px;
+    border: none;
+    background: #ffffff;
+    -webkit-box-shadow: 2px 2px 11px -1px rgba(151, 151, 151, 1);
+    -moz-box-shadow: 2px 2px 11px -1px rgba(151, 151, 151, 1);
+    box-shadow: 2px 2px 11px -1px rgba(151, 151, 151, 1);
 }

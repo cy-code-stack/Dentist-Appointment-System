@@ -5,16 +5,16 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid min-vh-100 overflow-scroll">
+    <div class="container-fluid overflow-hidden">
         <div class="logo-txt container d-flex justify-content-center align-items-center">
-            <div class="col col-lg-4 d-flex flex-column d-flex justify-content-center align-items-center bg-white">
+            <div class="col col-lg-5 d-flex flex-column d-flex justify-content-center align-items-center bg-white">
                 <img src="{{ asset('images/sign-in.png') }}" class="image-fluid mx-auto d-block" alt="login-logo">
                 <p class="fs-2 fw-medium text-center">Sign up</p>
                 <p class="fs-6 text-center">Please enter your credentials in the input.</p>
                 <p class="fs-6 text-center">Already have an account? <a href="{{ route('signin') }}"
                         class="fw-semibold text-info">Sign in</a></p>
             </div>
-            <div class="sign-up-cont col col-lg-5 bg-info rounded-end-4 p-4">
+            <div class="sign-up-cont  col col-lg-7 bg-info rounded-end-4 p-3">
                 <form action="{{ route('storeData') }}" method="POST" id="signupForm">
                     @csrf
                     <div class="input-container">

@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <div class="services container-fluid d-flex flex-column align-items-center mb-5 min-vh-100">
+    <div class="services container-fluid d-flex flex-column align-items-center mb-3 min-vh-100">
         <div class="container-lg">
             <div class="section-procedure">
                 <h1 class="text-center mb-2" style="font-size: 4.5rem;">Services</h1>
@@ -189,6 +189,42 @@
                         and a fresh, clean smile.</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="inquries-section container-lg w-100 p-3">
+        <h1 class="text-center mb-2" style="font-size: 4.5rem;">Inquiries</h1>
+        <p class="text-center mb-5">Send us an inquiry using the form below and we will get back to you on time.</p>
+        <div class="main-inq-cont rounded-4 p-5">
+            <form action="" method="">
+                <div class="d-flex justify-content-center mb-2">
+                    <div class=" w-100 me-2">
+                        <label for="fname" class="form-label mb-1">Firstname</label>
+                        <input type="text" class="form-control" placeholder="Enter your firstname">
+                    </div>
+                    <div class=" w-100">
+                        <label for="fname" class="form-label mb-1">Lastname</label>
+                        <input type="text" class="form-control" placeholder="Enter your lastname">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mb-2">
+                    <div class=" w-100 me-2">
+                        <label for="email" class="form-label mb-1">Email</label>
+                        <input type="text" class="form-control" placeholder="email@gmail.com">
+                    </div>
+                    <div class="w-100">
+                        <label for="phone" class="form-label mb-1">Contact Number</label>
+                        <input type="text" class="form-control" placeholder="09123456789">
+                    </div>
+                </div>
+                <div class="inq-message flex-column mb-3">
+                    <label for="" class="form-label mb-1">Drop your concern here</label>
+                    <textarea class="form-control" placeholder="message" style="height: 200px; resize:none;"></textarea>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 

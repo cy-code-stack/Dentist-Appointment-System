@@ -35,6 +35,8 @@ Route::get('/', function () {
     Route::get('/user/signin', [Authentication::class, 'index'])->name('signin');
     Route::post('/user/auth', [Authentication::class, 'loginUsers'])->name('authenticate');
     Route::get('/user/signup', [Authentication::class, 'indexSignup'])->name('signup');
+    Route::get('/verify/otp', [Authentication::class, 'indexVerify'])->name('verify');
+    Route::post('/verify/user/acc', [Authentication::class, 'otpVerify'])->name('acc-verify');
     Route::post('/storeData', [Authentication::class,'submitUser'])->name('storeData');
     Route::get('/user/forgot', [Authentication::class, 'indexForgot'])->name('forgot');
     Route::get('/user/logout', [Authentication::class, 'logout'])->name('logout');
@@ -122,3 +124,5 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/user/admin/{path}',[App\Http\Controllers\HomeController::class, 'adminIndex'])->where('any','^(?!js/).*')->where( 'path', '([A-z\d\-/_.]+)?' );
     Route::get('/user/staff/{path}',[App\Http\Controllers\HomeController::class, 'index'])->where('any','^(?!js/).*')->where( 'path', '([A-z\d\-/_.]+)?' );
     Route::get('/user/patient/{path}',[App\Http\Controllers\HomeController::class, 'indexuserPatient'])->where('any','^(?!js/).*')->where( 'path', '([A-z\d\-/_.]+)?' );
+
+    
