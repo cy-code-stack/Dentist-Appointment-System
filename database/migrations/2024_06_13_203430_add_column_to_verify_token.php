@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('verify_tokens', function (Blueprint $table) {
-            $table->timestamp('expires_at')->nullable()->after('email');
+            $table->dropColumn('expires_at');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('verify_tokens', function (Blueprint $table) {
-            $table->dropColumn('expires_at');
+            $table->timestamp('expires_at')->nullable();
         });
     }
 };

@@ -20,16 +20,15 @@
                         @csrf
                         <input type="text" name='token' class="form-control mb-2" placeholder="Enter the code here">
                     </div>
+                    @error('token')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    
                     <div class="d-flex justify-content-end mt-2">
-                        <button type="button" name="resend-otp" class="btn btn-secondary text-white me-2">Resend Verification OTP</button>
                         <button type="submit" class="btn btn-info text-white">Verify</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-
-<script>
-    
-</script>
 @endsection

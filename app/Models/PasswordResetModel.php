@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VerifyToken extends Model
+class PasswordResetModel extends Model
 {
     use HasFactory;
 
+    protected $table = "password_reset_token";
+
     protected $fillable = [
-        'token',
         'email',
-        'expires_at',
-        'is_activated'
+        'token',
+        'created_at',
     ];
 }

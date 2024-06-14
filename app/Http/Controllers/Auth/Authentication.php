@@ -90,7 +90,6 @@ class Authentication extends Controller
 
         $get_token = new VerifyToken();
         $get_token->token = $validToken;
-        $get_token->expires_at = now()->addMinutes(10);
         $get_token->email = $data['email'];
         $get_token->save();
         $get_user_email = $data['email'];
@@ -120,26 +119,32 @@ class Authentication extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            $user->session_id = Session::getId(); 
+            $user->save();
         
-            // Check if the user is unverified
-            if ($user->status == 'unverified') {
-                Alert::error('Login Failed', 'Your account is not verified.')->persistent(true);
-                return redirect()->back()->withErrors(['email' => 'Your account is not verified.']);
-            }elseif ($user->status == 'archieve') {
+
+            if ($user->is_verified == 0) {
+                // Resend OTP
+                $validToken = rand(100000, 999999);
+                $get_token = new VerifyToken();
+                $get_token->token = $validToken;
+                $get_token->email = $user->email;
+                $get_token->save();
+            
+                Mail::to($user->email)->send(new welcomeMail($user->email, $validToken, $user->firstname, $user->lastname ));
+                Alert::error('Login Failed', 'Your account is not verified. Please enter the otp send to your email.')->persistent(true);
+                return redirect(route('verify'));
+            }elseif ($user->status == 'unverified') {
                 Alert::error('Login Failed', 'Your account is not verified.')->persistent(true);
                 return redirect()->back()->withErrors(['email' => 'Your account is not verified.']);
             }
-        
             switch ($user->role) {
                 case 'Dentist':
                     Alert::success('Login Successful', 'Welcome back Admin ' . $user->firstname)->persistent(true);
-                    $request->session()->put('ss_id', $user->id);
                     return redirect(route('admin'));
                 case 'Assistant':
-                    $request->session()->put('ss_id', $user->id);
                     return redirect(route('staff'));
                 case 'Patient':
-                    $request->session()->put('ss_id', $user->id);
                     return redirect(route('appointment'));
                 default:
                     break;
@@ -150,28 +155,38 @@ class Authentication extends Controller
         }
     }
 
+    public function indexForgotAcc(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ], [
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'Please enter valid email address.',
+            'email.exists' => 'Invalid Email. Make sure your email is already registered in the system',
+        ]);
+
+        
+
+    }
+
 
     public function otpVerify(Request $request){
 
         $request->validate([
             'token' => 'required|string|digits:6'  
+        ],[
+            'token.digits' => 'It must minimum of 6 digits',
         ]);
 
         $get_token = $request->token;
         $token_record = VerifyToken::where('token', $get_token)->first();
 
         if ($token_record) {
-
-            if ($token_record->expires_at < now()) {
-                return redirect()->back()->with('expired', 'Your OTP has expired. Please check your email once. or Please request a new one.');
-            }
-    
-            // Mark the token as activated
             $token_record->is_activated = 1;
             $token_record->save();
 
             $user = User::where('email', $token_record->email)->first();
             $user->is_verified = 1;
+            $user->status = 'verified';
             $user->save();
 
             $token_record->delete();
@@ -183,22 +198,17 @@ class Authentication extends Controller
         }
     }
 
-    public function resendOTP(Request $request){
-        $email = $request->email;
+    public function forgotPass(){
 
-        $otp = rand(100000, 999999);
-
-        $token_record = VerifyToken::where('email', $email)->first();
-
-        
     }
 
     public function logout(Request $request)
     {
-        Session::flush();
-        Session::pull('ss_id');
-        Alert::success('Logged Out', 'You have been successfully logged out.')->persistent(true);
-        return redirect(route('signin'));
+        if (session_id() != Auth::user()->session_id) {
+            Auth::logout();
+            Alert::success('Logout Successfully', 'You have successfully logout.')->persistent(1);
+            return redirect(route('signin'));
+        }
     }
 
 }

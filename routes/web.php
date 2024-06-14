@@ -39,11 +39,12 @@ Route::get('/', function () {
     Route::post('/verify/user/acc', [Authentication::class, 'otpVerify'])->name('acc-verify');
     Route::post('/storeData', [Authentication::class,'submitUser'])->name('storeData');
     Route::get('/user/forgot', [Authentication::class, 'indexForgot'])->name('forgot');
+    Route::post('/user/forgot/acc', [Authentication::class, 'indexForgotAcc'])->name('user-forgot');
     Route::get('/user/logout', [Authentication::class, 'logout'])->name('logout');
 
 
 // Routes for authenticated users
-Route::middleware(['guest'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     //Start of Patient Controller
     Route::get('/user/patient/booking', [PatientController::class, 'indexPatient'])->name('appointment');
 

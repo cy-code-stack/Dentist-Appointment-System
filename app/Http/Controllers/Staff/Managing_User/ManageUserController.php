@@ -47,6 +47,7 @@ class ManageUserController extends Controller
         $data = $request->all();
         $data['password'] = Hash::make($plainPassword);
         $data['status'] = 'verified';
+        $data['is_verified'] = 1;
     
         // Create the user and handle any potential errors
         try {
@@ -93,11 +94,6 @@ class ManageUserController extends Controller
         $user = User::whereNotIn("role", ['Dentist', 'Assistant'])
                         ->where('status', '<>', 'archive')
                         ->get();
-        
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'User display successfully', $user,
-        // ], 200);
 
         return $user;
     }
