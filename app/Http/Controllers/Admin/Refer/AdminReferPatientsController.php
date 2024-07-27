@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class AdminReferPatientsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function getVerifiedPatients(){
         $verifiedPatients = Appointment::whereNotIn('appnt_status', ['Archive', 'Pending', 'Declined'])
                                             ->with('services', 'patient')

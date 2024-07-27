@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\ForgotPasswordMail;
+use App\Models\ForgotPassModel;
 use App\Models\VerifyToken;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\Controller;
@@ -12,6 +15,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\welcomeMail;
+use Str;
+use Hash;
 
 
 
@@ -35,8 +40,14 @@ class Authentication extends Controller
     {
         return view("auth.forgot");
     }
-    public function submitUser(Request $request)
-{
+
+    public function resetPass($token){
+        return view("auth.reset", ['token' => $token]);
+    }
+
+
+    public function submitUser(Request $request){
+
     $request->validate([
         'firstname' => 'required',
         'lastname' => 'required',
@@ -123,7 +134,7 @@ class Authentication extends Controller
             $user->save();
         
 
-            if ($user->is_verified == 0) {
+            if ($user->is_verified == 0 || $user->status == 'unverified') {
                 // Resend OTP
                 $validToken = rand(100000, 999999);
                 $get_token = new VerifyToken();
@@ -134,9 +145,6 @@ class Authentication extends Controller
                 Mail::to($user->email)->send(new welcomeMail($user->email, $validToken, $user->firstname, $user->lastname ));
                 Alert::error('Login Failed', 'Your account is not verified. Please enter the otp send to your email.')->persistent(true);
                 return redirect(route('verify'));
-            }elseif ($user->status == 'unverified') {
-                Alert::error('Login Failed', 'Your account is not verified.')->persistent(true);
-                return redirect()->back()->withErrors(['email' => 'Your account is not verified.']);
             }
             switch ($user->role) {
                 case 'Dentist':
@@ -164,10 +172,59 @@ class Authentication extends Controller
             'email.exists' => 'Invalid Email. Make sure your email is already registered in the system',
         ]);
 
-        
+        $token =  Str::random(64);
 
+        $passData = new ForgotPassModel();
+        $passData->email = $request->email;
+        $passData->token = $token;
+        $passData->created_at = Carbon::now();
+        $passData->updated_at = Carbon::now();
+        $passData->save();
+
+        Mail::to($request->email)->send(new ForgotPasswordMail($request->email, $token));
+
+        try {
+            Mail::to($request->email)->send(new ForgotPasswordMail($request->email, $token));
+            Alert::success('Email Sent', 'You may now check your email address to reset your password')->persistent(true);
+        } catch (\Exception $e) {
+            Alert::error('Email Failed', 'There was an error sending the email. Please try again later.')->persistent(true);
+        }
+
+        return redirect()->back();
     }
 
+    public function changePass(Request $request){
+        $request->validate([
+            'password' => [ 'required', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/', 'confirmed'],
+        ], [
+            'password.required' => 'Please enter your password.',
+            'password.min' => 'Password must be at least 8 characters long.',
+            'password.regex' => 'Password must contain at least one letter, one number, one special character, and one uppercase letter.',
+            'password.confirmed' => 'The password confirmation does not match.'
+        ]);
+    
+    
+        $dataToken = ForgotPassModel::where('token', $request->token)->first();
+    
+        if (!$dataToken) {
+            return redirect()->back()->withErrors(['token' => 'Invalid or expired token.']);
+        }
+    
+        $user = User::where('email', $request->email)->first();
+    
+        if (!$user) {
+            return redirect()->back()->withErrors(['email' => 'User not found.']);
+        }
+    
+        $user->password = Hash::make($request->password);
+        $user->save();
+    
+        $dataToken->delete();
+    
+        Alert::success('Password Change', 'You may now login to your account')->persistent(true);
+        return redirect(route('signin'))->with('success', 'Your password has been changed.');
+    }
+    
 
     public function otpVerify(Request $request){
 
@@ -198,17 +255,11 @@ class Authentication extends Controller
         }
     }
 
-    public function forgotPass(){
-
-    }
-
     public function logout(Request $request)
     {
         if (session_id() != Auth::user()->session_id) {
             Auth::logout();
-            Alert::success('Logout Successfully', 'You have successfully logout.')->persistent(1);
             return redirect(route('signin'));
         }
     }
-
 }

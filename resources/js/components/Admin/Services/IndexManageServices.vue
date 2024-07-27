@@ -24,47 +24,22 @@
         </div>
         <div class="table-responsive-lg">
             <div class="header d-flex p-2 justify-content-between align-items-center bg-info bg-gradient rounded-1 mb-2">
-                <div class="text-center col-lg-3">
+                <div class="text-center col-lg-7">
                     <p class="fs-6 fw-semibold mb-0">Service Name</p>
                 </div>
-                <div class="text-center col-lg-3">
-                    <p class="fs-6 fw-semibold mb-0">Service Requirements</p>
-                </div>
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Service Duration</p>
-                </div>
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Service Price</p>
-                </div>
-                <div class="text-center col-lg-2">
+                <div class="text-center col-lg-5">
                     <p class="fs-6 fw-semibold mb-0">Actions</p>
                 </div>
             </div>
             <div class="main-table-body">
                 <div class="table-row card mb-2" v-for="items in listofServices" :key="items.id">
                     <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-3">
+                        <div class="text-center col-lg-7">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
                                 {{ items.services_name }}
                             </p>
                         </div>
-                        <div class="text-center col-lg-3">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ items.services_requirements }}
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ items.services_duration }}
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-2">
-                            <p class="fs-6 fw-medium mb-0 text-black-50">
-                               P {{ items.services_price }}
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-2">
+                        <div class="text-center d-flex justify-content-center col-lg-5">
                             <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white">
                                 <div class="d-flex justify-content-center align-items-center" @click="editServices(items)">
                                     <i class="fa-solid fa-user-pen me-2"></i>

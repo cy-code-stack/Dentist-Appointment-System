@@ -13,9 +13,8 @@ class AppointmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function __construct(){
+        $this->middleware('auth');
     }
 
     /**
@@ -23,9 +22,10 @@ class AppointmentController extends Controller
      */
     public function showAppointment()
     {
-        $appointment = Appointment::with('patient', 'services')
+        $appointment = Appointment::with('patient', 'appointServices')
                         ->whereNotIn('appnt_status', ['Ongoing', 'Declined', 'Archive'])
                         ->get();
+                        
         return $appointment;
     }
 

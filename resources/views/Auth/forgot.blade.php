@@ -17,14 +17,14 @@
                         <div class="input-item mb-3">
                             <label for="" class="form-label">Email</label>
                             <div class="input-icon d-flex align-items-center">
-                                <input type="email" name="email" id="email" class="form-control p-3" placeholder="Enter your email">
+                                <input type="email" name="email" id="email" class="form-control p-3" placeholder="Enter your email" value="{{ old('email') }}">
                             </div>
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="active-btn d-md-flex justify-content-md-end">
-                            <button class="btn btn-primary" type="submit">Continue</button>
+                            <button class="btn btn-primary" type="submit">Reset your password</button>
                         </div>
                     </div>
                 </form>

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('verify_tokens', function (Blueprint $table) {
-            $table->dropColumn('expires_at');
+        Schema::table('calendar_event', function (Blueprint $table) {
+            $table->dropColumn('event_description');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('verify_tokens', function (Blueprint $table) {
-            $table->timestamp('expires_at')->nullable();
+        Schema::table('calendar_event', function (Blueprint $table) {
+            $$table->string('event_description');
         });
     }
 };

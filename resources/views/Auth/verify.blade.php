@@ -11,7 +11,7 @@
                 <div class="verify-card p-4 rounded-3">
                     <div class="d-flex flex-column justify-content-center align-itemas-center">
                         <p class="text-break fs-3 fw-medium">Verify using OTP</p>
-                        <p class="text-break text-center fs-6 mb-2">A One Time Password has been sent to your registered email.<br>It will expires in 10 minutes.</p>
+                        <p class="text-break text-center fs-6 mb-2">A One Time Password has been sent to your registered email.</p>
                         @if (session('incorrect'))
                             <div class="fw-medium text-danger text-center text-break mb-2">{{ session('incorrect') }}</div>
                         @elseif (session('expired'))

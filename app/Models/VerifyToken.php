@@ -12,7 +12,6 @@ class VerifyToken extends Model
     protected $fillable = [
         'token',
         'email',
-        'expires_at',
         'is_activated'
     ];
 }

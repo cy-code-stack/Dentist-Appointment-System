@@ -40,11 +40,11 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="input-item mb-2 d-flex justify-content-between align-items-center">
-                            <div class="remember-container">
+                        <div class="input-item mb-2 d-flex justify-content-end align-items-center">
+                            {{-- <div class="remember-container">
                                 <input type="checkbox" class="form-check-input">
                                 <label class="form-check-label text-white">Remember</label>
-                            </div>
+                            </div> --}}
                             <a href="{{ route('forgot') }}">
                                 <p class="text-white fs-6">Forgot Password</p>
                             </a>

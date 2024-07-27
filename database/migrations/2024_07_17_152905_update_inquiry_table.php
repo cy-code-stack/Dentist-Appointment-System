@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('status')->default('unverified')->after('role');
+        Schema::table('inquiry', function (Blueprint $table) {
+            $table->string('reply')->nullable()->after('message');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('status');
+        Schema::table('inquiry', function (Blueprint $table) {
+            $table->dropColumn('reply');
         });
     }
 };

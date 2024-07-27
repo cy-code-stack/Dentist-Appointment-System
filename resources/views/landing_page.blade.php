@@ -124,7 +124,7 @@
         </div>
         <div class="container-fluid text-white d-flex justify-content-center mb-4">
             <div class="card m-2">
-                <img src="{{ asset('images/services/OralProphylaxisCleaning.png') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/animated-img/oral-prophylaxis-cleaning.png') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Oral Prophylaxis Cleaning</h5>
                     <p class="card-text">Thorough cleaning of teeth to remove plaque and tartar buildup, promoting oral
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div class="card m-2">
-                <img src="{{ asset('images/services/ToothRestoration.png') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/animated-img/tooth-restoration.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Tooth Restoration</h5>
                     <p class="card-text">Restoration of damaged or decayed teeth using durable and natural-looking materials
@@ -140,7 +140,7 @@
                 </div>
             </div>
             <div class="card m-2">
-                <img src="{{ asset('images/services/tooth_extraction.jpg') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/animated-img/tooth-extraction.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Tooth Extraction</h5>
                     <p class="card-text">Safe and professional removal of damaged or problematic teeth to alleviate pain
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="card m-2">
-                <img src="{{ asset('images/services/orthodontics_treatment.png') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/animated-img/orthodontics-treatment.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Orthodontics Treatment</h5>
                     <p class="card-text">Correction of teeth alignment issues using advanced orthodontic techniques to
@@ -158,7 +158,7 @@
         </div>
         <div class="container-fluid d-flex justify-content-center">
             <div class="card m-2">
-                <img src="{{ asset('images/services/root_canal.jpg') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/animated-img/root-canal.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Root Canal Treatment</h5>
                     <p class="card-text">Specialized treatment to save and repair infected or damaged teeth, typically
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="card m-2">
-                <img src="{{ asset('images/services/jacket_crowns.jpg') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/animated-img/jacket-crown.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Jacket Crowns</h5>
                     <p class="card-text">Custom-made crowns to cover and protect damaged teeth, restoring their shape,
@@ -174,7 +174,7 @@
                 </div>
             </div>
             <div class="card m-2">
-                <img src="{{ asset('images/services/teeth_whitening.png') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/animated-img/teeth-whitening.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Teeth Whitenings</h5>
                     <p class="card-text">Professional teeth whitening services to brighten and enhance the appearance of
@@ -182,7 +182,7 @@
                 </div>
             </div>
             <div class="card m-2">
-                <img src="{{ asset('images/services/tooth_cleaning.png') }}" class="card-img-top" alt="...">
+                <img src="{{ asset('images/animated-img/tooth-cleaning.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Tooth Cleaning</h5>   
                     <p class="card-text">Regular dental cleaning to remove plaque and stains, ensuring optimal oral health
@@ -196,30 +196,53 @@
         <h1 class="text-center mb-2" style="font-size: 4.5rem;">Inquiries</h1>
         <p class="text-center mb-5">Send us an inquiry using the form below and we will get back to you on time.</p>
         <div class="main-inq-cont rounded-4 p-5">
-            <form action="" method="">
-                <div class="d-flex justify-content-center mb-2">
+            <form action="{{ route('sendInquiry') }}" method="POST">
+                @csrf
+                <div class="d-flex justify-content-between mb-2">
                     <div class=" w-100 me-2">
                         <label for="fname" class="form-label mb-1">Firstname</label>
-                        <input type="text" class="form-control" placeholder="Enter your firstname">
+                        <input type="text" class="form-control" name="fname" placeholder="Enter your firstname">
+                        @error('fname')
+                            <div class="text-danger"><small>{{ $message }}</small></div>
+                        @enderror
+                    </div>
+                    <div class=" w-100 me-2">
+                        <label for="lname" class="form-label mb-1">Lastname</label>
+                        <input type="text" class="form-control" name="lname" placeholder="Enter your lastname">
+                        @error('lname')
+                            <div class="text-danger"><small>{{ $message }}</small></div>
+                        @enderror
                     </div>
                     <div class=" w-100">
-                        <label for="fname" class="form-label mb-1">Lastname</label>
-                        <input type="text" class="form-control" placeholder="Enter your lastname">
+                        <label for="fblink" class="form-label mb-1">Facebook Link</label>
+                        <input type="text" class="form-control" name="fblink" placeholder="facebook link">
+                        @error('fblink')
+                            <div class="text-danger"><small>{{ $message }}</small></div>
+                        @enderror
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mb-2">
                     <div class=" w-100 me-2">
                         <label for="email" class="form-label mb-1">Email</label>
-                        <input type="text" class="form-control" placeholder="email@gmail.com">
+                        <input type="email" class="form-control" name="email" placeholder="email@gmail.com">
+                        @error('email')
+                            <div class="text-danger"><small>{{ $message }}</small></div>
+                        @enderror
                     </div>
                     <div class="w-100">
                         <label for="phone" class="form-label mb-1">Contact Number</label>
-                        <input type="text" class="form-control" placeholder="09123456789">
+                        <input type="text" class="form-control" name="cnumber" placeholder="09123456789">
+                        @error('cnumber')
+                            <div class="text-danger"><small>{{ $message }}</small></div>
+                        @enderror
                     </div>
                 </div>
                 <div class="inq-message flex-column mb-3">
                     <label for="" class="form-label mb-1">Drop your concern here</label>
-                    <textarea class="form-control" placeholder="message" style="height: 200px; resize:none;"></textarea>
+                    <textarea class="form-control" placeholder="message" name="message" style="height: 200px; resize:none;"></textarea>
+                    @error('message')
+                        <div class="text-danger"><small>{{ $message }}</small></div>
+                    @enderror
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-success">Submit</button>

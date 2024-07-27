@@ -13,12 +13,11 @@ class Services extends Model
 
     protected $table = "services";
 
+    public $timestamps = false;
+
     protected $fillable = [
         'id',
         'services_name',
-        'services_requirements',
-        'services_duration',
-        'services_price',
         'serv_status',
     ];
 

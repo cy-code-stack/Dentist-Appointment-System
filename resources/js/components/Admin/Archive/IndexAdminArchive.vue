@@ -99,9 +99,6 @@
                     <tr>
                         <th scope="col">Services No.</th>
                         <th scope="col">Services Name</th>
-                        <th scope="col">Services Requirements</th>
-                        <th scope="col">Services Duration</th>
-                        <th scope="col">Servies Price</th>
                         <th scope="col">Servies Status</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -110,9 +107,6 @@
                     <tr v-for="servitems in listofArchiveServices" :key="servitems.id">
                         <td>{{ servitems.id }}</td>
                         <td>{{ servitems.services_name }}</td>
-                        <td>{{ servitems.services_requirements }}</td>
-                        <td>{{ servitems.services_duration }}</td>
-                        <td>{{ servitems.services_price }}</td>
                         <td><span class="text-danger fw-medium">{{ servitems.serv_status }}</span></td>
                         <td>
                             <div class="text-center d-flex justify-content-center">

@@ -1,5 +1,5 @@
 :root {
-    --navbar-color: #FEF5E7;
+    --navbar-color: #fef5e7;
     --dominant-color: #fff;
     --primary-color: #50b8e7;
     --secondary-color: #84cdee;
@@ -10,19 +10,28 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'poppins';
+    font-family: "poppins";
 }
-h1, h2, h3, h4, h5, h6, p, span, strong, label {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+strong,
+label {
     padding: 0;
     margin: 0;
 }
-a{
+a {
     font-size: 1.1rem;
     text-decoration: none;
     color: black;
 }
 
-.main-div{
+.main-div {
     padding: 0;
     margin: 0;
     height: 100vh;
@@ -30,10 +39,27 @@ a{
     background-color: #fff;
 }
 
-ul, li{
+ul,
+li {
     list-style: none;
 }
 
-
-
-
+.fc-daygrid-day-number {
+    text-decoration: none !important;
+    color: black !important;
+    
+}
+.fc-event-title{
+    padding: 5px 5px !important;
+}
+.fc-col-header-cell-cushion {
+    text-decoration: none !important;
+    color: black !important;
+}
+.fc .fc-toolbar.fc-header-toolbar{
+    margin-bottom: 10px !important;
+    padding: 8px !important;
+}
+.fc {
+    cursor: pointer;
+}

@@ -24,7 +24,6 @@
 
 </head>
 
-
 <body class="hold-transition sidebar-mini overflow-auto">
     <div class="wrapper" id="app">
         <nav class="main-header navbar navbar-expand navbar-white navbar-light sticky-md-top">
@@ -77,6 +76,12 @@
                             <router-link to="/user/admin/refer" class="nav-link">
                                 <i class="nav-icon fa-solid fa-hospital-user"></i>
                                 <p>Refer Patients</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/user/admin/calendar" class="nav-link">
+                                <i class="nav-icon fa-solid fa-calendar-check"></i>
+                                <p>Company Events</p>
                             </router-link>
                         </li>
                         <li class="nav-item">

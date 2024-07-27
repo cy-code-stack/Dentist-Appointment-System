@@ -15,6 +15,9 @@ class ManageUserController extends Controller
 {
 
 
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -26,7 +29,7 @@ class ManageUserController extends Controller
             'lastname' => 'required',
             'home_address' => 'required',
             'phone_number' => ['required', 'numeric', 'digits_between:1,11'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],// Add password validation
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
         ], [
             'firstname.required' => 'Please enter your firstname.',
             'lastname.required' => 'Please enter your lastname.',

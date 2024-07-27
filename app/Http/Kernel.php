@@ -66,5 +66,10 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'isAlreadyLogin' => \App\Http\Middleware\isAlreadyLogin::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'assistant' => \App\Http\Middleware\AssistantMiddleware::class,
+        'patient' => \App\Http\Middleware\PatientMiddleware::class,
+        'page.role' => \App\Http\Middleware\PageNotFoundMiddleware::class,
+        'preventBackHistory' => \App\Http\Middleware\PreventBackHistory::class,
     ];
 }

@@ -15,27 +15,14 @@
                                 ></button>
                             </div>
                             <div class="company-serv card w-100 mb-3 d-flex align-items-between justify-content-between p-3">
-                                <p class="fw-medium mb-2"> Fill the form for adding a service.</p>
+                                <p class="fw-medium mb-2">Fill the form for adding a service.</p>
                                 <div class="form-group mb-1 w-100">
                                     <label class="form-label">Service name</label>
                                     <input type="text" class="form-control" placeholder="Enter new services name" v-model="services.services_name"/>
                                 </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Service requirements</label>
-                                    <input type="text" class="form-control" placeholder="Enter services requirements" v-model="services.services_requirements"/>
-                                </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Service duration</label>
-                                    <input type="text" class="form-control" placeholder="Enter services duration" v-model="services.services_duration"/>
-                                </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Service price</label>
-                                    <input type="text" class="form-control" placeholder="Enter services price" v-model="services.services_price"/>
-                                </div>
                             </div>
-
                             <div class="active-btn">
-                                <button type="submit"  class="btn btn-success text-white btn-md-1 w-100" > Add Services  </button>
+                                <button type="submit"  class="btn btn-success text-white btn-md-1 w-100" > Add Services</button>
                             </div>
                         </form>
                     </div>
@@ -54,9 +41,6 @@ export default {
             services: {
                 id: '',
                 services_name: '',
-                services_requirements: '',
-                services_duration: '',
-                services_price: '',
             },
             errors: {},
         };
@@ -85,9 +69,6 @@ export default {
             this.services = {
                 id: '',
                 services_name: '',
-                services_requirements: '',
-                services_duration: '',
-                services_price: '',
             };
         },
     },

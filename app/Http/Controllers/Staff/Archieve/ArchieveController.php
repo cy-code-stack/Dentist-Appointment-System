@@ -12,9 +12,8 @@ class ArchieveController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function __construct(){
+        $this->middleware('auth');
     }
 
     /**
@@ -59,11 +58,4 @@ class ArchieveController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

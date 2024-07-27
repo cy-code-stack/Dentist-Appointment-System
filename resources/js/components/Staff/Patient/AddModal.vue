@@ -198,7 +198,6 @@ export default {
                 }
 
                 const response = await axios.post("/user/staff/user/add", this.user);
-                console.log(response.data);
 
                 this.resetForm();
                 $("#add-user-modal").modal("hide");

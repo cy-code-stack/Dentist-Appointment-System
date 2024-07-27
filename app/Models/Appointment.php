@@ -23,7 +23,7 @@ class Appointment extends Model
         'abort_reason',
     ];
 
-    public function services(){
+    public function appointServices(){
         return $this->belongsTo(Services::class, 'services_id');
     }
 

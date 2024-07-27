@@ -14,19 +14,15 @@ class ForgotPasswordMail extends Mailable
     use Queueable, SerializesModels;
 
     public $user_email;
-    public $passToken;
-    public $user_firstname;
-    public $user_lastname;
+    public $token;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($user_email, $passToken, $user_firstname, $user_lastname)
+    public function __construct($user_email, $token)
     {
         $this->user_email = $user_email;
-        $this->passToken = $passToken;
-        $this->user_firstname = $user_firstname;
-        $this->user_lastname = $user_lastname;
+        $this->token = $token;
     }
 
     /**
@@ -42,13 +38,15 @@ class ForgotPasswordMail extends Mailable
     /**
      * Get the message content definition.
      */
-    public function content(): Content
+    public function build()
     {
-        return new Content(
-            view: 'email.forgot',
-        );
+        return $this->view('email.forgot')
+                    ->with([
+                        'user_email' => $this->user_email,
+                        'token' => $this->token,
+                    ])
+                    ->subject('Reset Password');
     }
-
     /**
      * Get the attachments for the message.
      *

@@ -11,9 +11,8 @@ class ManageServicesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function __construct(){
+        $this->middleware('auth');
     }
 
     /**
@@ -22,7 +21,6 @@ class ManageServicesController extends Controller
     public function storeService(Request $request)
     {
         $services = $request->all();
-        $request['serv_status'] = 'Verified';
         $response = Services::create($services);
         return response()->json([
             'status' => 'success',

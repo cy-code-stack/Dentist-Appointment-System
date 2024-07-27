@@ -18,6 +18,10 @@ class ManageStaffController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function __construct(){
+        $this->middleware('auth');
+    }
+    
     public function storeUser(Request $request)
     {
         // Validate the incoming request
@@ -47,6 +51,7 @@ class ManageStaffController extends Controller
         $data = $request->all();
         $data['password'] = Hash::make($plainPassword);
         $data['status'] = 'verified';
+        $data['is_verified'] = 1;
     
         // Create the user and handle any potential errors
         try {

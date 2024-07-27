@@ -1,8 +1,6 @@
 <template>
     <div class="container-fluid">
-        <div class="txt-title mt-2">
-            <p class="fs-3 fw-semibold text-primary mb-0">Patient Appointment</p>
-        </div>
+            <p class="fs-5 fw-semibold mb-0 p-2">Patient Appointment</p>
         <div class="d-flex justify-content-end align-items-center mb-2">
             <div class="sort">
                 <div class="select-input d-flex justify-content-center align-items-center">
@@ -48,12 +46,12 @@
                         </div>
                         <div class="text-center col-lg-3">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ appoint.sched_date }} {{ appoint.sched_time }}
+                                Date: {{ appoint.sched_date }} <br> Time: {{ appoint.sched_time }}
                             </p>
                         </div>
                         <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ appoint.services?.services_name }}
+                                {{ appoint?.appoint_services?.services_name }}
                             </p>
                         </div>
                         <div

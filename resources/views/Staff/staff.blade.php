@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('images/logo.png') }}" rel="icon">
-    <title>Staff Appointment</title>
+    <title>Assistant Appointment</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -39,7 +39,7 @@
                             class="fas fa-bars"></i></a>
                 </li> --}}
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/user/staff/dashboard" class="nav-link ms-4">Staff Dashboard</a>
+                    <a href="/user/staff/dashboard" class="nav-link ms-4">Assistant Dashboard</a>
                 </li>
             </ul>
         </nav>
@@ -85,19 +85,19 @@
                                 </p>
                             </router-link>
                         </li>
-                        {{-- <li class="nav-item">
-                            <router-link to="/user/staff/service" class="nav-link">
-                                <i class="nav-icon fa-solid fa-list-check"></i>
+                        <li class="nav-item">
+                            <router-link to="/user/staff/inquiry" class="nav-link">
+                                <i class="nav-icon fa-solid fa-person-circle-question"></i>
                                 <p>
-                                    Services
+                                    Patient Inquiries
                                 </p>
                             </router-link>
-                        </li> --}}
+                        </li>
                         <li class="nav-item">
-                            <router-link to="/user/staff/profile" class="nav-link">
-                                <i class="nav-icon fa-solid fa-id-badge"></i>
+                            <router-link to="/user/staff/callendar/event" class="nav-link">
+                                <i class="nav-icon fa-solid fa-calendar-check"></i>
                                 <p>
-                                    Profile
+                                    Company Events
                                 </p>
                             </router-link>
                         </li>
@@ -106,6 +106,14 @@
                                 <i class="nav-icon fa-solid fa-box-archive"></i>
                                 <p>
                                     Archive
+                                </p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/user/staff/profile" class="nav-link">
+                                <i class="nav-icon fa-solid fa-id-badge"></i>
+                                <p>
+                                    Profile
                                 </p>
                             </router-link>
                         </li>

@@ -80,9 +80,9 @@
                                 <label for="sex" class="form-label text-white mb-1">Gender</label>
                                 <select class="form-select" name="sex" id="sex" aria-label="sex">
                                     <option selected>Choose</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="prefer_not_to_say">Prefer not to say</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value=">Prefer not to Say">Prefer not to say</option>
                                 </select>
                             </div>
                             @error('sex')
@@ -103,10 +103,10 @@
                                 <label for="marital_status" class="form-label text-white mb-1">Marital Status</label>
                                 <select class="form-select" name="marital_status" id="marital_status" aria-label="Gender">
                                     <option selected>Choose</option>
-                                    <option value="single">Single</option>
-                                    <option value="single">Married</option>
-                                    <option value="widow">Widow</option>
-                                    <option value="prefer_not_to_say">Prefer not to say</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Widow">Widow</option>
+                                    <option value="Prefer not to Say">Prefer not to say</option>
                                 </select>
                             </div>
                             @error('marital_status')

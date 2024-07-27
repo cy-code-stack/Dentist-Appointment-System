@@ -11,6 +11,9 @@ use App\Mail\BookAppointmentVerification;
 
 class PatientController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function indexPatient(){
         return view("Patient.Booking_Appointment");
     }
@@ -34,7 +37,7 @@ class PatientController extends Controller
         $appoint['patient_id'] = \Auth::user()->id;
         $data = Appointment::create($appoint);
 
-        $user_data = Appointment::with('patient', 'services')->where('id', $data->id)->first();
+        $user_data = Appointment::with('patient', 'appointServices')->where('id', $data->id)->first();
 
         $bookmailData = [
             'main-title' => 'Booking Appointment Successfuly Done',
@@ -43,7 +46,7 @@ class PatientController extends Controller
             'name' => $user_data->patient->firstname. ' ' .$user_data->patient->lastname,
             'email' => $user_data->patient->email,
             'acc_create' => $user_data->patient->created_at,
-            'services_name' => $user_data->services->services_name,
+            'services_name' => $user_data->appointServices->services_name,
             'time' => $user_data->sched_date. ' ' .$user_data->sched_time,
             'status' => $user_data->patient->status
         ];
@@ -65,6 +68,7 @@ class PatientController extends Controller
     }
 
     public function diplayServices(){
-        return Services::all();
+        $services = Services::where("serv_status", "=", "Verified")->get();
+        return $services;
     }
 }

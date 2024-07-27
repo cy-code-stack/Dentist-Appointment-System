@@ -3,7 +3,7 @@
         <p class="fs-5 fw-semibold mb-0 p-2">Archive Page</p>
 
         <div class="container mt-4">
-            <p class="fs-5 text-black-50">List of Archive Patients</p>
+            <p class="fs-6 text-black-50 mb-1">List of Archive Patients</p>
             <table class="table table-hover text-center mb-1">
                 <thead>
                     <tr>
@@ -70,8 +70,8 @@
             </div>
         </div>
 
-        <div class="container mt-2">
-            <p class="fs-5 text-black-50">List of Declined Appointments</p>
+        <div class="container mt-2 ">
+            <p class="fs-6 text-black-50 mb-1">List of Declined Appointments</p>
             <table class="table table-hover text-center mb-1">
                 <thead>
                     <tr>

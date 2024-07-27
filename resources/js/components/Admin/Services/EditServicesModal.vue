@@ -18,20 +18,7 @@
                                     <label class="form-label">Service name</label>
                                     <input type="text" class="form-control" placeholder="Enter new services name" v-model="services.services_name"/>
                                 </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Service requirements</label>
-                                    <input type="text" class="form-control" placeholder="Enter services requirements" v-model="services.services_requirements"/>
-                                </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Service duration</label>
-                                    <input type="text" class="form-control" placeholder="Enter services duration" v-model="services.services_duration"/>
-                                </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Service price</label>
-                                    <input type="text" class="form-control" placeholder="Enter services price" v-model="services.services_price"/>
-                                </div>
                             </div>
-
                             <div class="active-btn">
                                 <button type="button"  class="btn btn-success text-white btn-md-1 w-100" @click=" updateServices(services.id)"> Edit Services  </button>
                             </div>
@@ -52,9 +39,6 @@ export default {
             services: {
                 id: '',
                 services_name: '',
-                services_requirements: '',
-                services_duration: '',
-                services_price: '',
             },
         }
     },
@@ -82,9 +66,6 @@ export default {
                 // console.log(val);
                 this.services.id = val.id;
                 this.services.services_name = val.services_name;
-                this.services.services_requirements = val.services_requirements;
-                this.services.services_duration = val.services_duration;
-                this.services.services_price = val.services_price;
             },
             deep: true,
         },
