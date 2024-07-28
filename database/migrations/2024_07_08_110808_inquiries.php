@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('cnumber');
             $table->string('message');
+            $table->string('reply');
+            $table->string('status');
         });
     }
 
