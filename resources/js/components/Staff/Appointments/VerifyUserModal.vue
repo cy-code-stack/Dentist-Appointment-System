@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" id="verify-appointment-modal">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="container">
@@ -8,16 +8,20 @@
                             <p class="fs-5 fw-medium">Review Details</p>
                             <button type="button" class="btn-close btn-black" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="company-serv card w-100 mb-3 d-flex align-items-between justify-content-between p-3">
+                        <div class="company-serv card w-100 mb-3 d-flex align-items-between justify-content-center p-3">
                             <p class="fw-medium mb-2">Please review the details</p>
-                                <div class="form-group mb-1 d-flex justify-content-between w-100">
+                                <div class="form-group mb-1 d-flex justify-content-center align-items-center w-100">
                                     <div class="me-1">
                                         <label class="form-label">Firstname</label>
                                         <input type="text" class="form-control" v-model="user.firstname" disabled/>
                                     </div>
-                                    <div>
+                                    <div class="me-1">
                                         <label class="form-label">Lastname</label>
                                         <input type="text" class="form-control" v-model="user.lastname" disabled/>
+                                    </div>
+                                    <div class="me-1">
+                                        <label class="form-label">Middle Initial</label>
+                                        <input type="text" class="form-control" :value="displayMiddleInitial" disabled/>
                                     </div>
                                 </div>
                                 <div class="form-group mb-1">
@@ -37,14 +41,14 @@
                                         <label class="form-label mb-0">Age</label>
                                         <input type="text" class="form-control" v-model="user.age" disabled/>
                                     </div>
-                                    <div>
+                                    <div class="me-1">
                                         <label class="form-label mb-0">Sex</label>
                                         <input type="text" class="form-control" v-model="user.sex" disabled/>
                                     </div>
-                                </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Marital Status</label>
-                                    <input type="tel" class="form-control" v-model="user.marital_status"  disabled/>
+                                    <div>
+                                        <label class="form-label mb-0">Marital Status</label>
+                                        <input type="tel" class="form-control" v-model="user.marital_status" disabled/>
+                                    </div>
                                 </div>
                                 <div class="form-group mb-1">
                                     <label class="form-label mb-1">Occupation</label>
@@ -76,6 +80,7 @@ data() {
         user:{
             id: '',
             firstname: '',
+            middle_initial: null,
             lastname: '',
             home_address: '',
             email: '',
@@ -105,12 +110,18 @@ methods: {
     });
    }
 },
+computed:{
+    displayMiddleInitial() {
+      return this.user.middle_initial || 'None';
+    }
+},
 watch:{
     selected_user: {
         handler(val) {
             console.log(val);
             this.user.id = val.id;
             this.user.firstname = val.patient?.firstname;
+            this.user.middle_initial = val.patient?.middle_initial;
             this.user.lastname = val.patient?.lastname;
             this.user.home_address = val.patient?.home_address;
             this.user.email = val.patient?.email;

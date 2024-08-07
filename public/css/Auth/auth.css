@@ -1,15 +1,22 @@
 .logo-txt img{
-    max-width: 250px;
-    max-height: 250px;
+    min-width: 300px;
+    min-height: 300px;
 }
 .logo-txt{
-    height: 100vh;
+    height: 55vh;
+}
+.logo-txt-sign-up{
+    height: 80vh;
+}
+.sign-up-img{
+    height: 0vh;
 }
 .col{
-    height: 60vh;
+    height: 50vh;
 }
 .sign-up-cont{
-    height: 90%;
+    height: fit-content;
+    padding: 30px !important;
 }
 .forgot{
     height: 30vh;
@@ -46,7 +53,7 @@
 }
 .main-verify-container{
     display: flex;
-    min-height: 80vh;
+    min-height: 50vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;

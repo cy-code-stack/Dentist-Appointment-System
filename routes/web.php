@@ -10,6 +10,7 @@ use App\Http\Controllers\LandingPageController;
 
 //Patient
 use App\Http\Controllers\Patient\CalendarEvt\CalendarEventControllerPatient;
+use App\Http\Controllers\Patient\View_Appointment\ViewAppointmentController;
 
 //Admin
 use App\Http\Controllers\Admin\AdminDashboardController; 
@@ -37,35 +38,29 @@ use App\Http\Controllers\Staff\CalendarEvent\CalendarEventController;
 |
 */
 
-Route::get('/', function () {
-    return view('landing_page');
-});
-    Route::post('/inquiry/store', [LandingPageController::class, 'MakeInquiry'])->name('sendInquiry');
+Route::get('/', function () { return view('landing_page');});
     
+    Route::post('/inquiries/store', [LandingPageController::class, 'makeInquiry'])->name('inquiries.store');
+        
     Route::get('/user/signin', [Authentication::class, 'index'])->name('signin');
     Route::post('/user/auth', [Authentication::class, 'loginUsers'])->name('authenticate');
-
 
     Route::get('/user/signup', [Authentication::class, 'indexSignup'])->name('signup');
     Route::post('/storeData', [Authentication::class,'submitUser'])->name('storeData');
 
-
     Route::get('/verify/otp', [Authentication::class, 'indexVerify'])->name('verify');
     Route::post('/verify/user/acc', [Authentication::class, 'otpVerify'])->name('acc-verify');
-
 
     Route::get('/user/forgot', [Authentication::class, 'indexForgot'])->name('forgot');
     Route::post('/user/forgot/acc', [Authentication::class, 'indexForgotAcc'])->name('user-forgot');
     Route::get('/user/reset/index/{token}', [Authentication::class, 'resetPass'])->name('reset');
     Route::post('/user/change/pass', [Authentication::class, 'changePass'])->name('changePass');
 
-
     Route::get('/user/logout', [Authentication::class, 'logout'])->name('logout');
 
 
 // Routes for authenticated users
 Route::middleware(['preventBackHistory', 'auth'])->group(function () {
-
 
     Route::middleware(['patient'])->group(function(){
         //Start of Patient Routes
@@ -77,9 +72,14 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             //End of Book Appointment Section
 
             //Start of Calendar Event Routes
-                Route::get('/user/patient/display/calendar', [CalendarEventControllerPatient::class, 'displayEvnt']);
+                // Route::get('/user/patient/display/calendar', [CalendarEventControllerPatient::class, 'displayEvnt']);
                 Route::get('/user/patient/display/appointment', [CalendarEventControllerPatient::class, 'displayAppointment']);
             //End of Calendar Event Routes
+
+            //Start of View Appointment Routes
+                Route::get('/user/patient/appointment/view', [ViewAppointmentController::class,'displayAppointmentDate']);
+                Route::put('/user/patient/appointment/view/{id}', [ViewAppointmentController::class,'displayAppointmentInfo']);
+            //End of View Appointment Routes
 
         //End of Patient Routes
     });
@@ -145,6 +145,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 // Route::delete('/user/staff/delete/appointment/{id}', [AppointmentController::class, 'destroyAppointment']);
                 Route::put('/user/staff/recomend/doctor/{id}', [AppointmentController::class, 'recoAppointment']);
                 Route::put('/user/staff/appointment/abort/{id}', [AppointmentController::class, 'abortAppointment']);
+                Route::put('/user/staff/appointment/resched/{id}', [AppointmentController::class,'reschedAppointment']);
             //End of Appointment Routes
 
             //Start of Calendar Event Routes

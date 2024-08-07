@@ -97,7 +97,7 @@
                             <router-link to="/user/staff/callendar/event" class="nav-link">
                                 <i class="nav-icon fa-solid fa-calendar-check"></i>
                                 <p>
-                                    Company Events
+                                    Calendar View
                                 </p>
                             </router-link>
                         </li>

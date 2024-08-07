@@ -6,14 +6,20 @@
 
 @section('content')
     <div class="container-fluid min-vh-100">
-        <div class="logo-txt container d-flex justify-content-center align-items-center">
-            <div class="col col-lg-4 d-flex flex-column d-flex justify-content-center align-items-center bg-white">
-                <img src="{{ asset('images/sign-in.png') }}" class="image-fluid mx-auto d-block" alt="login-logo">
-                <p class="fs-2 fw-medium text-center">Sign in</p>
+        <div class="company-logo  align-items-center">
+            <a href="/">
+                <img src="{{ asset('images/logo.png') }}" alt="logo-img" class="image-fluid mx-auto d-block mt-2" height="130">
+                <p class="text-primary text-center fw-semibold fs-2 mb-0">Graces Dental Clinic</p>
+            </a>
+            <p class="fs-4 fw-medium text-center">Sign in</p>
                 <p class="fs-6 text-center">Make certain that your account is verified by the admin before entering your
                     credentials.</p>
                 <p class="fs-6 text-center">Don't have an account? <a href="{{ route('signup') }}"
-                        class="fw-semibold text-info">Sign up</a></p>
+                        class="fw-semibold text-primary">Sign up</a></p>
+        </div>
+        <div class="logo-txt container d-flex justify-content-center align-items-center">
+            <div class="sign-up-img col col-lg-5 d-flex flex-column d-flex justify-content-center align-items-center bg-white">
+                <img src="{{ asset('images/sign-in.png') }}" class="image-fluid mx-auto d-block" alt="sign-in-logo">
             </div>
             <div class="col col-lg-5 bg-info rounded-end-4 p-4">
                 <form action="{{ route('authenticate') }}" method="POST">

@@ -19,7 +19,7 @@
             <i class="fa-solid fa-plus fs-3 text-center"></i>
         </button>
 
-        <add-event-callendar-modal @eventAdded="displayEvent"></add-event-callendar-modal>
+        <add-event-callendar-modal @eventAdded="loadAllEvents"></add-event-callendar-modal>
     </div>
 </template>
 

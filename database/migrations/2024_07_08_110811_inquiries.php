@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('fname');
             $table->string('lname');
             $table->string('email');
+            $table->string('fblink');
             $table->string('cnumber');
             $table->string('message');
-            $table->string('reply');
-            $table->string('status');
+            $table->string('reply')->nullable();
+            $table->string('status')->default('uncatered');
         });
     }
 

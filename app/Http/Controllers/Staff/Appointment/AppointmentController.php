@@ -76,33 +76,19 @@ class AppointmentController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Appointment updated successfully',
+            'message' => 'Appointment aborted successfully',
             'data' => $appoint,
         ], 200);
     }
 
-    // public function abortAppointment(Request $request, $id)
-    // {
-    //     try {
-    //         $appoint = Appointment::findOrFail($id);
-
-    //         $appoint->update([
-    //             'appnt_status' => 'Declined',
-    //             'abort_reason' => '',
-    //         ]);
-
-    //         return response()->json([
-    //             'status' => 'success',
-    //             'message' => 'Appointment updated successfully',
-    //             'appointment' => $appoint,
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status' => 'error',
-    //             'message' => 'Failed to update appointment',
-    //             'error' => $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
+    public function reschedAppointment(Request $request, $id)  {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->update($request->all());
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Resched appointment successfully',
+            'data' => $appointment,
+        ], 200);
+    }
 
 }

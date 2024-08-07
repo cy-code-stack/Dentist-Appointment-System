@@ -81,7 +81,7 @@
                         <li class="nav-item">
                             <router-link to="/user/admin/calendar" class="nav-link">
                                 <i class="nav-icon fa-solid fa-calendar-check"></i>
-                                <p>Company Events</p>
+                                <p>Calendar View</p>
                             </router-link>
                         </li>
                         <li class="nav-item">

@@ -8,7 +8,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class LandingPageController extends Controller
 {
-    public function MakeInquiry(Request $request){
+    public function makeInquiry(Request $request)
+    {
+        // Validate the request
         $request->validate([
             'fname' => 'required',
             'lname' => 'required',
@@ -27,16 +29,24 @@ class LandingPageController extends Controller
             'cnumber.digits_between' => 'Phone number must be between 1 and 11 digits long.',
             'message.required' => 'This field is required.',
         ]);
-    
+
         try {
-            $data = $request->all();
-            $response = Inquiries::create($data);
+            Inquiries::create([
+                'fname' => $request->input('fname'),
+                'lname' => $request->input('lname'),
+                'email' => $request->input('email'),
+                'fblink' => $request->input('fblink'),
+                'cnumber' => $request->input('cnumber'),
+                'message' => $request->input('message'),
+            ]);
+
             Alert::success('Inquiry Sent')->persistent(true);
         } catch (\Exception $e) {
             Alert::error('Inquiry Failed', 'Something went wrong!')->persistent(true);
         }
-    
-        return redirect()->back();
+
+        return redirect('/');
     }
- 
+
+
 }

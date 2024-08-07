@@ -9,13 +9,13 @@ use App\Models\CalendarEvent;
 
 class CalendarEventControllerPatient extends Controller
 {
-    public function displayEvnt(){
-        $data = CalendarEvent::all();
-        return $data;
-    }
+    // public function displayEvnt(){
+    //     $data = CalendarEvent::all();
+    //     return $data;
+    // }
 
     public function displayAppointment(){
-        $data = Appointment::with('patient')->get();
+        $data = Appointment::with('patient')->where('appnt_status', '<>', 'Declined')->get();
         return $data;
     }
 }

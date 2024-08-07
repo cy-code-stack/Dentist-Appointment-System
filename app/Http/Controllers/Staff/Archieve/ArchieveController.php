@@ -37,7 +37,7 @@ class ArchieveController extends Controller
 
     public function showAppointmentDeclined(){
         $decline = Appointment::where('appnt_status', '=', 'Declined')
-                                ->with('patient', 'services')
+                                ->with('patient', 'appointServices')
                                 ->get();
 
         return $decline;

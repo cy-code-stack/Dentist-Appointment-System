@@ -15,7 +15,7 @@ class AdminCalendarController extends Controller
     }
 
     public function displayAppointment(){
-        $data = Appointment::with('patient')->get();
+        $data = Appointment::with('patient')->where('appnt_status', '<>', 'Declined')->get();
         return $data;
     }
 }

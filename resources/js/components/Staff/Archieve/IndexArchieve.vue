@@ -88,8 +88,8 @@
                         <td>{{ items.id }}</td>
                         <td>{{ items.patient?.firstname }} {{ items.patient?.lastname }}</td>
                         <td>{{ items.sched_date }} {{ items.sched_time }}</td>
-                        <td>{{ items.services?.services_name }}</td>
-                        <td>{{ items.abort_reason}}</td>
+                        <td>{{ items.appoint_services?.services_name }}</td>
+                        <td class="text-break">{{ items.abort_reason}}</td>
                         <td><span class="text-danger fw-medium">{{ items.appnt_status }}</span></td>
                     </tr>
                 </tbody>

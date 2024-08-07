@@ -61,24 +61,24 @@
                             </p>
                         </div>
                         <div class="text-center d-flex justify-content-center align-items-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm" v-if="appoint.Pending || appoint.Completed" @click="recomendDentist(appoint)">
+                            <button type="button" class="me-2 rounded-1 btn btn-info text-white btn-sm" v-if="appoint.Pending || appoint.Completed" @click="recomendDentist(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
+                                    <i class="fa-solid fa-eye me-1"></i>
                                     <span>Confirm</span>
                                 </div>
                             </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending" @click="abortPatient(appoint)">
+                            <button type="button" class="rounded-1 btn btn-success btn-sm me-2" @click="reschedPatient(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-box-archive me-2"></i>
-                                    <span>Archive</span>
+                                    <i class="fa-solid fa-calendar-check me-1"></i>
+                                    <span>Reschedule</span>
                                 </div>
                             </button>
-                            <!-- <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending || appoint.Declined" @click="deleteAppointment(appoint.id)">
+                            <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending" @click="abortPatient(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-box-archive me-2"></i>
-                                    <span>Archieve</span>
+                                    <i class="fa-solid fa-ban me-1"></i>
+                                    <span>Abort</span>
                                 </div>
-                            </button> -->
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -111,27 +111,30 @@
         </div>
         <verify-appointment-modal :selected_user="selected_user" @displayOngoingPatient="displayAppointment"></verify-appointment-modal>
         <abort-patient-modal-vue :selected_abort="selected_abort" @displayAbortApp="displayAppointment"></abort-patient-modal-vue>
+        <resched-appointment :selected_resched="selected_resched" @displayReschedApp="displayAppointment"></resched-appointment>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import VerifyAppointmentModal from './VerifyUserModal.vue';
+    import ReschedAppointment from './ReschedAppointment.vue';
     import AbortPatientModalVue from './AbortPatientModal.vue';
 export default {
     components:{
         VerifyAppointmentModal,
         AbortPatientModalVue,
+        ReschedAppointment,
     },
     data() {
         return {
             listofAppointment:[],
             selected_user: {},
             selected_abort: {},
+            selected_resched: {}
         };
     },
     methods:{
-        
         displayAppointment(){
             axios.get('/user/staff/appointment/display').then((response)=>{
                 // console.log(response);
@@ -155,34 +158,13 @@ export default {
         abortPatient(selected_abort){
             this.selected_abort = selected_abort;
             $('#abort-appointment-modal').modal("show");
+        },
+        
+        reschedPatient(selected_resched){
+            this.selected_resched = selected_resched;
+            $('#resched-appointment-modal').modal("show");
         }
 
-        // deleteAppointment(id){
-        //     Swal.fire({
-        //         title: "Are you sure?",
-        //         text: "You won't be able to revert this!",
-        //         icon: "warning",
-        //         showCancelButton: true,
-        //         confirmButtonColor: "#3085d6",
-        //         cancelButtonColor: "#d33",
-        //         confirmButtonText: "Yes, delete it!",
-        //     }).then((data) => {
-        //         if (data.isConfirmed) {
-        //             axios
-        //                 .delete("/user/staff/delete/appointment/" + id)
-        //                 .then((response) => {
-        //                     Swal.fire("Removed!", "Appointment has been removed.", "success");
-        //                     this.displayAppointment();
-        //                 });
-        //         }
-        //     }).catch((error) => {
-        //         Swal.fire({
-        //             icon: "error",
-        //             text: "Something went wrong!",
-        //         });
-        //         console.log(error);
-        //     });
-        // },
 
         // abortAppointment(id){
         //     Swal.fire({

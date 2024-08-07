@@ -17,6 +17,9 @@
         rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/png" href="{{ asset('images/doctor.png') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -30,10 +33,9 @@
             <div class="header-nav col-lg-4">
                 <ul class="navbar-nav">
                     <li class="nav-item d-flex justify-content-start">
-                        <a href="{{ route('appointment') }}" class="nav-link ms-4 fw-medium text-white">Appointment Booking</a>
-                        <router-link to="/user/patient/calendar/event" class="nav-link">
-                            <p class="ms-4 fw-medium text-white calendar-link mb-0">Callendar Events</p> 
-                        </router-link>
+                        <a href="{{ route('appointment') }}" class="nav-link ms-4 fw-medium text-white active me-2">Appointment Booking</a>
+                        <router-link to="/user/patient/calendar/event" class="nav-link text-white me-2">Calendar View</router-link>
+                        <router-link to="/user/patient/appointment" class="nav-link text-white">Appointments</router-link>
                     </li>
                 </ul>
             </div>
@@ -42,7 +44,8 @@
                     <li class="nav-item d-none d-sm-inline-block">
                         <div class="d-flex justify-content-center align-items-center me-2">
                             @if (Auth::check())
-                            <span class="nav-link fw-medium text-white">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
+                                <span class="nav-link fw-medium text-white">{{ Auth::user()->firstname }}
+                                    {{ Auth::user()->lastname }}</span>
                             @endif
                             <div class="dropstart">
                                 <img src="{{ asset('images/logo.png') }}" alt="prof-img"
@@ -95,9 +98,36 @@
         margin-top: 4rem !important;
         margin-left: 1rem !important;
     }
-    .calendar-link:active{
+
+    .calendar-link:active {
         color: var(--secondary-color);
     }
+
+    .nav-link.active {
+        background-color: #007bff; 
+        color: #fff; 
+        border-radius: 5px; 
+    }
+
+    .nav-link {
+        transition: background-color 0.8s ease;
+    }
+
 </style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(nav => nav.classList.remove('active'));
+
+                this.classList.add('active');
+            });
+        });
+    });
+</script>
 
 </html>

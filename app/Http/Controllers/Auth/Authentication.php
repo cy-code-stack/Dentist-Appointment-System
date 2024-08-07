@@ -50,6 +50,7 @@ class Authentication extends Controller
 
     $request->validate([
         'firstname' => 'required',
+        'middle_name' => 'nullable',
         'lastname' => 'required',
         'home_address' => 'required',
         'phone_number' => ['required', 'numeric', 'digits_between:1,11'],
@@ -130,7 +131,6 @@ class Authentication extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $user->session_id = Session::getId(); 
             $user->save();
         
 
@@ -257,9 +257,7 @@ class Authentication extends Controller
 
     public function logout(Request $request)
     {
-        if (session_id() != Auth::user()->session_id) {
             Auth::logout();
             return redirect(route('signin'));
-        }
     }
 }
