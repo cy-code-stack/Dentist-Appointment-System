@@ -5,12 +5,13 @@ use App\Http\Controllers\Auth\Authentication;
 use App\Http\Controllers\Patient\PatientController;
 use App\Http\Controllers\Staff\StaffController; 
 
-//Landing poge
+//Landing page
 use App\Http\Controllers\LandingPageController;
 
 //Patient
 use App\Http\Controllers\Patient\CalendarEvt\CalendarEventControllerPatient;
 use App\Http\Controllers\Patient\View_Appointment\ViewAppointmentController;
+use App\Http\Controllers\Patient\Profile\PatientProfileController;
 
 //Admin
 use App\Http\Controllers\Admin\AdminDashboardController; 
@@ -19,6 +20,7 @@ use App\Http\Controllers\Admin\Managing_Staff\ManageStaffController;
 use App\Http\Controllers\Admin\Refer\AdminReferPatientsController; 
 use App\Http\Controllers\Admin\Archive\AdminArchiveController;
 use App\Http\Controllers\Admin\Calendar\AdminCalendarController;
+use App\Http\Controllers\Admin\Profile\AdminProfileController;
 //End of Admin
 
 //Staff
@@ -27,6 +29,8 @@ use App\Http\Controllers\Staff\Appointment\AppointmentController;
 use App\Http\Controllers\Staff\Archieve\ArchieveController;
 use App\Http\Controllers\Staff\Inquiry\InquiryController;
 use App\Http\Controllers\Staff\CalendarEvent\CalendarEventController;
+use App\Http\Controllers\Staff\Profile\AssistantProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,6 +85,15 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::put('/user/patient/appointment/view/{id}', [ViewAppointmentController::class,'displayAppointmentInfo']);
             //End of View Appointment Routes
 
+            //Start of Profile Page
+                Route::get('/user/patient/profile/displayUser', [PatientProfileController::class,'displayInfo']);
+                Route::post('/user/patient/profile/uploadImage', [PatientProfileController::class,'uploadImage']);
+                Route::delete('/user/patient/profile/deleteUser', [PatientProfileController::class,'destroyPatientUser']);
+                Route::delete('/user/patient/profile/deleteImage', [PatientProfileController::class,'removePatientImg']);
+                Route::put('/user/patient/profile/updateProfile/{id}', [PatientProfileController::class,'updatePatientProfile']);
+                Route::post('/user/patient/profile/change_pass', [PatientProfileController::class,'updatePatientPassword']);
+            //End of Profile Page
+
         //End of Patient Routes
     });
     
@@ -124,6 +137,15 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::put('/admin/services/restore/{id}', [AdminArchiveController::class, 'restoreArchiveServices']);
                 Route::put('/admin/refer/restore/{id}', [AdminArchiveController::class, 'restoreArchiveRefer']);
             //End of Archive Page Section
+
+            //Profile Page Section
+                Route::get('/admin/profile/user', [AdminProfileController::class,'getProfileInfo']);
+                Route::put('/admin/profile/update/{id}', [AdminProfileController::class,'updateProfile']);
+                Route::post('/admin/profile/upload', [AdminProfileController::class,'uploadAvatar']);
+                Route::delete('/admin/profile/destroy', [AdminProfileController::class,'removeImg']);
+                Route::post('/admin/profile/changePass', [AdminProfileController::class,'updatePassword']);
+                Route::delete('/admin/profile/userDestroy', [AdminProfileController::class,'destroyUser']);
+            //End Profile
         //End of Admin Routes
     });  
     
@@ -165,6 +187,16 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::put('/user/staff/archieve/restore/{id}', [ArchieveController::class, 'updateArchieve']);
                 Route::get('/user/staff/appointment/declined', [ArchieveController::class, 'showAppointmentDeclined']);
             //End of Archieve Section
+
+            //Start of Profile Section
+                Route::post('/user/assistant/profile/upload', [AssistantProfileController::class, 'uploadImage']);
+                Route::get('/user/assistant/profile/display', [AssistantProfileController::class,'displayProfile']);
+                Route::put('/user/staff/profile/update/{id}', [AssistantProfileController::class,'updateAssistantProfile']);
+                Route::delete('/user/assistant/profile/removeAvatar', [AssistantProfileController::class,'removeAvatar']);
+                Route::post('/user/assistant/profile/passChange', [AssistantProfileController::class,'changePassword']);
+                Route::delete('/user/assistant/profile/destroy', [AssistantProfileController::class,'destroyUserCred']);
+            //End of Profile Section
+
         //End of Staff Routes
     });
 });
@@ -176,5 +208,3 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
     Route::get('/user/admin/{path}',[App\Http\Controllers\HomeController::class, 'adminIndex'])->where('any','^(?!js/).*')->where( 'path', '([A-z\d\-/_.]+)?' )->middleware('page.role:Dentist');
     Route::get('/user/staff/{path}',[App\Http\Controllers\HomeController::class, 'index'])->where('any','^(?!js/).*')->where( 'path', '([A-z\d\-/_.]+)?' )->middleware('page.role:Assistant');
     Route::get('/user/patient/{path}',[App\Http\Controllers\HomeController::class, 'indexuserPatient'])->where('any','^(?!js/).*')->where( 'path', '([A-z\d\-/_.]+)?' )->middleware('page.role:Patient');
-
-    

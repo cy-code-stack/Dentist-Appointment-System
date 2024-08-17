@@ -118,7 +118,7 @@ export default {
       el.style.opacity = 0;
     },
     enter(el, done) {
-      el.offsetHeight; // trigger reflow
+      el.offsetHeight; 
       el.style.transition = 'opacity 0.5s ease';
       el.style.opacity = 1;
       done();

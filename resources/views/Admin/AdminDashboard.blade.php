@@ -46,16 +46,16 @@
             </a>
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="{{ asset('images/logo.png') }}"
-                            alt="school logo" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        @if (Auth::check())
+                    @if (Auth::check())
+                        <div class="image">
+                            <img src="{{ Auth::user()->profile_img ? asset(Auth::user()->profile_img) : asset('images/avatar.png') }}"
+                                alt="User Image" class="img-circle elevation-2">
+                        </div>
+                        <div class="info">
                             <span class="fw-medium">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span> <br>
                             <span style="color:#a5a5a5"><small>{{ Auth::user()->role }}</small></span>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -131,13 +131,11 @@
             </div>
         </aside>
         <div class="content-wrapper">
-            {{-- content vue here --}}
             <router-view></router-view>
         </div>
     </div>
 
     @vite('resources/js/app.js')
-    {{-- <script src="{{ asset('/js/app.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

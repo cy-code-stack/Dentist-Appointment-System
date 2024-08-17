@@ -1,22 +1,22 @@
 <template>
     <div class="container-fluid">
-        <div class="container">
+        <div class="container-fluid">
             <div class="d-flex flex-column p-3 align-items-center">
-                <div class="card p-2 w-100">
+                <div class="card p-4 mb-3 w-100">
                     <div class="card-title">
-                        <p class="fs-4 fw-semibold mb-1 ms-2">Personal Information</p>
+                        <p class="fs-4 fw-semibold mb-3 ms-2">Personal Information</p>
                         <div class="d-flex align-items-center">
                             <div class="col col-lg-4 d-flex flex-column justify-content-center align-items-center">
-                                <div class="image-container mb-3">
-                                    <img :src="profileImageSrc || defaultProfile" name="profile_img" class="img-fluid rounded-5"  alt="photo-logo" />
+                                <div class="image-container mb-1">
+                                    <img :src="profileImageSrc || defaultProfile" name="profile_img" class="img-fluid rounded-5 mb-2" alt="photo-logo"/>
                                 </div>
-                                <div class="active-btn d-flex" v-if="assitantProfInfo">
-                                    <button class="btn btn-primary me-2 text-white" @click="triggerFileInput">
+                                <div class="active-btn d-flex" v-if="profileInfo">
+                                    <button class="btn btn-primary me-2 text-white" @click="toggleFileInput">
                                         <i class="fa-solid fa-upload me-2"></i>
                                         <span>Upload</span>
                                     </button>
-                                    <input type="file" ref="fileInput" @change="handlerImageFile" style="display: none;">
-                                    <button class="btn btn-danger text-white" @click="removeAvatar" v-if="isImageUpload">
+                                    <input type="file" ref="fileInput" @change="imgHandlerPatient" style="display: none"/>
+                                    <button class="btn btn-danger text-white" @click="removeImage" v-if="isImageUpload">
                                         <i class="fa-solid fa-trash me-2"></i>
                                         <span>Remove</span>
                                     </button>
@@ -24,44 +24,44 @@
                             </div>
                             <div class="col col-lg-8">
                                 <div class="d-flex mb-1">
-                                    <div class=" w-100 me-2">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Firstname</label>
-                                        <input type="text" class="form-control" id="fname" placeholder="Enter your firstname" v-model="assistantProfile.firstname" :disabled="!assitantProfInfo">
+                                    <div class="w-100 me-2">
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Firstname</label>
+                                        <input type="text" class="form-control" id="fname" placeholder="Enter your firstname" v-model="profile.firstname" :disabled="!profileInfo"/>
                                     </div>
-                                    <div class=" w-100 me-2">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Lastname</label>
-                                        <input type="text" class="form-control" id="lname" placeholder="Enter your lastname" v-model="assistantProfile.lastname" :disabled="!assitantProfInfo">
+                                    <div class="w-100 me-2">
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Lastname</label>
+                                        <input type="text" class="form-control" id="lname" placeholder="Enter your lastname" v-model="profile.lastname" :disabled="!profileInfo"/>
                                     </div>
-                                    <div class=" w-100">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Middle Initial</label>
-                                        <input type="text" class="form-control" id="mInitial" placeholder="Optional" v-model="assistantProfile.middle_initial" :disabled="!assitantProfInfo">
+                                    <div class="w-100">
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Middle Initial</label>
+                                        <input type="text" class="form-control" id="mInitial" placeholder="Optional" v-model="profile.middle_initial" :disabled="!profileInfo"/>
                                     </div>
                                 </div>
                                 <div class="d-flex mb-1">
-                                    <div class=" w-100 me-2">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Age</label>
-                                        <input type="text" class="form-control" id="age" placeholder="Enter your age" v-model="assistantProfile.age" :disabled="!assitantProfInfo">
+                                    <div class="w-100 me-2">
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Age</label>
+                                        <input type="text" class="form-control" id="age" placeholder="Enter your age" v-model="profile.age" :disabled="!profileInfo"/>
                                     </div>
                                     <div class="w-100 me-2">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Phone Number</label>
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Phone Number</label>
                                         <div class="input-group">
                                             <span class="input-group-text">+63</span>
-                                            <input type="text" name="phone_number" class="form-control" v-model="assistantProfile.phone_number" :disabled="!assitantProfInfo">
+                                            <input type="text" name="phone_number" class="form-control" v-model="profile.phone_number" :disabled="!profileInfo"/>
                                         </div>
                                     </div>
                                     <div class="w-100">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Email Address</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Enter your email" v-model="assistantProfile.email" :disabled="!assitantProfInfo">
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Email Address</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Enter your email" v-model="profile.email" :disabled="!profileInfo"/>
                                     </div>
                                 </div>
                                 <div class="d-flex mb-4">
                                     <div class="w-100 me-2">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Occupation</label>
-                                        <input type="text" name="occupation" class="form-control" v-model="assistantProfile.occupation" :disabled="!assitantProfInfo">
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Occupation</label>
+                                        <input type="text" name="occupation" class="form-control" v-model="profile.occupation" :disabled="!profileInfo"/>
                                     </div>
                                     <div class="w-100 me-2">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Marital Status</label>
-                                        <select class="form-control" name="marital_status" aria-label="marital_status" v-model="assistantProfile.marital_status" :disabled="!assitantProfInfo">
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Marital Status</label>
+                                        <select class="form-control" name="marital_status" aria-label="marital_status" v-model="profile.marital_status" :disabled="!profileInfo">
                                             <option disabled selected value="">Marital Status*</option>
                                             <option value="Single">Single</option>
                                             <option value="Married">Married</option>
@@ -70,8 +70,8 @@
                                         </select>
                                     </div>
                                     <div class="w-100">
-                                        <label for="" class="fw-medium fs-6 mb-1 text-black-50">Gender</label>
-                                        <select class="form-control" name="sex" aria-label="sex" v-model="assistantProfile.sex" :disabled="!assitantProfInfo">
+                                        <label class="fw-medium fs-6 mb-1 text-black-50">Gender</label>
+                                        <select class="form-control" name="sex" aria-label="sex" v-model="profile.sex" :disabled="!profileInfo">
                                             <option disabled selected value="">Gender*</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -80,11 +80,11 @@
                                     </div>
                                 </div>
                                 <div class="active-btn d-flex justify-content-end">
-                                    <button class="btn btn-primary me-2 text-white" @click="toogleProfInfo">
+                                    <button class="btn btn-primary me-2 text-white" @click="toggleProfileInfo">
                                         <i class="fa-solid fa-pen-to-square me-2"></i>
                                         <span>Edit Profile Information</span>
                                     </button>
-                                    <button type="submit" class="btn btn-success text-white" @click="updateProfile(assistantProfile.id)" :disabled="!assitantProfInfo">
+                                    <button type="submit" class="btn btn-success text-white" @click="updateProfile(profile.id)" :disabled="!profileInfo">
                                         <i class="fa-solid fa-floppy-disk me-2"></i>
                                         <span>Save Changes</span>
                                     </button>
@@ -92,49 +92,49 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
-                    <div class="col col-lg-12 p-0">
-                        <div class="card p-4">
-                            <p class="fs-5 fw-semibold mb-2">Change Password</p>
-                            <div class="d-flex mb-1">
-                                <div class=" w-100 me-2">
-                                    <label for="" class="fw-medium fs-6 mb-1 text-black-50">Current Password</label>
-                                    <input type="password" class="form-control" name="old_password" placeholder="Old Password" v-model="oldPassword" :disabled="!assitantPassInfo">
-                                    <div v-if="errors.old_password" class="text-danger">
-                                        <span><small>{{ errors.old_password[0] }}</small></span>
-                                    </div>
-                                </div>
-                                <div class=" w-100 me-2">
-                                    <label for="" class="fw-medium fs-6 mb-1 text-black-50">New Password</label>
-                                    <input type="password" class="form-control" name="password" placeholder="New Password" v-model="newPassword" :disabled="!assitantPassInfo">
-                                    <div v-if="errors.password" class="text-danger">
-                                        <span><small>{{ errors.password[0] }}</small></span>
-                                    </div>
+                <div class="col col-lg-12 p-0">
+                    <div class="card p-4 mb-3">
+                        <p class="fs-5 fw-semibold mb-2">Change Password</p>
+                        <div class="d-flex mb-1">
+                            <div class="w-100 me-2">
+                                <label class="fw-medium fs-6 mb-1 text-black-50">Current Password</label>
+                                <input type="password" class="form-control" name="old_password" placeholder="Old Password" :disabled="!infoPass"/>
+                                <div v-if="errors.old_password" class="text-danger">
+                                    <span><small>{{ errors.old_password[0] }}</small></span>
                                 </div>
                             </div>
-                            <div class=" w-100 mb-3">
-                                <label for="" class="fw-medium fs-6 mb-1 text-black-50">Confirm Password</label>
-                                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm your Password" v-model="confirmPassword" :disabled="!assitantPassInfo">
+                            <div class="w-100 me-2">
+                                <label class="fw-medium fs-6 mb-1 text-black-50">New Password</label>
+                                <input type="password" class="form-control" name="password" placeholder="New Password" :disabled="!infoPass"/>
+                                <div v-if="errors.password" class="text-danger">
+                                    <span><small>{{ errors.password[0] }}</small></span>
+                                </div>
+                            </div>
+                            <div class="w-100 mb-3">
+                                <label class="fw-medium fs-6 mb-1 text-black-50">Confirm Password</label>
+                                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm your Password" :disabled="!infoPass"/>
                                 <div v-if="errors.password_confirmation" class="text-danger">
                                     <span><small>{{ errors.password_confirmation[0] }}</small></span>
                                 </div>
                             </div>
-                            <div class="active-btn d-flex justify-content-end">
-                                <button class="btn btn-primary me-2 text-white" @click="tooglePassInfo">
+                        </div>
+                        <div class="active-btn d-flex justify-content-end">
+                                <button class="btn btn-primary me-2 text-white" @click="togglePassInfo">
                                     <i class="fa-solid fa-lock me-2"></i>
                                     <span>Change Password</span>
                                 </button>
-                                <button type="submit" class="btn btn-success text-white" @click="changePass" :disabled="!assitantPassInfo || errors.old_password || errors.new_password || errors.new_password_confirmation">
+                                <button type="submit" class="btn btn-success text-white" :disabled="!infoPass" @click="changePassword">
                                     <i class="fa-solid fa-floppy-disk me-2"></i>
                                     <span>Save Changes</span>
                                 </button>
                             </div>
-                        </div>
                     </div>
                     <div class="col col-lg-12 p-0">
                         <div class="card p-4">
-                            <p class="fs-5 fw-medium mb-0">Delete your account</p>
+                            <p class="fs-5 fw-medium mb-0">
+                                Delete your account
+                            </p>
                             <p class="fs-6 text-black-50 text-break">
                                 Permanently remove your Personal Account and all
                                 of its associated content from this application.
@@ -146,81 +146,81 @@
                                 before proceeding with this irreversible action.
                             </p>
                             <div class="active-btn d-flex justify-content-end">
-                                <button class="btn btn-danger text-white" @click="destroyUserCred">
+                                <button class="btn btn-danger text-white" @click="destroyUser">
                                     <i class="fa-solid fa-trash me-2"></i>
                                     <span>Delete your account</span>
                                 </button>
                             </div>
-                        </div>  
+                        </div>
                     </div>
-            </div> 
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-    data(){
-        return{
-            assistantProfile: {
-                id: '',
-                firstname: '',
-                lastname: '',
-                middle_initial: '',
-                email: '',
-                home_address: '',
-                phone_number: '',
-                age: '',
-                sex: '',
-                profile_img: '',
-                marital_status: '',
-                occupation: ''
+    data() {
+        return {
+            profile: {
+                id: "",
+                firstname: "",
+                lastname: "",
+                middle_initial: "",
+                email: "",
+                home_address: "",
+                phone_number: "",
+                age: "",
+                sex: "",
+                profile_img: "",
+                marital_status: "",
+                occupation: ""
             },
-            errors: {},
-            defaultProfile: '/images/avatar.png',
-            assitantProfInfo: false,
-            assitantPassInfo: false,
+            defaultProfile: "/images/avatar.png",
+            profileInfo: false,
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
-        }
+            errors: {},
+            infoPass: false,
+        };
     },
-    computed:{
+    computed: {
         profileImageSrc(){
-            return this.assistantProfile.profile_img || this.defaultProfile;
+            return this.profile.profile_img || this.defaultProfile;
         },
         isImageUpload(){
-            return this.assistantProfile.profile_img && this.assistantProfile.profile_img !== this.defaultProfile;
+            return this.profile.profile_img && this.profile.profile_img !== this.defaultProfile;
         }
     },
-    methods:{
-        toogleProfInfo(){
-            this.assitantProfInfo = !this.assitantProfInfo;
-            if (!this.assitantProfInfo) {
-                this.displayProfile(); 
-            }
+    methods: {
+        toggleProfileInfo(){
+            return this.profileInfo = !this.profileInfo;
         },
-        tooglePassInfo(){
-            this.assitantPassInfo = !this.assitantPassInfo;
-        }, 
-        triggerFileInput(){
+        togglePassInfo(){
+            return this.infoPass = !this.infoPass;
+        },
+        toggleFileInput(){
             this.$refs.fileInput.click();
         },
-        handlerImageFile(event){
-            const imgFile = event.target.files[0];
-            if (imgFile) {
+        imgHandlerPatient(event){
+            const file = event.target.files[0];
+
+            if (file) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    this.assistantProfile.profile_img = e.target.result; 
+
+                reader.onload = (e) =>{
+                    this.profile.profile_img = e.target.result;
                 };
-                reader.readAsDataURL(imgFile);
+                reader.readAsDataURL(file);
 
                 const formData = new FormData();
-                formData.append('profile_img', imgFile)
+                formData.append('profile_img', file);
 
-                axios.post('/user/assistant/profile/upload', formData)
-                    .then((data)=>{
+                axios.post('/user/patient/profile/uploadImage', formData)
+                    .then((response)=>{
                         Swal.fire({
                             icon: 'success',
                             title: 'Image has been uploaded!',
@@ -234,57 +234,36 @@ export default {
                                 toast.addEventListener('mouseleave', Swal.resumeTimer);
                             }
                         });
-                        this.assistantProfile.profile_img = data.data.data['profile_img'];
+                        this.profile.profile_img = response.data.data['profile_img'];
                     }).catch((e)=>{
                         console.log(e);
                     });
             }
         },
-
         displayProfile(){
-            axios.get('/user/assistant/profile/display')
+            axios.get('/user/patient/profile/displayUser')
                 .then((response)=>{
-                    this.assistantProfile = response.data.data;
+                    this.profile = response.data;
                 }).catch((e)=>{
                     console.log(e);
                 });
         },
-
-        changePass(){
-            const data = {
-                old_password: this.oldPassword,
-                password: this.newPassword,
-                password_confirmation: this.confirmPassword
-            };
-
-            axios.post('/user/assistant/profile/passChange', data)
-                .then(()=>{
-                    this.oldPassword = '',
-                    this.newPassword = '',
-                    this.confirmPassword = ''
+        updateProfile(id){
+            axios.put(`/user/patient/profile/updateProfile/${id}`, this.profile)
+                .then((response)=>{
                     Swal.fire({
                         icon: 'success',
-                        title: 'Password has been change!',
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
+                        title: 'Profile has been updated!',
                         timer: 2000,
                         timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer);
-                            toast.addEventListener('mouseleave', Swal.resumeTimer);
-                        }
+                        showConfirmButton: false
                     });
-                    this.errors();
-            }).catch((error)=>{
-                console.log('The error :', error);
-                if (error.response && error.response.data) {
-                    this.errors = error.response.data.errors || {};
-                }
-            });
+                    this.toggleProfileInfo();
+                }).catch((e)=>{
+                    console.log(e);
+                });
         },
-
-        removeAvatar(){
+        removeImage(){
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -295,9 +274,9 @@ export default {
                 confirmButtonText: "Yes, remove it!"
             }).then(result => {
                 if (result.isConfirmed) {
-                    axios.delete('/user/assistant/profile/removeAvatar')
+                    axios.delete('/user/patient/profile/deleteImage')
                         .then(() => {
-                            this.assistantProfile.profile_img = '';
+                            this.profile.profile_img = '';
                             this.$refs.fileInput.value = '';
                             Swal.fire({
                                 icon: 'success',
@@ -326,24 +305,40 @@ export default {
                 console.log('The error was:', error);
             });
         },
+        changePassword(){
+            const data = {
+                old_password: this.oldPassword,
+                password: this.newPassword,
+                password_confirmation: this.confirmPassword
+            };
 
-        updateProfile(id){
-            axios.put(`/user/staff/profile/update/${id}`, this.assistantProfile)
-                .then((response)=>{
+            axios.post('/user/patient/profile/change_pass', data)
+                .then(()=>{
+                    this.oldPassword = '',
+                    this.newPassword = '',
+                    this.confirmPassword = ''
                     Swal.fire({
                         icon: 'success',
-                        title: 'Profile has been updated!',
+                        title: 'Password has been change!',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
                         timer: 2000,
                         timerProgressBar: true,
-                        showConfirmButton: false
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                            toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        }
                     });
-                    this.toogleProfInfo();
-                }).catch((e)=>{
-                    console.log(e);
-                });
+                    this.errors();
+            }).catch((error)=>{
+                console.log('The error :', error);
+                if (error.response && error.response.data) {
+                    this.errors = error.response.data.errors || {};
+                }
+            });
         },
-
-        destroyUserCred(){
+        destroyUser(){
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -354,7 +349,7 @@ export default {
                 confirmButtonText: "Yes, remove it!"
             }).then(result => {
                 if (result.isConfirmed) {
-                    axios.delete('/user/assistant/profile/destroy')
+                    axios.delete('/user/patient/profile/deleteUser')
                         .then(() => {
                             Swal.fire({
                                 icon: 'success',
@@ -377,31 +372,28 @@ export default {
                 console.log('The error was:', error);
             });
         }
-
-       
-
     },
-    mounted(){
+    mounted() {
         this.displayProfile();
-    }
-}
+    },
+};
 </script>
 
 <style scope>
-    .image-container {
-        max-width: 200px; 
-        max-height: 200px; 
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%; 
-        background-color: #f8f9fa; 
-    }
+.image-container {
+    max-width: 200px;
+    max-height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+}
 
-    .image-container img {
-        object-fit: cover; 
-        max-width: 180px;
-        max-height: 180px;
-    }
+.image-container img {
+    object-fit: cover;
+    max-width: 180px;
+    max-height: 180px;
+}
 </style>

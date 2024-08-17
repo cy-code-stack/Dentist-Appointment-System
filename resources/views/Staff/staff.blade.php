@@ -51,16 +51,16 @@
             </a>
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="{{ asset('images/logo.png') }}" alt="school logo" class="img-circle elevation-2"
-                            alt="User Image">
-                    </div>
-                    <div class="info">
-                        @if (Auth::check())
+                    @if (Auth::check())
+                        <div class="image">
+                            <img src="{{ Auth::user()->profile_img ? asset(Auth::user()->profile_img) : asset('images/avatar.png') }}" alt="clinic_logo" class="img-circle elevation-2"
+                                alt="User Image">
+                        </div>
+                        <div class="info">
                             <span class="fw-medium">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span> <br>
                             <span style="color:#a5a5a5"><small>{{ Auth::user()->role }}</small></span>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"

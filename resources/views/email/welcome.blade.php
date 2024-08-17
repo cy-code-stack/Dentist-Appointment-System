@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>ONE TIME PASSWORD</h1>
-    <p>Your account has been successfully verified, just copy the OTP and you can now log in. 
+    <p>Your account has been successfully verified, just copy the OTP and paste it in your web so you can now log in. 
         Please visit our website and enter your email and password, and click "Sign In."
         If you have any questions or encounter any issues, please contact at Oconrenegrace@gmail.com or 092 9603 3673. 
         Thank you for choosing Graces Dental Clinic.</p>

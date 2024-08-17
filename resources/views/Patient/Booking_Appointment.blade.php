@@ -30,36 +30,34 @@
 <body>
     <div class="wrapper" id="app">
         <nav class="main-header navbar navbar-expand bg-info sticky-md-top">
-            <div class="header-nav col-lg-4">
+            <div class="header-nav col-lg-5">
                 <ul class="navbar-nav">
                     <li class="nav-item d-flex justify-content-start">
-                        <a href="{{ route('appointment') }}" class="nav-link ms-4 fw-medium text-white active me-2">Appointment Booking</a>
-                        <router-link to="/user/patient/calendar/event" class="nav-link text-white me-2">Calendar View</router-link>
-                        <router-link to="/user/patient/appointment" class="nav-link text-white">Appointments</router-link>
+                        <router-link to="/user/patient/booking" exact-active-class="active" class="nav-link ms-4 fw-medium text-white me-3">Appointment Booking</router-link>
+                        <router-link to="/user/patient/calendar/event" exact-active-class="active" class="nav-link text-white me-3">Calendar View</router-link>
+                        <router-link to="/user/patient/appointment" exact-active-class="active" class="nav-link text-white me-3 ">Appointments</router-link>
+                        <router-link to="/user/patient/profile" exact-active-class="active" class="nav-link text-white me-3 ">Profile</outer-link>
                     </li>
                 </ul>
             </div>
-            <div class="header-nav d-flex justify-content-end col-lg-8">
+            <div class="header-nav d-flex justify-content-end col-lg-7">
                 <ul class="navbar-nav">
                     <li class="nav-item d-none d-sm-inline-block">
                         <div class="d-flex justify-content-center align-items-center me-2">
                             @if (Auth::check())
                                 <span class="nav-link fw-medium text-white">{{ Auth::user()->firstname }}
                                     {{ Auth::user()->lastname }}</span>
-                            @endif
-                            <div class="dropstart">
-                                <img src="{{ asset('images/logo.png') }}" alt="prof-img"
-                                    class="profile-img img-fluid rounded-5 dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                                    <li>
-                                        <a href="{{ route('logout') }}" class="dropdown-item">
-                                            <span class="name">Logout</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                                    <div class="dropstart">
+                                        <img src="{{ Auth::user()->profile_img ? asset(Auth::user()->profile_img) : asset('images/avatar.png') }}" alt="prof-img"
+                                        class="profile-img img-fluid img-circle rounded-5 dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ route('logout') }}" class="dropdown-item"><span class="name">Logout</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
                         </div>
                     </li>
                 </ul>
@@ -88,10 +86,10 @@
 
 <style>
     .profile-img {
-        max-width: 50px;
-        max-height: 50px;
+        max-width: fit-content !important;
+        max-height: 50px !important;
         cursor: pointer;
-        border: 1.5px solid white;
+        /* border: 1.5px solid white; */
     }
 
     .dropdown-menu {
@@ -120,10 +118,19 @@
     document.addEventListener('DOMContentLoaded', function() {
         const navLinks = document.querySelectorAll('.nav-link');
 
+        const currentUrl = window.location.pathname;
+
         navLinks.forEach(link => {
+            const linkUrl = link.getAttribute('href');
+            
+            if (linkUrl === currentUrl) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+
             link.addEventListener('click', function() {
                 navLinks.forEach(nav => nav.classList.remove('active'));
-
                 this.classList.add('active');
             });
         });

@@ -4,10 +4,10 @@
             <h1 class="fw-bold mt-5">Book your appointment</h1>
             <p class="fs-6 text-break lh-lg">
                 Welcome to Graces Dental Clinic, where scheduling appointments
-                is simple and convenient. Whether you're an individual, or
+                is simple and convenient. Whether you're an individual or
                 anyone in need of our service, we've got you covered. <br />The
-                appointment is simple yet effective. Choose your service you
-                want, Pick a date and time, and Book your Appointment.
+                appointment is simple yet effective. Choose your service, pick a
+                date and time, and book your appointment.
                 <br />Note: Please wait for the confirmation email and present
                 it to the Assistant at Graces Dental Clinic for confirmation.
                 This is <b>FIRST COME FIRST SERVE BASIS</b>.
@@ -71,10 +71,10 @@
                     <div class="form-floating">
                         <button
                             type="submit"
-                            class="btn btn-info text-white"
+                            class="btn btn-primary text-white"
                             @click="submitAppointment"
                         >
-                            Book Appointment
+                        <p class="fs-5 fw-medium text-center mb-0">Book Appointment</p>
                         </button>
                     </div>
                 </div>
@@ -100,13 +100,13 @@ export default {
             minDate: "",
             maxDate: "",
             times: [
-                { label: "8:00 AM", value: "08:00" },
-                { label: "9:00 AM", value: "09:30" },
-                { label: "10:00 AM", value: "10:30" },
-                { label: "1:00 PM", value: "13:00" },
-                { label: "2:00 PM", value: "14:00" },
-                { label: "3:00 PM", value: "15:00" },
-                { label: "4:00 PM", value: "16:00" },
+                { label: "8:00 AM", value: "8:00 AM" },
+                { label: "9:00 AM", value: "9:00 AM" },
+                { label: "10:00 AM", value: "10:00 AM" },
+                { label: "1:00 PM", value: "1:00 PM" },
+                { label: "2:00 PM", value: "2:00 PM" },
+                { label: "3:00 PM", value: "3:00 PM" },
+                { label: "4:00 PM", value: "4:00 PM" },
             ],
         };
     },
@@ -115,9 +115,13 @@ export default {
             const currentDate = new Date();
             const selectedDate = new Date(this.appointmentData.sched_date);
             return this.times.map((time) => {
-                const [hours, minutes] = time.value.split(":");
+                const [hours, minutesPeriod] = time.value.split(":");
+                const [minutes, period] = minutesPeriod.split(" ");
                 const timeDate = new Date(selectedDate);
-                timeDate.setHours(hours, minutes);
+                timeDate.setHours(
+                    period === "PM" ? parseInt(hours) + 12 : parseInt(hours),
+                    parseInt(minutes)
+                );
 
                 return {
                     ...time,
@@ -139,7 +143,7 @@ export default {
 
             formData.append("services_id", this.selectedServices?.id);
             formData.append("sched_date", this.appointmentData?.sched_date);
-            formData.append("sched_time", this.appointmentData?.sched_time);
+            formData.append("sched_time", this.appointmentData?.sched_time); // 12-hour format
 
             Swal.fire({
                 title: "Please wait...",
@@ -211,7 +215,7 @@ export default {
                     Swal.fire({
                         icon: 'error',
                         title: 'Invalid Date',
-                        text: 'Please set your appointment in weekdays. otherwise, your appointment will not be accommodated by the clinic.',
+                        text: 'Please set your appointment on weekdays; otherwise, your appointment will not be accommodated by the clinic.',
                     }).then(() => {
                         dateInput.value = ""; 
                     });

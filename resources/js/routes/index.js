@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import PatientIndexPage from "../components/Patient/PatientIndex.vue";
 import IndexCalendarEventPage from "../components/Patient/Calendar/IndexCalendarEvent.vue"
 import PatientIndexAppointment from '../components/Patient/Patient_Appointment/IndexAppointment.vue';
+import IndexPatientProfile from '../components/Patient/Profile/IndexPatientProfile.vue';
 
 //Staff View
 import StaffIndexPage from "../components/Staff/StaffIndex.vue";
@@ -43,6 +44,11 @@ const routes = [
         path: '/user/patient/appointment',
         name: 'patient_appointment',
         component: PatientIndexAppointment
+    },
+    {
+        path: '/user/patient/profile',
+        name: 'patient_profile',
+        component: IndexPatientProfile
     },
     //-----Start of Staff Page ---- ///
     {

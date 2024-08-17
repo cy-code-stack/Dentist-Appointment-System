@@ -71,7 +71,7 @@ class Authentication extends Controller
         'home_address.required' => 'Please enter your home address.',
         'phone_number.required' => 'Please enter your Phone Number.',
         'phone_number.numeric' => 'Phone number must contain only numbers.',
-        'phone_number.digits_between' => 'Phone number must be between 1 and 11 digits long.',
+        'phone_number.digits_between' => 'Phone number must be 11 digits long.',
         'email.required' => 'Please enter your email address.',
         'email.email' => 'Please enter a valid email address.',
         'email.max' => 'Email address must not exceed 255 characters.',
@@ -135,7 +135,6 @@ class Authentication extends Controller
         
 
             if ($user->is_verified == 0 || $user->status == 'unverified') {
-                // Resend OTP
                 $validToken = rand(100000, 999999);
                 $get_token = new VerifyToken();
                 $get_token->token = $validToken;
