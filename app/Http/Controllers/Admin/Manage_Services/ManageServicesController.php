@@ -21,6 +21,7 @@ class ManageServicesController extends Controller
     public function storeService(Request $request)
     {
         $services = $request->all();
+        $services['serv_status'] = 'Verified';
         $response = Services::create($services);
         return response()->json([
             'status' => 'success',

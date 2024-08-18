@@ -48,7 +48,7 @@
                         </div>
                         <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ item.services?.services_name }}
+                                {{ item.appoint_services?.services_name }}
                             </p>
                         </div>
                         <div

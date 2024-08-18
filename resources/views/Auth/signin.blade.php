@@ -12,10 +12,8 @@
                 <p class="text-primary text-center fw-semibold fs-2 mb-0">Graces Dental Clinic</p>
             </a>
             <p class="fs-4 fw-medium text-center">Sign in</p>
-                <p class="fs-6 text-center">Make certain that your account is verified by the admin before entering your
+                <p class="fs-6 text-center">Make certain that your account is already verified before entering your
                     credentials.</p>
-                <p class="fs-6 text-center">Don't have an account? <a href="{{ route('signup') }}"
-                        class="fw-semibold text-primary">Sign up</a></p>
         </div>
         <div class="logo-txt container d-flex justify-content-center align-items-center">
             <div class="sign-up-img col col-lg-5 d-flex flex-column d-flex justify-content-center align-items-center bg-white">
@@ -56,7 +54,9 @@
                             </a>
                         </div>
                         <div class="sign-in-btn mb-2">
-                            <button type="submit" class="btn w-100 btn-primary text-white fs-5 mt-2">Sign in</button>
+                            <button type="submit" class="btn w-100 btn-primary text-white fs-5 mt-2 mb-3">Sign in</button>
+                            <p class="fs-6 text-center mb-3"><small class="me-2">Don't have an account?</small><a href="{{ route('signup') }}"
+                                class="fw-semibold text-white"><small>Sign up</small></a></p>
                         </div>
                     </div>
                 </form>
