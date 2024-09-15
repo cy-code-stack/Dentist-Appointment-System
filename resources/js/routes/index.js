@@ -22,7 +22,6 @@ import IndexManageStaff from "../components/Admin/Staff/IndexManageStaff.vue"
 import IndexReferPatients from "../components/Admin/Refer/IndexRefer.vue"
 import IndexManageServices from "../components/Admin/Services/IndexManageServices.vue";
 import IndexTransaction from "../components/Admin/Transaction/IndexTransaction.vue";
-import IndexSales from "../components/Admin/Sales/IndexSales.vue";
 import IndexLogs from "../components/Admin/Logs/IndexLogs.vue";
 import IndexAdminProfile from "../components/Admin/Profile/IndexAdminProfile.vue";
 import IndexAdminArchive from '../components/Admin/Archive/IndexAdminArchive.vue';
@@ -124,11 +123,6 @@ const routes = [
         path: '/user/admin/trasanction',
         name: 'admin-transaction',
         component: IndexTransaction,
-    },
-    {
-        path: '/user/admin/sales',
-        name: 'admin-sales',
-        component: IndexSales,
     },
     {
         path: '/user/admin/logs',
