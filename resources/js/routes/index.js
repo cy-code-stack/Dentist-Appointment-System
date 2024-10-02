@@ -22,10 +22,11 @@ import IndexManageStaff from "../components/Admin/Staff/IndexManageStaff.vue"
 import IndexReferPatients from "../components/Admin/Refer/IndexRefer.vue"
 import IndexManageServices from "../components/Admin/Services/IndexManageServices.vue";
 import IndexTransaction from "../components/Admin/Transaction/IndexTransaction.vue";
-import IndexLogs from "../components/Admin/Logs/IndexLogs.vue";
 import IndexAdminProfile from "../components/Admin/Profile/IndexAdminProfile.vue";
 import IndexAdminArchive from '../components/Admin/Archive/IndexAdminArchive.vue';
 import IndexAdminCalendar from '../components/Admin/Calendar/IndexAdminCalendar.vue';
+import ViewPatientInfo from '../components/Admin/Refer/ViewPatientInfo.vue';
+import Teeth from '../components/Admin/Refer/Teeth.vue';
 
 
 const routes = [
@@ -109,6 +110,16 @@ const routes = [
         component: IndexReferPatients,
     },
     {
+        path: '/user/admin/view/:id',
+        name: 'patient-view',
+        component: ViewPatientInfo,
+    },
+    {
+        path: '/user/admin/diagnose',
+        name: 'patient-diagnose',
+        component: Teeth,
+    },
+    {
         path: '/user/admin/calendar',
         name: 'admin-calendar',
         component: IndexAdminCalendar,
@@ -123,11 +134,6 @@ const routes = [
         path: '/user/admin/trasanction',
         name: 'admin-transaction',
         component: IndexTransaction,
-    },
-    {
-        path: '/user/admin/logs',
-        name: 'admin-logs',
-        component: IndexLogs,
     },
     {
         path: '/user/admin/profile',

@@ -21,6 +21,8 @@ use App\Http\Controllers\Admin\Refer\AdminReferPatientsController;
 use App\Http\Controllers\Admin\Archive\AdminArchiveController;
 use App\Http\Controllers\Admin\Calendar\AdminCalendarController;
 use App\Http\Controllers\Admin\Profile\AdminProfileController;
+use App\Http\Controllers\Admin\Refer\PatientInformationController;
+use App\Http\Controllers\Admin\Refer\DiagnosticController;
 //End of Admin
 
 //Staff
@@ -121,7 +123,13 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
 
             //Refer Patients
                 Route::get('/admin/patients/refer', [AdminReferPatientsController::class, 'getVerifiedPatients']);
+                Route::get('/admin/patients/index/{id}', [PatientInformationController::class, 'index']);
+                Route::get('/admin/patients/show/{id}', [PatientInformationController::class, 'show']);
                 Route::put('/admin/patient/archive/{id}', [AdminReferPatientsController::class, 'archiveReferPatients']);
+                Route::post('/admin/patients/information', [PatientInformationController::class, 'store']);
+                Route::get('/admin/patients/diagnostic/get-id', [DiagnosticController::class, 'getPatientId']);
+                Route::get('/admin/patients/diagnostic', [DiagnosticController::class, 'index']);
+                Route::post('/admin/patients/diagnostic/store', [DiagnosticController::class, 'store']);
             //End of Refer Patients
 
             //Callendar Event Page Section

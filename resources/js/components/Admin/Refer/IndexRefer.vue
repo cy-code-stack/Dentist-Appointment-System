@@ -58,12 +58,14 @@
                             </p>
                         </div>
                         <div class="text-center d-flex justify-content-center align-items-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm" @click="patientModalShow(item)">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
+                            <router-link :to="`/user/admin/view/${item.id}`">
+                                <button type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <i class="fa-solid fa-eye me-2"></i>
+                                        <span>View</span>
+                                    </div>
+                                </button>
+                            </router-link>
                             <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="archiveReferPatients(item.id)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-box-archive me-2"></i>
@@ -101,21 +103,16 @@
             </div>
         </div>
     </div>
-    <view-patient-modal :selected_patient="selected_patient"></view-patient-modal>
 </div>
 </template>
 
 <script>
 import axios from 'axios';
-import ViewPatientModal from './ViewPatientModal.vue'
 export default {
-    components:{
-        ViewPatientModal,
-    },
     data() {
         return {
             listofVerfiedPatients:[],
-            selected_patient: {},
+            selected_patients: {}
         };
     },
 
@@ -127,11 +124,6 @@ export default {
             }).catch((error)=>{
                 console.log(error);
             });
-        },
-        patientModalShow(selected_patient){
-            // console.log("clicked");
-            this.selected_patient = selected_patient;
-            $('#view-appointment-modal').modal('show');
         },
         archiveReferPatients(id){
             Swal.fire({
@@ -161,6 +153,8 @@ export default {
                     console.log(error);
                 });
         },
+
+        
     },
     mounted(){
         this.diplayVerfiedPatients();

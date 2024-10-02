@@ -133,7 +133,7 @@ class Authentication extends Controller
             $user = Auth::user();
             $user->save();
         
-
+            // random string 
             if ($user->is_verified == 0 || $user->status == 'unverified') {
                 $validToken = rand(100000, 999999);
                 $get_token = new VerifyToken();
