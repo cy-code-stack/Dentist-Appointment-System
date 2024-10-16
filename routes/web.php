@@ -127,9 +127,11 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::get('/admin/patients/show/{id}', [PatientInformationController::class, 'show']);
                 Route::put('/admin/patient/archive/{id}', [AdminReferPatientsController::class, 'archiveReferPatients']);
                 Route::post('/admin/patients/information', [PatientInformationController::class, 'store']);
-                Route::get('/admin/patients/diagnostic/get-id', [DiagnosticController::class, 'getPatientId']);
                 Route::get('/admin/patients/diagnostic', [DiagnosticController::class, 'index']);
+                Route::get('/admin/patients/child', [DiagnosticController::class, 'childIndex']);
                 Route::post('/admin/patients/diagnostic/store', [DiagnosticController::class, 'store']);
+                Route::post('/admin/patients/child/store', [DiagnosticController::class, 'storeChild']);
+                Route::post('/admin/patients/payment/store', [AppointmentController::class, 'addPayment']);
             //End of Refer Patients
 
             //Callendar Event Page Section

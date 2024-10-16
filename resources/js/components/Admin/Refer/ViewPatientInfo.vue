@@ -315,6 +315,7 @@ export default {
             },
             information: {
                 user_id: '',
+                appointment_id: '',
                 birthdate: '',
                 religion: '',
                 place_of_birth: '',
@@ -346,24 +347,34 @@ export default {
         };
     },
     methods: {
+        getUrlId(){
+            const url = window.location.href;
+            const urlSegments = url.split('/').filter(Boolean)
+            return urlSegments[urlSegments.length - 1];
+        },
         submitInformation() {
             if (!this.patientData.patient.id) {
                 console.error('Patient ID is missing.');
                 return;
             }
             this.information.user_id = this.patientData.patient.id;
+            this.information.appointment_id = this.getUrlId();
             axios.post('/admin/patients/information', this.information)
                 .then((response) => {
                     Swal.fire({
-                        position: "center",
+                       position: "center",
                         icon: "success",
                         title: "Information has been added!",
                         showConfirmButton: false,
                         timer: 2000,
                     }).then(() => {
-                        this.$router.push('/user/admin/diagnose');
+                        const patientAge = this.patientData.patient.age;
+                        if (patientAge < 12) {
+                            this.$router.push(`/user/admin/child/${response.data.data.id}`);
+                        }else {
+                            this.$router.push(`/user/admin/diagnose/${response.data.data.id}`);
+                        }
                     });
-                    console.log(response);
                 })
                 .catch((error) => {
                     console.error('Error submitting information:', error);

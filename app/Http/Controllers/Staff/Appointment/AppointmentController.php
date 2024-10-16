@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReschedAppointmentMail;
 use App\Mail\AbortAppointmentMail;
+use App\Models\PaymentAppointment;
 
 class AppointmentController extends Controller
 {
@@ -89,6 +90,16 @@ class AppointmentController extends Controller
             'status' => 'success',
             'message' => 'Resched appointment successfully',
             'data' => $appointment,
+        ], 200);
+    }
+
+
+    public function addPayment(Request $request){
+        $payment = $request->all();
+        $response = PaymentAppointment::create($payment);
+        return response()->json([
+            'status' => 'success',
+            'data' => $response,
         ], 200);
     }
 

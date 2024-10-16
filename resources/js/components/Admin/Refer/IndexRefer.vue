@@ -66,6 +66,12 @@
                                     </div>
                                 </button>
                             </router-link>
+                            <button v-if="item.appnt_status === 'Ready to pay'" type="button" class="me-1 rounded-1 btn btn-warning text-white btn-sm" @click="addPayment">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <i class="fa-solid fa-peso-sign me-2"></i>
+                                    <span>Payment</span>
+                                </div>
+                            </button>
                             <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="archiveReferPatients(item.id)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-box-archive me-2"></i>
@@ -103,16 +109,20 @@
             </div>
         </div>
     </div>
+    <add-payment-modal></add-payment-modal>
 </div>
 </template>
 
 <script>
 import axios from 'axios';
+import AddPaymentModal from './Modal/PaymentModal.vue';
 export default {
+    components:{
+        AddPaymentModal,
+    },
     data() {
         return {
             listofVerfiedPatients:[],
-            selected_patients: {}
         };
     },
 
@@ -154,6 +164,9 @@ export default {
                 });
         },
 
+        addPayment(){
+            $("#add-payment-modal").modal("show");
+        }
         
     },
     mounted(){

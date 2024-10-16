@@ -4,38 +4,67 @@ namespace App\Http\Controllers\Admin\Refer;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdultTeeth;
+use App\Models\Appointment;
+use App\Models\ChildDiagnostic;
+use App\Models\ChildTeeth;
 use App\Models\PatientDiagnostic;
 use App\Models\PatientInformationRecord;
 use Illuminate\Http\Request;
 
 class DiagnosticController extends Controller
 {
-    public function getPatientId(Request $request)
-    {
-        $request->validate([
-            'user_id' => 'required|integer', 
-        ]);
-
-        $patient = PatientInformationRecord::where('user_id', $request->user_id)->first();
-
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Patient not found.',
-            ], 404);
-        }
-
-        return response()->json([
-            'patient_information_id' => $patient->id,
-        ], 200);
-    }
     public function index(){
         $teeths = AdultTeeth::with('diseases')->get();
         return response()->json($teeths);
     }
+
+    public function childIndex(){
+        $childTeeth = ChildTeeth::with('diseases')->get();
+        return response()->json($childTeeth);
+    }
+
     
     public function store(Request $request)
     {
         $validData = $request->validate([
+            '*.patient_information_id' => 'nullable|integer',
+            '*.teeth_id' => 'nullable|integer',
+            '*.disease_id' => 'nullable|integer',
+            '*.comments' => 'nullable|string',  
+        ]);
+
+        $savedData = [];
+
+        foreach ($validData as $data) {
+            $savedData[] = PatientDiagnostic::create([
+                'patient_information_id' => $data['patient_information_id'],
+                'teeth_id' => $data['teeth_id'],
+                'disease_id' => $data['disease_id'],
+                'comments' => $data['comments'],
+            ]);
+        }
+
+        $patientInformationRecord = PatientInformationRecord::with('appointment')
+            ->where('id', $validData[0]['patient_information_id'] ?? null)
+            ->first();
+
+        if ($patientInformationRecord && $patientInformationRecord->appointment) {
+            $patientInformationRecord->appointment->update([
+                'appnt_status' => 'Ready to pay'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Teeth Diagnostics saved successfully',
+            'data' => $savedData
+        ], 200);
+    }   
+
+
+    public function storeChild(Request $request)
+    {
+        $validData = $request->validate([
+            '*.information_id' => 'nullable|integer',
             '*.teeth_id' => 'nullable|integer',
             '*.disease_id' => 'nullable|integer',
             '*.comments' => 'nullable|string',  
@@ -44,19 +73,19 @@ class DiagnosticController extends Controller
         $savedData = []; 
 
         foreach ($validData as $data) {
-            $savedData[] = PatientDiagnostic::updateOrCreate(
+            $savedData[] = ChildDiagnostic::create(
                 [
+                    'information_id' => $data['information_id'],
                     'teeth_id' => $data['teeth_id'],
                     'disease_id' => $data['disease_id'],
+                    'comments' => $data['comments'],
                 ],
-                [
-                    'comments' => $data['comments'] 
-                ]
             );
         }
 
+
         return response()->json([
-            'message' => 'Teeth Diagnostics saved successfully',
+            'message' => 'Child  Diagnostics saved successfully',
             'data' => $savedData
         ], 200);
     }

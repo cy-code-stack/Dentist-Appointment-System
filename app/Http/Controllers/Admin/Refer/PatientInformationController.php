@@ -38,9 +38,9 @@ class PatientInformationController extends Controller
      */
     public function store(Request $request)
     {
-    
         $validatedData = $request->validate([
-            'user_id' => 'nullable|integer',  
+            'user_id' => 'nullable|integer',
+            'appointment_id' => 'nullable|integer',
             'birthdate' => 'nullable|date',
             'religion' => 'nullable',   
             'place_of_birth' => 'nullable',   
@@ -70,11 +70,7 @@ class PatientInformationController extends Controller
             'health_problem' => 'nullable',   
         ]);
 
-        
-        $data = PatientInformationRecord::updateOrCreate(
-            ['user_id' => $validatedData['user_id']], 
-            $validatedData                       
-        );
+        $data = PatientInformationRecord::create($validatedData);
 
         return response()->json([
             'message' => 'Information saved successfully',

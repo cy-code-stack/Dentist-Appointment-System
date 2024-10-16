@@ -141,7 +141,7 @@ export default {
     props: true,
     data() {
         return {
-            adultTeeth: [],
+            childTeeth: [],
             selectedDiseaseImage: null, 
             teethData: {},
             patientInformationId: null,
@@ -149,29 +149,31 @@ export default {
     },
     computed: {
         firstHalf() {
-            return this.adultTeeth.filter(tooth => tooth.teeth_number >= 11 && tooth.teeth_number <= 18).reverse();
+            return this.childTeeth.filter(tooth => tooth.teeth_number >= 51 && tooth.teeth_number <= 55).reverse();
         },
         secondHalf() {
-            return this.adultTeeth.filter(tooth => tooth.teeth_number >= 21 && tooth.teeth_number <= 28);
+            return this.childTeeth.filter(tooth => tooth.teeth_number >= 61 && tooth.teeth_number <= 65);
         },
         thirdHalf() {
-            return this.adultTeeth.filter(tooth => tooth.teeth_number >= 41 && tooth.teeth_number <= 48).reverse();
+            return this.childTeeth.filter(tooth => tooth.teeth_number >= 71 && tooth.teeth_number <= 75).reverse();
         },
         fourthHalf() {
-            return this.adultTeeth.filter(tooth => tooth.teeth_number >= 31 && tooth.teeth_number <= 38);
+            return this.childTeeth.filter(tooth => tooth.teeth_number >= 81 && tooth.teeth_number <= 85);
         },
         firstColumn() {
-            return this.adultTeeth.slice(0, Math.ceil(this.adultTeeth.length / 2));
+            return this.childTeeth.slice(0, Math.ceil(this.childTeeth.length / 2));
         },
         secondColumn() {
-            return this.adultTeeth.slice(Math.ceil(this.adultTeeth.length / 2));
+            return this.childTeeth.slice(Math.ceil(this.childTeeth.length / 2));
         }
     },
     methods: {
         fetchDiagnostics() {
-            axios.get('/admin/patients/diagnostic')
+            axios.get('/admin/patients/child')
+            
                 .then(response => {
-                    this.adultTeeth = response.data.map(tooth => ({
+                    console.log(response);
+                    this.childTeeth = response.data.map(tooth => ({
                         ...tooth,
                         selectedDiseaseImage: null,
                         comments: tooth.comments || '', 
@@ -189,23 +191,25 @@ export default {
         },
 
         getImageUrl(imageName) {
-            return `/storage/adult/${imageName}`;
+            return `/storage/child/${imageName}`;
         },
         getDiseaseUrl(diseaseName){
-            return `/storage/adult_disease/${diseaseName}`;
+            return `/storage/child_disease/${diseaseName}`;
         },
         changeImage(tooth, diseaseName) {
             tooth.selectedDiseaseImage = this.getDiseaseUrl(diseaseName);
             tooth.disease_id = tooth.diseases.find(disease => disease.disease_img_url === diseaseName).id;
         },
         submitForm() {
-            this.teethData = this.adultTeeth.map(tooth => ({
+            this.teethData = this.childTeeth.map(tooth => ({
                 teeth_id: tooth.id,
                 disease_id: tooth.disease_id || null, 
                 comments: tooth.comments || null, 
-                patient_information_id: this.getUrlId(),
+                information_id: this.getUrlId(),
             }));
-            axios.post('/admin/patients/diagnostic/store', this.teethData)
+
+            console.log(this.teethData); 
+            axios.post('/admin/patients/child/store', this.teethData)
                 .then(response => {
                     this.patientInformationId = response.data.id;
                     Swal.fire({

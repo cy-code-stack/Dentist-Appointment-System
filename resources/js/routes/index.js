@@ -27,6 +27,7 @@ import IndexAdminArchive from '../components/Admin/Archive/IndexAdminArchive.vue
 import IndexAdminCalendar from '../components/Admin/Calendar/IndexAdminCalendar.vue';
 import ViewPatientInfo from '../components/Admin/Refer/ViewPatientInfo.vue';
 import Teeth from '../components/Admin/Refer/Teeth.vue';
+import ChildTeeth from '../components/Admin/Refer/ChildTeeth.vue';
 
 
 const routes = [
@@ -115,9 +116,14 @@ const routes = [
         component: ViewPatientInfo,
     },
     {
-        path: '/user/admin/diagnose',
+        path: '/user/admin/diagnose/:id',
         name: 'patient-diagnose',
         component: Teeth,
+    },
+    {
+        path: '/user/admin/child/:id',
+        name: 'child-teeth',
+        component: ChildTeeth,
     },
     {
         path: '/user/admin/calendar',

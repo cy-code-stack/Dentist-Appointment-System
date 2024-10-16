@@ -12,7 +12,7 @@ class PatientInformationRecord extends Model
     protected $guarded = [];
 
     public function user(){
-        return $this->belongsTo(User::class, 'user_id');    
+        return $this->belongsTo(User::class, 'user_id'); 
     }
 
     public function diagnostic(){
@@ -21,5 +21,9 @@ class PatientInformationRecord extends Model
     public function diagnostics()
     {
         return $this->hasMany(PatientDiagnostic::class, 'patient_information_id'); 
+    }
+
+    public function appointment(){
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 }

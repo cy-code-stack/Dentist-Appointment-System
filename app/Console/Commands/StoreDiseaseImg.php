@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 use App\Models\AdultTeeth;
 use App\Models\AdultTeethDisease;
+use App\Models\ChildDisease;
+use App\Models\ChildTeeth;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,14 +29,14 @@ class StoreDiseaseImg extends Command
      */
     public function handle()
     {
-        $folderPath = storage_path('app/public/adult_missing_teeth');
-        $files = Storage::files('public/adult_missing_teeth');
+        $folderPath = storage_path('app/public/child_missing');
+        $files = Storage::files('public/child_missing');
 
         foreach ($files as $file) {
             $fileName = basename($file);
             $teethNumber = explode("-",$fileName);
-            $teeth = AdultTeeth::where('teeth_number',$teethNumber[0])->first();
-            AdultTeethDisease::create([
+            $teeth = ChildTeeth::where('teeth_number',$teethNumber[0])->first();
+            ChildDisease::create([
                 'teeth_number' => $teeth->id,  
                 'disease_img_url' => $fileName,  
                 'disease_name' => 'Missing'
