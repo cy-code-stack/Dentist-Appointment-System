@@ -5,6 +5,7 @@
                 <div class="modal-body">
                     <div class="container">
                         <form @submit.prevent="storePayment">
+                            <input type="hidden" v-model="data.appointment_id">
                             <div class="d-flex justify-content-between w-100">
                                 <p class="fs-5 fw-medium">Add Payment</p>
                                 <button
@@ -55,6 +56,7 @@
 <script>
 import axios from 'axios';
 export default {
+    props: ["payment_user"],
     data() {
         return {
             data: {
@@ -79,7 +81,7 @@ export default {
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                // this.$emit('displayService');
+                this.$emit("displayPayment");
             }).catch((error)=>{
                 console.log(error);
             });
@@ -93,7 +95,21 @@ export default {
                 payment_method: '',
             };
         },
+        setCurrentDate() {
+            this.data.date = new Date().toISOString().slice(0, 10);
+        },
     },
-    mounted() {},
+    watch: {
+        payment_user: {
+            handler(val) {
+                this.data.appointment_id = val.appointment_id;
+                this.setCurrentDate();
+            },
+            deep: true,
+        },
+    },
+    mounted() {
+        this.setCurrentDate();
+    },
 };
 </script>

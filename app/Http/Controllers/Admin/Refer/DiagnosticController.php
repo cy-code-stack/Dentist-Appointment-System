@@ -44,13 +44,13 @@ class DiagnosticController extends Controller
             ]);
         }
 
-        $patientInformationRecord = PatientInformationRecord::with('appointment')
+        $record = PatientInformationRecord::with('appointment')
             ->where('id', $validData[0]['patient_information_id'] ?? null)
             ->first();
 
-        if ($patientInformationRecord && $patientInformationRecord->appointment) {
-            $patientInformationRecord->appointment->update([
-                'appnt_status' => 'Ready to pay'
+        if ($record && $record->appointment) {
+            $record->appointment->update([
+                'appnt_status' => 'Payment'
             ]);
         }
 

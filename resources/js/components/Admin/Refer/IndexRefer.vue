@@ -59,14 +59,14 @@
                         </div>
                         <div class="text-center d-flex justify-content-center align-items-center col-lg-3">
                             <router-link :to="`/user/admin/view/${item.id}`">
-                                <button type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm">
+                                <button v-if="item.appnt_status === 'Ongoing'" type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <i class="fa-solid fa-eye me-2"></i>
                                         <span>View</span>
                                     </div>
                                 </button>
                             </router-link>
-                            <button v-if="item.appnt_status === 'Ready to pay'" type="button" class="me-1 rounded-1 btn btn-warning text-white btn-sm" @click="addPayment">
+                            <button v-if="item.appnt_status === 'Payment'" type="button" class="me-1 rounded-1 btn btn-warning text-white btn-sm" @click="addPayment(item.id)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-peso-sign me-2"></i>
                                     <span>Payment</span>
@@ -109,7 +109,7 @@
             </div>
         </div>
     </div>
-    <add-payment-modal></add-payment-modal>
+    <add-payment-modal :payment_user="payment_user" @displayPayment="diplayVerfiedPatients"></add-payment-modal>
 </div>
 </template>
 
@@ -123,13 +123,13 @@ export default {
     data() {
         return {
             listofVerfiedPatients:[],
+            payment_user : {},
         };
     },
 
     methods:{
         diplayVerfiedPatients(){
             axios.get('/admin/patients/refer').then((response)=>{
-                console.log(response);
                 this.listofVerfiedPatients = response.data.data;
             }).catch((error)=>{
                 console.log(error);
@@ -164,7 +164,12 @@ export default {
                 });
         },
 
-        addPayment(){
+        addPayment(payment_user){
+            console.log(payment_user);
+            
+            this.payment_user = {
+                appointment_id: payment_user
+            };
             $("#add-payment-modal").modal("show");
         }
         

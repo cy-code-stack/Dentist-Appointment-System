@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\Calendar\AdminCalendarController;
 use App\Http\Controllers\Admin\Profile\AdminProfileController;
 use App\Http\Controllers\Admin\Refer\PatientInformationController;
 use App\Http\Controllers\Admin\Refer\DiagnosticController;
+use App\Http\Controllers\Admin\Transaction\TransactionController;
 //End of Admin
 
 //Staff
@@ -147,6 +148,11 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::put('/admin/services/restore/{id}', [AdminArchiveController::class, 'restoreArchiveServices']);
                 Route::put('/admin/refer/restore/{id}', [AdminArchiveController::class, 'restoreArchiveRefer']);
             //End of Archive Page Section
+
+
+            //Transaction Section
+                Route::get('/admin/transaction/display', [TransactionController::class, 'show']);
+            //End of transaction Section
 
             //Profile Page Section
                 Route::get('/admin/profile/user', [AdminProfileController::class,'getProfileInfo']);

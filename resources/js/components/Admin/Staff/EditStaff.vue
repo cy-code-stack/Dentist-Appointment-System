@@ -65,7 +65,6 @@
                                     type="tel"
                                     class="form-control"
                                     v-model="user.phone_number"
-                                    aaa
                                 />
                             </div>
                             <div class="form-group">

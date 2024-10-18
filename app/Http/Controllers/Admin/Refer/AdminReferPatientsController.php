@@ -13,7 +13,7 @@ class AdminReferPatientsController extends Controller
     }
     
     public function getVerifiedPatients(){
-        $verifiedPatients = Appointment::whereNotIn('appnt_status', ['Archive', 'Pending', 'Declined'])
+        $verifiedPatients = Appointment::whereNotIn('appnt_status', ['Archive', 'Pending', 'Declined', 'Completed'])
                                 ->with('appointServices', 'patient')
                                 ->get();
         

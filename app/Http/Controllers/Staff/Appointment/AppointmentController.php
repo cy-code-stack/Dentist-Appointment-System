@@ -94,9 +94,20 @@ class AppointmentController extends Controller
     }
 
 
-    public function addPayment(Request $request){
+    public function addPayment(Request $request)
+    {
         $payment = $request->all();
         $response = PaymentAppointment::create($payment);
+
+        $appointmentData = PaymentAppointment::with('appointment')
+            ->where('id', $response->id)
+            ->first();
+        if ($appointmentData && $appointmentData->appointment) {
+            $appointmentData->appointment->update([
+                'appnt_status' => 'Completed'
+            ]);
+        }
+
         return response()->json([
             'status' => 'success',
             'data' => $response,

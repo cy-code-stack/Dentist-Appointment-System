@@ -30,7 +30,7 @@
                     <p class="fs-6 fw-semibold mb-0">Email</p>
                 </div>
                 <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Catered By</p>
+                    <p class="fs-6 fw-semibold mb-0">Services</p>
                 </div>
                 <div class="text-center col-lg-1">
                     <p class="fs-6 fw-semibold mb-0">Status</p>
@@ -41,352 +41,30 @@
             </div>
             <div class="main-table-body">
                 <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
+                    <div v-for="item in transaction" :key="item.id" class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
                         <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul
-                            </p>
+                            <p class="fs-6 mb-0 fw-medium text-black-50">{{ item.patient?.firstname }}</p>
                         </div>
                         <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Petter
-                            </p>
+                            <p class="fs-6 mb-0 fw-medium text-black-50">{{ item.patient?.lastname }}</p>
                         </div>
                         <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                useremail@gmail.com
-                            </p>
+                            <p class="fs-6 mb-0 fw-medium text-black-50">{{ item.patient?.email }}</p>
                         </div>
                         <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Doctor name
-                            </p>
+                            <p class="fs-6 mb-0 fw-medium text-black-50">{{ item.appoint_services?.services_name }}</p>
                         </div>
                         <div
                             class="text-center justify-content-center col-lg-1">
-                            <p class="fs-6 fw-medium mb-0 text-success">
-                               Complete
-                            </p>
+                            <p class="fs-6 fw-medium mb-0 text-success">{{ item.appnt_status }}</p>
                         </div>
                         <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
                             <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-file-pdf me-1"></i>
-                                    <span>Generate PDF</span>
+                                    <i class="fa-solid fa-file-invoice me-2"></i>
+                                    <span>Invoice</span>
                                 </div>
                             </button>
-                            <!-- <button type="button" class=" rounded-1 btn btn-danger btn-sm">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
-                                </div>
-                            </button> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Petter
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                useremail@gmail.com
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Doctor name
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-1">
-                            <p class="fs-6 fw-medium mb-0 text-success">
-                               Complete
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-file-pdf me-1"></i>
-                                    <span>Generate PDF</span>
-                                </div>
-                            </button>
-                            <!-- <button type="button" class=" rounded-1 btn btn-danger btn-sm">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
-                                </div>
-                            </button> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Petter
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                useremail@gmail.com
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Doctor name
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-1">
-                            <p class="fs-6 fw-medium mb-0 text-success">
-                               Complete
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-file-pdf me-1"></i>
-                                    <span>Generate PDF</span>
-                                </div>
-                            </button>
-                            <!-- <button type="button" class=" rounded-1 btn btn-danger btn-sm">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
-                                </div>
-                            </button> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Petter
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                useremail@gmail.com
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Doctor name
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-1">
-                            <p class="fs-6 fw-medium mb-0 text-success">
-                               Complete
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-file-pdf me-1"></i>
-                                    <span>Generate PDF</span>
-                                </div>
-                            </button>
-                            <!-- <button type="button" class=" rounded-1 btn btn-danger btn-sm">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
-                                </div>
-                            </button> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Petter
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                useremail@gmail.com
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Doctor name
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-1">
-                            <p class="fs-6 fw-medium mb-0 text-success">
-                               Complete
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-file-pdf me-1"></i>
-                                    <span>Generate PDF</span>
-                                </div>
-                            </button>
-                            <!-- <button type="button" class=" rounded-1 btn btn-danger btn-sm">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
-                                </div>
-                            </button> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Petter
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                useremail@gmail.com
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Doctor name
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-1">
-                            <p class="fs-6 fw-medium mb-0 text-success">
-                               Complete
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-file-pdf me-1"></i>
-                                    <span>Generate PDF</span>
-                                </div>
-                            </button>
-                            <!-- <button type="button" class=" rounded-1 btn btn-danger btn-sm">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
-                                </div>
-                            </button> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="table-row card mb-2">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Paul
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                Petter
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                useremail@gmail.com
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               Doctor name
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-1">
-                            <p class="fs-6 fw-medium mb-0 text-success">
-                               Complete
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
-                            </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-file-pdf me-1"></i>
-                                    <span>Generate PDF</span>
-                                </div>
-                            </button>
-                            <!-- <button type="button" class=" rounded-1 btn btn-danger btn-sm">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-trash me-2"></i>
-                                    <span>Delete</span>
-                                </div>
-                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -421,9 +99,26 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    setup() {
-        return {};
+    data() {
+        return {
+            transaction: [],
+        };
     },
+    methods:{
+        displayTransaction(){
+          axios.get('/admin/transaction/display').then((response)=>{
+            this.transaction = response.data.data;
+          }).catch((error)=>{
+            console.log(error);
+          });
+            
+        }
+    },  
+    mounted(){
+        this.displayTransaction();
+    }
 };
 </script>
