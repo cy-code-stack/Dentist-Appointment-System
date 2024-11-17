@@ -197,7 +197,7 @@
                                 </ul>
                             </nav>
                         </div>
-                        <div class="container-fluid d-flex justify-content-evenly align-items-center flex-wrap">
+                        <div class="container-fluid">
                             <canvas id="barChart" class="chart"></canvas>
                             <canvas id="lineChart" class="chart"></canvas>
                         </div>
@@ -209,38 +209,12 @@
 </template>
 
 <script>
+import axios from "axios";
 import Chart from "chart.js/auto";
 
 export default {
     data() {
         return {
-            barChartData: {
-                labels: [
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December",
-                ],
-                datasets: [
-                    {
-                        label: "Net Income Sales (Monthly)",
-                        data: [
-                            12000, 19000, 3000, 5000, 2000, 3000, 10000, 8000,
-                            15000, 7000, 9000, 6000,
-                        ],
-                        backgroundColor: "rgba(54, 162, 235)",
-                        borderRadius: 5,
-                    },
-                ],
-            },
             lineChartData: {
                 labels: [
                     "2020",
@@ -269,21 +243,52 @@ export default {
                     },
                 ],
             },
+            barChart: null, 
         };
     },
     methods: {
         createBarChart(ctx) {
-            const barChart = new Chart(ctx, {
-                type: "bar",
-                data: this.barChartData,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 20000,
+            axios.get('/user/admin/count').then((response) => {
+                    const barChart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                    labels: [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December",
+                    ],
+                        datasets: [
+                            {
+                                label: "Patient Catered",
+                                data: Object.values(response.data),
+                                backgroundColor: "rgba(13, 110, 253)",
+                                borderRadius: 5,
+                            },
+                        ],
+                    },
+                    options: {
+                        responsive:true,
+                        maintainAspectRatio:true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: Math.max(...Object.values(response.data)) + 5,
+                            },
                         },
                     },
-                },
+                });
+            }).catch((error) =>{
+                console.log(error);
+                
             });
         },
         createLineChart(ctx) {
@@ -308,9 +313,10 @@ export default {
             console.error("Could not find canvas elements");
             return;
         }
-
+        
         this.createBarChart(barCtx);
         this.createLineChart(lineCtx);
+    
     },
 };
 </script>
@@ -340,7 +346,7 @@ export default {
     border-radius: 0;
 }
 .chart {
-    max-width: 550px; 
+    max-width: 100%; 
     max-height: 500px;
   }
 </style>

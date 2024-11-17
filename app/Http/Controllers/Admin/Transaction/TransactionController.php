@@ -29,7 +29,7 @@ class TransactionController extends Controller
      */
     public function show()
     {
-        $transaction = Appointment::with('patient', 'appointServices')->where('appnt_status', 'Completed')->get();
+        $transaction = Appointment::where('appnt_status', 'Completed')->with('patient', 'appointServices')->get();
         return response()->json([
             'status' => 'success',
             'data' => $transaction,

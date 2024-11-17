@@ -7,6 +7,7 @@ use App\Http\Controllers\Staff\StaffController;
 
 //Landing page
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\PrintController;
 
 //Patient
 use App\Http\Controllers\Patient\CalendarEvt\CalendarEventControllerPatient;
@@ -65,6 +66,11 @@ Route::get('/', function () { return view('landing_page');});
 
     Route::get('/user/logout', [Authentication::class, 'logout'])->name('logout');
 
+    
+//Print
+    Route::get('/patient/invoice/print/{id}', [PrintController::class, 'downloadPrint'])->name('invoive.print');
+//end
+
 
 // Routes for authenticated users
 Route::middleware(['preventBackHistory', 'auth'])->group(function () {
@@ -104,6 +110,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
     Route::middleware(['admin'])->group(function() {
         //Start of Admin Routes
             Route::get('/user/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin');
+            Route::get('/user/admin/count', [AdminDashboardController::class, 'countPatient']);
 
             //Manage User
                 Route::get('/user/admin/manage/user', [ManageStaffController::class, 'showUser']);
@@ -133,6 +140,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::post('/admin/patients/diagnostic/store', [DiagnosticController::class, 'store']);
                 Route::post('/admin/patients/child/store', [DiagnosticController::class, 'storeChild']);
                 Route::post('/admin/patients/payment/store', [AppointmentController::class, 'addPayment']);
+                Route::get('/admin/patients/payment/status', [AppointmentController::class, 'showStatusPayment']);
             //End of Refer Patients
 
             //Callendar Event Page Section
@@ -216,7 +224,6 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
         //End of Staff Routes
     });
 });
-
 
 
 

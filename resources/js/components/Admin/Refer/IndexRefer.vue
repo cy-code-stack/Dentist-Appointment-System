@@ -20,7 +20,7 @@
                 <div class="text-center col-lg-2">
                     <p class="fs-6 fw-semibold mb-0">Name</p>
                 </div>
-                <div class="text-center col-lg-3">
+                <div class="text-center col-lg-2">
                     <p class="fs-6 fw-semibold mb-0">Appointment Schedule</p>
                 </div>
                 <div class="text-center col-lg-2">
@@ -29,7 +29,7 @@
                 <div class="text-center col-lg-2">
                     <p class="fs-6 fw-semibold mb-0">Status</p>
                 </div>
-                <div class="text-center col-lg-3">
+                <div class="text-center col-lg-2">
                     <p class="fs-6 fw-semibold mb-0">Actions</p>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                                {{ item.patient?.firstname }} {{ item?.patient?.lastname }}
                             </p>
                         </div>
-                        <div class="text-center col-lg-3">
+                        <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
                                {{ item.sched_date }} {{ item.sched_time }}
                             </p>
@@ -57,7 +57,7 @@
                                 {{ item.appnt_status }}
                             </p>
                         </div>
-                        <div class="text-center d-flex justify-content-center align-items-center col-lg-3">
+                        <div class="text-center d-flex justify-content-center align-items-center col-lg-2">
                             <router-link :to="`/user/admin/view/${item.id}`">
                                 <button v-if="item.appnt_status === 'Ongoing'" type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm">
                                     <div class="d-flex justify-content-center align-items-center">
@@ -66,7 +66,7 @@
                                     </div>
                                 </button>
                             </router-link>
-                            <button v-if="item.appnt_status === 'Payment'" type="button" class="me-1 rounded-1 btn btn-warning text-white btn-sm" @click="addPayment(item.id)">
+                            <button v-if="item.appnt_status === 'Payment' || item.appnt_status === 'Not yet Paid'" type="button" class="me-1 rounded-1 btn btn-warning text-white btn-sm" @click="addPayment(item)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-peso-sign me-2"></i>
                                     <span>Payment</span>
@@ -165,10 +165,9 @@ export default {
         },
 
         addPayment(payment_user){
-            console.log(payment_user);
-            
             this.payment_user = {
-                appointment_id: payment_user
+                appointment_id: payment_user.id,
+                treatment_rendered: payment_user.appoint_services.services_name,
             };
             $("#add-payment-modal").modal("show");
         }

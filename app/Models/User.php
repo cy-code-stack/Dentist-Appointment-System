@@ -40,6 +40,10 @@ class User extends Authenticatable
         'sex'
     ];
 
+    public function appointment(){
+        return $this->hasMany(Appointment::class, 'patient_id');
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

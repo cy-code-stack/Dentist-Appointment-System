@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ReschedAppointmentMail;
 use App\Mail\AbortAppointmentMail;
 use App\Models\PaymentAppointment;
+use App\Models\PaymentItem;
 
 class AppointmentController extends Controller
 {
@@ -96,22 +97,52 @@ class AppointmentController extends Controller
 
     public function addPayment(Request $request)
     {
-        $payment = $request->all();
-        $response = PaymentAppointment::create($payment);
+        $data = $request->all();
 
-        $appointmentData = PaymentAppointment::with('appointment')
-            ->where('id', $response->id)
-            ->first();
-        if ($appointmentData && $appointmentData->appointment) {
-            $appointmentData->appointment->update([
-                'appnt_status' => 'Completed'
+        
+        $payment = PaymentAppointment::updateOrCreate([
+            'appointment_id' => $data['appointment_id'],
+            'payment_method' => $data['payment_method'],
+            'ref_number' => $data['ref_number'],
+        ]);
+
+        $allItemsPaid = true;
+
+        foreach ($data['payment_items'] as $item) {
+            $isPaid = $item['fee'] == $item['paid'];
+            
+            if (!$isPaid) {
+                $allItemsPaid = false;
+            }
+
+            $payment->paymentItems()->create([
+                'date' => $item['date'],
+                'tooth' => $item['tooth'],
+                'surface' => $item['surface'],
+                'treatment_rendered' => $item['treatment_rendered'],
+                'fee' => $item['fee'],
+                'paid' => $item['paid'],
+                'balance' => $item['fee'] - $item['paid'],
+            ]);
+        }
+
+        $paymentStatus = $allItemsPaid ? 'Completed' : 'Not yet Paid';
+
+        if ($payment->appointment) {
+            $payment->appointment->update([
+                'appnt_status' => $paymentStatus
             ]);
         }
 
         return response()->json([
             'status' => 'success',
-            'data' => $response,
+            'data' => $payment,
         ], 200);
     }
 
+    public function showStatusPayment()
+    {
+        $status = PaymentItem::all();
+        return $status;
+    }
 }
