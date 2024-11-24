@@ -16,7 +16,6 @@ class AdminReferPatientsController extends Controller
         $verifiedPatients = Appointment::whereNotIn('appnt_status', ['Archive', 'Pending', 'Declined', 'Completed'])
                                 ->with('appointServices', 'patient')
                                 ->get();
-        
         return response()->json([
             'status' => 'success',
             'data' => $verifiedPatients,

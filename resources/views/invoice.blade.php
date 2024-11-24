@@ -11,134 +11,23 @@
             box-sizing: border-box;
         }
 
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
         .container-fluid {
             width: 100%;
-            padding: 16px;
+            padding: 10px;
         }
 
-        .d-flex {
-            display: flex;
-        }
-
-        .d-grid {
-            display: grid;
-        }
-
-        .align-items-center {
-            align-items: center;
-        }
-
-        .flex-column {
-            flex-direction: column;
-        }
-
-        .justify-content-center {
-            justify-content: center;
-        }
-
-        .justify-content-between {
-            justify-content: space-between;
-        }
-
-        .gap-1 {
-            gap: 4px;
-        }
-
-        .gap-3 {
-            gap: 12px;
-        }
-
-        .col-lg-2 {
-            flex: 1;
-            max-width: 16.666667%;
-        }
-
-        .col-lg-10 {
-            flex: 4;
-            max-width: 83.333333%;
-        }
-
-        .mb-0 {
-            margin-bottom: 0 !important;
-        }
-
-        .mb-4 {
-            margin-bottom: 16px;
-        }
-
-        .py-2 {
-            padding-top: 8px;
-            padding-bottom: 8px;
-        }
-
-        .fs-3 {
-            font-size: 1.75rem;
-        }
-
-        .fs-5 {
-            font-size: 1.25rem;
-        }
-
-        .fw-bold {
-            font-weight: 700;
-        }
-
-        .fw-semibold {
-            font-weight: 600;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-
-        .container-lg {
-            width: 100%;
-            max-width: 1140px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-
-        .inline-block {
-            display: inline-block;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 5px;
-        }
-
-        .table th, .table td {
-            border: 1px solid #dee2e6;
-            padding: 5px;
-            text-align: left;
-        }
-
-        .table th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-
-        .form-label {
-            font-weight: 400 !important;
-            margin-right: 4px;
-        }
-
-        /* Flex Enhancements */
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 0;
-            margin-bottom: 16px;
-            border-bottom: 1px solid #ccc;
+            padding: 5px 0;  /* Smaller padding */
+            margin-bottom: 16px;  /* Smaller margin */
+            border-bottom: 2px solid #ddd;
         }
 
         .header-left {
@@ -146,17 +35,29 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 4px;
+            gap: 4px;  /* Smaller gap */
         }
 
         .header-right {
             text-align: center;
         }
 
+        .header-left img {
+            max-width: 90px;  /* Smaller logo */
+        }
+
+        .header-right p {
+            font-size: 1.5rem;  /* Smaller font size */
+            font-weight: 700;
+            letter-spacing: 1px;  /* Adjusted letter spacing */
+            margin: 0;
+        }
+
         .invoice-details {
             display: flex;
             justify-content: space-between;
-            margin: 16px 0;
+            margin: 16px 0;  /* Smaller margin */
+            flex-wrap: wrap;
         }
 
         .bill-to, .invoice-info {
@@ -170,6 +71,48 @@
             display: flex;
             gap: 8px;
         }
+
+        .info-group label {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .info-group span {
+            font-weight: 400;
+            color: #333;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 12px;
+            padding: 5px;
+        }
+
+        .table th, .table td {
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table td {
+            font-size: 12px;
+        }
+
+        .container-lg {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 
@@ -178,69 +121,97 @@
         <!-- Header Section -->
         <div class="header">
             <div class="header-left">
-                <img src="../public/images/logo.png" alt="company-logo" width="100">
-                <p class="mb-0 fs-5 fw-semibold">Graces Dental Clinic</p>
+                <img src="../public/images/logo.png" alt="company-logo">
+                <p class="fs-5 fw-semibold mb-0">Graces Dental Clinic</p>
             </div>
             <div class="header-right">
-                <p class="text-center fs-3 fw-bold mb-0" style="letter-spacing: 2px;">Dental Implant Invoice</p>
+                <p class="text-center fs-3 fw-bold mb-0">Dental Implant Invoice</p>
             </div>
         </div>
-
-        <!-- Invoice Details Section -->
+         <!-- Invoice Details Section -->
         <div class="invoice-details">
             <div class="bill-to">
                 <div class="info-group">
-                    <label class="form-label">Bill to</label>
+                    <label>Bill to</label>
                 </div>
                 <div class="info-group">
-                    <label class="form-label">Name: <span>{{ $record->appointment->patient?->firstname }} {{ $record->appointment->patient?->middle_initial }} {{ $record->appointment->patient?->lastname }}</span></label>
+                    <label>Name:</label>
+                    <span>{{$patient->firstname}} {{$patient->middle_initial}} {{$patient->lastname}}</span>
                 </div>
                 <div class="info-group">
-                    <label class="form-label">Street Address: <span>{{ $record->appointment->patient?->home_address }}</span></label>
+                    <label>Street Address:</label>
+                    <span>{{$patient->home_address}}</span>
                 </div>
                 <div class="info-group">
-                    <label class="form-label">Phone: <span>{{ '0' . $record->appointment->patient?->phone_number }}</span></label>
+                    <label>Phone:</label>
+                    <span>{{'0' . $patient->phone_number}}</span>
                 </div>
             </div>
             <div class="invoice-info">
                 <div class="info-group">
-                    <label class="form-label">Invoice No: <span>{{ $record->id }}</span></label>
+                    <label>Invoice No:</label>
+                    <span>{{$invoiceId}}</span>
                 </div>
                 <div class="info-group">
-                    <label class="form-label">Date:  <span>{{ now()->format('F j, Y') }}</span></label>
+                    <label>Date:</label>
+                    <span>{{ now()->format('F j, Y') }}</span>
                 </div>
             </div>
         </div>
 
         <!-- Table Section -->
-        <div class="container-lg">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Tooth</th>
-                        <th scope="col">Surface</th>
-                        <th scope="col">Treatment Rendered</th>
-                        <th scope="col">Fee</th>
-                        <th scope="col">Paid</th>
-                        <th scope="col">Balance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($record->paymentItems as $paymentItem)
+            <div class="container-lg">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>{{ \Carbon\Carbon::parse($paymentItem?->date)->format('F j, Y') }}</td>
-                            <td>{{ $paymentItem?->tooth }}</td>
-                            <td>{{ $paymentItem?->surface }}</td>
-                            <td>{{ $paymentItem?->treatment_rendered }}</td>
-                            <td>{{ $paymentItem?->fee }}</td>
-                            <td>{{ $paymentItem?->paid }}</td>
-                            <td>{{ $paymentItem?->balance }}</td>
+                            <th scope="col">Tooth</th>
+                            <th scope="col">Surface</th>
+                            <th scope="col">Fee</th>
+                            <th scope="col">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ( $paymentAppointments as $paymentAppointment )
+                        <tr>
+                            <td>{{$paymentAppointment->tooth}}</td>
+                            <td>{{$paymentAppointment->surface}}</td>
+                            <td>{{$paymentAppointment->fee}}</td>
+                            <td>{{$paymentAppointment->balance}}</td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Payment History</h3>
+               <!-- Table Section -->
+            <div class="container-lg">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tooth</th>
+                            <th scope="col">Payment Date</th>
+                            <th scope="col">Paid</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Reference Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ( $paymentAppointments as $paymentAppointment )
+                        @foreach ( $paymentAppointment->items as $item )
+                            <tr>
+                                <td>{{$paymentAppointment->tooth}}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->payment_date)->format('F j, Y') }}</td>
+                                <td>{{ $item->paid }}</td>
+                                <td>{{ $item->payment_method }}</td>
+                                <td>{{ $item->ref_number ?? 'Not G-cash MOP' }}</td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+      
     </div>
 </body>
 </html>

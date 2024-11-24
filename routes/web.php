@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\Managing_Staff\ManageStaffController;
 use App\Http\Controllers\Admin\Refer\AdminReferPatientsController; 
 use App\Http\Controllers\Admin\Archive\AdminArchiveController;
 use App\Http\Controllers\Admin\Calendar\AdminCalendarController;
+use App\Http\Controllers\Admin\Payments\PaymentsController;
 use App\Http\Controllers\Admin\Profile\AdminProfileController;
 use App\Http\Controllers\Admin\Refer\PatientInformationController;
 use App\Http\Controllers\Admin\Refer\DiagnosticController;
@@ -139,9 +140,14 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::get('/admin/patients/child', [DiagnosticController::class, 'childIndex']);
                 Route::post('/admin/patients/diagnostic/store', [DiagnosticController::class, 'store']);
                 Route::post('/admin/patients/child/store', [DiagnosticController::class, 'storeChild']);
-                Route::post('/admin/patients/payment/store', [AppointmentController::class, 'addPayment']);
-                Route::get('/admin/patients/payment/status', [AppointmentController::class, 'showStatusPayment']);
             //End of Refer Patients
+
+            //Payments
+                Route::get('/admin/patients/payment/show', [PaymentsController::class, 'show']);
+                Route::post('/admin/patients/pay/store', [PaymentsController::class, 'store']);
+                Route::post('/admin/patients/pay/item', [PaymentsController::class, 'addPayment']);
+                Route::get('/admin/patients/payment/history/show/{id}', [PaymentsController::class, 'getPaymentHistory']);
+            //End of payments
 
             //Callendar Event Page Section
                 Route::get('/admin/calendar/display/events', [AdminCalendarController::class, 'displayEvent']);

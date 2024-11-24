@@ -31,7 +31,10 @@ class AppointmentController extends Controller
                         ->whereNotIn('appnt_status', ['Ongoing', 'Declined', 'Archive'])
                         ->get();
                         
-        return $appointment;
+        return response()->json([
+            'status' => 'success',
+            'data' => $appointment
+        ], 200);
     }
 
     /**
@@ -92,57 +95,5 @@ class AppointmentController extends Controller
             'message' => 'Resched appointment successfully',
             'data' => $appointment,
         ], 200);
-    }
-
-
-    public function addPayment(Request $request)
-    {
-        $data = $request->all();
-
-        
-        $payment = PaymentAppointment::updateOrCreate([
-            'appointment_id' => $data['appointment_id'],
-            'payment_method' => $data['payment_method'],
-            'ref_number' => $data['ref_number'],
-        ]);
-
-        $allItemsPaid = true;
-
-        foreach ($data['payment_items'] as $item) {
-            $isPaid = $item['fee'] == $item['paid'];
-            
-            if (!$isPaid) {
-                $allItemsPaid = false;
-            }
-
-            $payment->paymentItems()->create([
-                'date' => $item['date'],
-                'tooth' => $item['tooth'],
-                'surface' => $item['surface'],
-                'treatment_rendered' => $item['treatment_rendered'],
-                'fee' => $item['fee'],
-                'paid' => $item['paid'],
-                'balance' => $item['fee'] - $item['paid'],
-            ]);
-        }
-
-        $paymentStatus = $allItemsPaid ? 'Completed' : 'Not yet Paid';
-
-        if ($payment->appointment) {
-            $payment->appointment->update([
-                'appnt_status' => $paymentStatus
-            ]);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $payment,
-        ], 200);
-    }
-
-    public function showStatusPayment()
-    {
-        $status = PaymentItem::all();
-        return $status;
     }
 }

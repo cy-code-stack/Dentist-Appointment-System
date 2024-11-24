@@ -66,12 +66,14 @@
                                     </div>
                                 </button>
                             </router-link>
-                            <button v-if="item.appnt_status === 'Payment' || item.appnt_status === 'Not yet Paid'" type="button" class="me-1 rounded-1 btn btn-warning text-white btn-sm" @click="addPayment(item)">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-peso-sign me-2"></i>
-                                    <span>Payment</span>
-                                </div>
-                            </button>
+                            <router-link :to="`/user/admin/payment/${item.id}`">
+                                <button v-if="item.appnt_status === 'Payment' || item.appnt_status === 'Not yet Paid'" type="button" class="me-1 rounded-1 btn btn-primary text-white btn-sm">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <span class="me-2">Payment</span>
+                                        <i class="fa-solid fa-circle-arrow-right"></i>
+                                    </div>
+                                </button>
+                            </router-link>
                             <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="archiveReferPatients(item.id)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-box-archive me-2"></i>

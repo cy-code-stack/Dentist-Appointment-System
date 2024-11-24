@@ -76,7 +76,7 @@
                         <li class="nav-item">
                             <router-link to="/user/admin/refer" class="nav-link">
                                 <i class="nav-icon fa-solid fa-hospital-user"></i>
-                                <p>Approved Patients</p>
+                                <p>Transactions</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
@@ -93,8 +93,8 @@
                         </li>
                         <li class="nav-item">
                             <router-link to="/user/admin/trasanction" class="nav-link">
-                                <i class="nav-icon fa-solid fa-notes-medical"></i>
-                                <p>Transaction History</p>
+                                <i class="nav-icon fa-solid fa-money-bill"></i>
+                                <p>Payment Histories</p>
                             </router-link>
                         </li>
                         <li class="nav-item">

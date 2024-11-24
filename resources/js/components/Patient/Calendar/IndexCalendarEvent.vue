@@ -33,25 +33,11 @@ export default {
                 end: event.end_date,
             });
         },
-        // async displayEventPatient() {
-        //     try {
-        //         const response = await axios.get('/user/patient/display/calendar');
-        //         const patientEvents = response.data.map(event => ({
-        //             title: event.event_name,
-        //             start: event.start_date,
-        //             end: event.end_date,
-        //         }));
-        //         return patientEvents;
-        //     } catch (error) {
-        //         console.error("Error fetching events:", error);
-        //         return [];
-        //     }
-        // },
         async displayAppointment() {
             try {
                 const response = await axios.get('/user/patient/display/appointment');
                 const appointmentEvents = response.data.map(appointment => ({
-                    title: `Appointment for ${appointment.patient?.firstname} ${appointment.patient?.lastname}`,
+                    title: `Appointment for ${appointment.appoint_services?.services_name}`,
                     start: appointment.sched_date,
                     end: appointment.sched_date,
                     color: appointment.color || '#14A44D',

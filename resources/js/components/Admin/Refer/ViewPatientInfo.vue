@@ -4,123 +4,153 @@
         <p class="text-center fs-4 text-success fw-semibold">Patient Information Record</p>
 
         <form @submit.prevent="submitInformation">
-            <div class="card p-3">
-                <div class="title-form">
-                    <p class="fs-5 mb-1 fw-semibold text-primary">Personal Information</p>
+            <div class="card p-3 shadow-sm">
+                <div class="title-form mb-3">
+                    <p class="fs-5 fw-semibold text-primary">Personal Information</p>
                 </div>
-               
-                <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Firstname</span>
-                        <input type="text" class="form-control" v-model="patientData.patient.firstname" readonly>
+                <div class="container-fluid">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Firstname</label>
+                            <input type="text" class="form-control rounded" v-model="patientData.patient.firstname" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Middle Initial</label>
+                            <input type="text" class="form-control rounded" v-model="patientData.patient.middle_initial" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Lastname</label>
+                            <input type="text" class="form-control rounded" v-model="patientData.patient.lastname" readonly>
+                        </div>
                     </div>
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Middle Initial</span>
-                        <input type="text" class="form-control" v-model="patientData.patient.middle_initial" readonly>
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Birthdate</label>
+                            <input type="date" class="form-control rounded" v-model="information.birthdate">
+                            <div v-if="errors.birthdate" class="text-danger mt-1"><small>{{ errors.birthdate[0] }}</small></div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Age</label>
+                            <input type="text" class="form-control rounded" v-model="patientData.patient.age" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Religion</label>
+                            <input type="text" class="form-control rounded" v-model="information.religion">
+                            <div v-if="errors.religion" class="text-danger mt-1"><small>{{ errors.religion[0] }}</small></div>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <span class="input-group-text">Lastname</span>
-                        <input type="text" class="form-control" v-model="patientData.patient.lastname" readonly>
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Place of Birth</label>
+                            <input type="text" class="form-control rounded" v-model="information.place_of_birth">
+                            <div v-if="errors.place_of_birth" class="text-danger mt-1"><small>{{ errors.place_of_birth[0] }}</small></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Home Address</label>
+                            <input type="text" class="form-control rounded" v-model="patientData.patient.home_address" readonly>
+                        </div>
                     </div>
-                </div>
-                <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Birthdate</span>
-                        <input type="date" class="form-control" v-model="information.birthdate">
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Contact Number</label>
+                            <input type="text" class="form-control rounded" v-model="patientData.patient.phone_number" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Occupation</label>
+                            <input type="text" class="form-control rounded" v-model="patientData.patient.occupation" readonly>
+                        </div>
                     </div>
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Age</span>
-                        <input type="text" class="form-control" v-model="patientData.patient.age" readonly>
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Parents or Guardian</label>
+                            <input type="text" class="form-control rounded" v-model="information.guardian">
+                            <div v-if="errors.guardian" class="text-danger mt-1"><small>{{ errors.guardian[0] }}</small></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Referred by</label>
+                            <input type="text" class="form-control rounded" v-model="information.referred_by">
+                            <div v-if="errors.referred_by" class="text-danger mt-1"><small>{{ errors.referred_by[0] }}</small></div>
+                        </div>
                     </div>
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Religion</span>
-                        <input type="text" class="form-control" v-model="information.religion">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text">Nationality</span>
-                        <input type="text" class="form-control" v-model="information.nationality">
-                    </div>
-                </div>
-                <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Place of Birth</span>
-                        <input type="text" class="form-control" v-model="information.place_of_birth">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text">Home Address</span>
-                        <input type="text" class="form-control" v-model="patientData.patient.home_address" readonly>
-                    </div>
-                </div>
-                <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Contact Number</span>
-                        <input type="text" class="form-control" v-model="patientData.patient.phone_number" readonly>
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text">Occupation</span>
-                        <input type="text" class="form-control" v-model="patientData.patient.occupation" readonly>
-                    </div>
-                </div>
-                <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text">Parents or Guardian</span>
-                        <input type="text" class="form-control" v-model="information.guardian">
-                    </div>
-                </div>
-                <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Referred by</span>
-                        <input type="text" class="form-control" v-model="information.referred_by">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text">Chief Complaint</span>
-                        <input type="text" class="form-control" v-model="information.chief_complaint">
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Chief Complaint</label>
+                            <input type="text" class="form-control rounded" v-model="information.chief_complaint">
+                            <div v-if="errors.chief_complaint" class="text-danger mt-1"><small>{{ errors.chief_complaint[0] }}</small></div>
+                        </div>
                     </div>
                 </div>
             </div>
+
     
-            <div class="card p-3">
-                <div class="title-form">
-                    <p class="fs-5 mb-1 fw-semibold text-primary">Dental History</p>
+            <div class="card p-3 shadow-sm">
+                <div class="title-form mb-3">
+                    <p class="fs-5 fw-semibold text-primary">Dental History</p>
                 </div>
-                <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                    <div class="input-group me-2">
-                        <span class="input-group-text">Previous Dentist</span>
-                        <input type="text" class="form-control" v-model="information.previous_dentist">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text">Last Dental Visit</span>
-                        <input type="text" class="form-control" v-model="information.last_dental_visit">
+                <div class="container-fluid">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Previous Dentist</label>
+                            <input type="text" class="form-control rounded" v-model="information.previous_dentist">
+                            <div v-if="errors.previous_dentist" class="text-danger mt-1">
+                                <small class="fw-medium">{{ errors.previous_dentist[0] }}</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Last Dental Visit</label>
+                            <input type="text" class="form-control rounded" v-model="information.last_dental_visit">
+                            <div v-if="errors.last_dental_visit" class="text-danger mt-1">
+                                <small class="fw-medium">{{ errors.last_dental_visit[0] }}</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
     
             <div class="card p-3">
                 <div class="title-form">
                     <p class="fs-5 mb-1 fw-semibold text-primary">Medical History</p>
                 </div>
                 <div class="physician-info mb-4">
-                    <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                        <div class="input-group me-2">
-                            <span class="input-group-text">Name of the Physician</span>
-                            <input type="text" class="form-control" v-model="information.physician_name">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-text">Specialty (if applicable)</span>
-                            <input type="text" class="form-control" v-model="information.specialty">
-                        </div>
+                <!-- Physician Name and Specialty -->
+                <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center mb-3">
+                    <!-- Physician Name -->
+                    <div class="input-group me-2 mb-3 mb-md-0" style="flex: 1 1 45%">
+                        <span class="input-group-text">Name of the Physician</span>
+                        <input type="text" class="form-control" v-model="information.physician_name">
+                        <div v-if="errors.physician_name" class="text-danger"><small class="fw-medium">{{ errors.physician_name[0] }}</small></div>
                     </div>
-                    <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
-                        <div class="input-group me-2">
-                            <span class="input-group-text">Office Address</span>
-                            <input type="text" class="form-control" v-model="information.office_address">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-text">Office Number</span>
-                            <input type="text" class="form-control" v-model="information.office_number">
-                        </div>
+                    <!-- Specialty -->
+                    <div class="input-group" style="flex: 1 1 45%">
+                        <span class="input-group-text">Specialty (if applicable)</span>
+                        <input type="text" class="form-control" v-model="information.specialty">
+                        <div v-if="errors.specialty" class="text-danger"><small class="fw-medium">{{ errors.specialty[0] }}</small></div>
                     </div>
                 </div>
+
+                <!-- Office Address and Office Number -->
+                <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center mb-3">
+                    <!-- Office Address -->
+                    <div class="input-group me-2 mb-3 mb-md-0" style="flex: 1 1 45%">
+                        <span class="input-group-text">Office Address</span>
+                        <input type="text" class="form-control" v-model="information.office_address">
+                        <div v-if="errors.office_address" class="text-danger"><small class="fw-medium">{{ errors.office_address[0] }}</small></div>
+                    </div>
+                    <!-- Office Number -->
+                    <div class="input-group" style="flex: 1 1 45%">
+                        <span class="input-group-text">Office Number</span>
+                        <input type="text" class="form-control" v-model="information.office_number">
+                        <div v-if="errors.office_number" class="text-danger"><small class="fw-medium">{{ errors.office_number[0] }}</small></div>
+                    </div>
+                </div>
+            </div>
+
                 <small class="mb-0 text-center">Type 'NO' or 'N/A' if you don't encounter the scenario below.</small>
                 <div class="container-fluid d-flex justify-content-between align-items-center mb-2">
                     <div class="questions">
@@ -135,6 +165,7 @@
                             <input class="form-check-input" type="radio" value="No" v-model="information.good_health">
                             <label class="form-check-label">No</label>
                         </div>
+                        <div v-if="errors.good_health" class="text-danger d-block"><small class="fw-medium">{{ errors.good_health[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid mb-2">
@@ -146,6 +177,7 @@
                     <div class="ms-5 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, what is the condition being treated?</p>
                         <input type="text" class="text-input ms-3" v-model="information.medical_treatment">
+                        <div v-if="errors.medical_treatment" class="text-danger"><small class="fw-medium">{{ errors.medical_treatment[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid mb-2">
@@ -153,20 +185,11 @@
                         <div class="questions">
                             <p class="fs-6 mb-1">3. Have you ever had serious illness or surgical operation?</p>
                         </div>
-                        <!-- <div class="checkboxs d-flex justify-content-center align-items-center">
-                            <div class="form-check me-2">
-                                <input class="form-check-input" type="checkbox" value="Yes">
-                                <label class="form-check-label">Yes</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="No">
-                                <label class="form-check-label">No</label>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="ms-5 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, what illness or operation?</p>
                         <input type="text" class="text-input ms-3" v-model="information.surgical_operation">
+                        <div v-if="errors.surgical_operation" class="text-danger"><small class="fw-medium">{{ errors.surgical_operation[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid mb-2">
@@ -178,6 +201,7 @@
                     <div class="ms-5 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, when and why?</p>
                         <input type="text" class="text-input" v-model="information.hospitalized">
+                        <div v-if="errors.hospitalized" class="text-danger"><small class="fw-medium">{{ errors.hospitalized[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid mb-2">
@@ -189,6 +213,7 @@
                     <div class="ms-5 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, pls. specify?</p>
                         <input type="text" class="text-input ms-3" v-model="information.prescribtion_non_rescribtion_medication">
+                        <div v-if="errors.prescribtion_non_rescribtion_medication" class="text-danger"><small class="fw-medium">{{ errors.prescribtion_non_rescribtion_medication[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -204,6 +229,7 @@
                             <input class="form-check-input" type="radio" v-model="information.tabacco_products" value="No">
                             <label class="form-check-label">No</label>
                         </div>
+                        <div v-if="errors.tabacco_products" class="text-danger d-block"><small class="fw-medium">{{ errors.tabacco_products[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -219,6 +245,7 @@
                             <input class="form-check-input" type="radio" value="No" v-model="information.dangerous_drugs">
                             <label class="form-check-label">No</label>
                         </div>
+                        <div v-if="errors.dangerous_drugs" class="text-danger d-block"><small class="fw-medium">{{ errors.dangerous_drugs[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid">
@@ -229,6 +256,7 @@
                         <div class="form-check">
                             <label class="form-check-label me-2 mb-1">Include what type of allergies </label>
                             <input type="textarea" class="text-input w-100" v-model="information.allergy" placeholder="Type N/A if no allergies">
+                            <div v-if="errors.allergy" class="text-danger"><small class="fw-medium">{{ errors.allergy[0] }}</small></div>
                         </div>
                     </div>
                 </div>
@@ -245,6 +273,7 @@
                             <input class="form-check-input" type="radio" value="No" v-model="information.pregnant">
                             <label class="form-check-label">No</label>
                         </div>
+                        <div v-if="errors.pregnant" class="text-danger"><small class="fw-medium">{{ errors.pregnant[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -260,6 +289,7 @@
                             <input class="form-check-input" type="radio" value="No" v-model="information.nursing_mother">
                             <label class="form-check-label">No</label>
                         </div>
+                        <div v-if="errors.nursing_mother" class="text-danger"><small class="fw-medium">{{ errors.nursing_mother[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -275,15 +305,18 @@
                             <input class="form-check-input" type="radio" value="No" v-model="information.birth_control_pills">
                             <label class="form-check-label">No</label>
                         </div>
+                        <div v-if="errors.birth_control_pills" class="text-danger"><small class="fw-medium">{{ errors.birth_control_pills[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-start align-items-center mb-1">
                     <p class="fs-6 mb-0">12. Blood Type: </p>
                     <input type="text" class="text-input ms-3" v-model="information.blood_type">
+                    <div v-if="errors.blood_type" class="text-danger"><small class="fw-medium">{{ errors.blood_type[0] }}</small></div>
                 </div>
                 <div class="container-fluid d-flex justify-content-start align-items-center">
                     <p class="fs-6 mb-0">13. Blood Pressure: </p>
                     <input type="text" class="text-input ms-3" v-model="information.blood_pressure">
+                    <div v-if="errors.blood_pressure" class="text-danger"><small class="fw-medium">{{ errors.blood_pressure[0] }}</small></div>
                 </div>
                 <div class="container-fluid mb-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -294,6 +327,7 @@
                     <div class="ms-5 mb-3 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, what medications are you taking?</p>
                         <input type="text" class="text-input ms-3" v-model="information.health_problem">
+                        <div v-if="errors.health_problem" class="text-danger"><small class="fw-medium">{{ errors.health_problem[0] }}</small></div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
@@ -343,7 +377,8 @@ export default {
                 blood_type: '',
                 blood_pressure: '',
                 health_problem: ''
-            }
+            },
+            errors: {},
         };
     },
     methods: {
@@ -354,15 +389,21 @@ export default {
         },
         submitInformation() {
             if (!this.patientData.patient.id) {
-                console.error('Patient ID is missing.');
+                Swal.fire({
+                    icon: "error",
+                    title: "Missing Patient ID",
+                    text: "Please select a patient before submitting the form.",
+                });
                 return;
             }
+            
             this.information.user_id = this.patientData.patient.id;
             this.information.appointment_id = this.getUrlId();
+
             axios.post('/admin/patients/information', this.information)
                 .then((response) => {
                     Swal.fire({
-                       position: "center",
+                        position: "center",
                         icon: "success",
                         title: "Information has been added!",
                         showConfirmButton: false,
@@ -371,15 +412,25 @@ export default {
                         const patientAge = this.patientData.patient.age;
                         if (patientAge < 12) {
                             this.$router.push(`/user/admin/child/${response.data.data.id}`);
-                        }else {
+                        } else {
                             this.$router.push(`/user/admin/diagnose/${response.data.data.id}`);
                         }
                     });
                 })
                 .catch((error) => {
-                    console.error('Error submitting information:', error);
+                    if (error.response && error.response.data && error.response.data.errors) {
+                        this.errors = error.response.data.errors;
+                    } else {
+                        console.error('Error submitting information:', error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Submission Failed",
+                            text: "An unexpected error occurred. Please try again later.",
+                        });
+                    }
                 });
         },
+
         getPatientBasedOnId() {
             const patientId = this.$route.params.id;
             if (!patientId) {

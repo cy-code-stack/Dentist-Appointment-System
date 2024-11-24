@@ -8,14 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentAppointment extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
+
+    protected static function booted(): void
+    {
+        static::creating(function ($model) {
+            $model->status = 'Pending';
+            $model->balance = $model->fee;
+        });
+    }
+    
     public $timestamps = false;
 
     public function appointment(){
         return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 
-    public function paymentItems(){
-        return $this->hasMany(PaymentItem::class);
+    public function items(){
+        return $this->hasMany(PaymentItem::class,'payment_appoitment_id');
     }
 }

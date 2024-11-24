@@ -28,6 +28,8 @@ import IndexAdminCalendar from '../components/Admin/Calendar/IndexAdminCalendar.
 import ViewPatientInfo from '../components/Admin/Refer/ViewPatientInfo.vue';
 import Teeth from '../components/Admin/Refer/Teeth.vue';
 import ChildTeeth from '../components/Admin/Refer/ChildTeeth.vue';
+import PaymentInfo from '../components/Admin/Refer/Payments/PaymentInfo.vue';
+import AddToothPayment from '../components/Admin/Refer/Payments/AddToothPayment.vue';
 
 
 const routes = [
@@ -114,6 +116,16 @@ const routes = [
         path: '/user/admin/view/:id',
         name: 'patient-view',
         component: ViewPatientInfo,
+    },
+    {
+        path: '/user/admin/payment/:id',
+        name: 'payment-view',
+        component: PaymentInfo,
+    },
+    {
+        path: '/user/admin/payment/add/:id',
+        name: 'payment-add',
+        component: AddToothPayment,
     },
     {
         path: '/user/admin/diagnose/:id',
