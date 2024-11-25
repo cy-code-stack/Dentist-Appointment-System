@@ -188,7 +188,7 @@ export default {
     },
     computed:{
         profileImageSrc(){
-            return this.assistantProfile.profile_img || this.defaultProfile;
+            return this.assistantProfile?.profile_img || this.defaultProfile;
         },
         isImageUpload(){
             return this.assistantProfile.profile_img && this.assistantProfile.profile_img !== this.defaultProfile;
