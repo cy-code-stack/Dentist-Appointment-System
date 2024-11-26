@@ -6,18 +6,26 @@ html {
     padding: 0;
 }
 .main-container {
-    height: 70vh;
+    height: auto;
     margin-bottom: 2rem !important;
+    padding: 2rem 0;
 }
 .landing_wrapper {
-    margin-top: 5rem !important;
+    margin-top: 6rem !important;
+    gap: 2rem;
+}
+.text-container h1 {
+    font-size: 2.5rem; 
 }
 .navbar {
-    display: block;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 999;
+}
+
+.navbar-toggler {
+    border: none;
 }
 .navbar-brand img {
     min-width: 50px;
@@ -83,9 +91,6 @@ html {
     align-items: center !important;
     margin-bottom: 5rem;
 }
-/* .footer{
-    background-color: var(--primary-color);
-} */
 .logo-icon img {
     max-width: 150px;
     max-height: 150px;
@@ -149,4 +154,18 @@ html {
 
 .scroll-to-top i {
     margin: 0;
+}
+
+
+@media (max-width: 768px) {
+    .landing_wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+    .text-container h1 {
+        font-size: 2rem; 
+    }
+    .text-container p {
+        font-size: 0.9rem;
+    }
 }

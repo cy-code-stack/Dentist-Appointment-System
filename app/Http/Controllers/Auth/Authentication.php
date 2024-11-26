@@ -12,11 +12,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\User;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\welcomeMail;
-use Str;
-use Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 
 

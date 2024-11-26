@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('patient_diagnostics', function (Blueprint $table) {
-            $table->foreignId('disease_id')->nullable()->after('teeth_id')->constrained('adult_teeth_diseases');
+        Schema::table('payment_appointments', function (Blueprint $table) {
+            $table->timestamps();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('patient_diagnostics', function (Blueprint $table) {
+        Schema::table('payment_appointments', function (Blueprint $table) {
             //
         });
     }

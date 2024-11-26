@@ -199,6 +199,17 @@
                         </div>
                         <div class="container-fluid">
                             <canvas id="barChart" class="chart"></canvas>
+                            <p class="text-center fw-medium fs-4 mt-4">Date Filter</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3 mb-2 gap-2">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">Start Date</span>
+                                    <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">End Date</span>
+                                    <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
                             <canvas id="lineChart" class="chart"></canvas>
                         </div>
                     </div>
@@ -217,22 +228,22 @@ export default {
         return {
             lineChartData: {
                 labels: [
-                    "2020",
-                    "2021",
-                    "2022",
-                    "2023",
-                    "2024",
-                    "2025",
-                    "2026",
-                    "2027",
-                    "2028",
-                    "2029",
-                    "2030",
-                    "2031",
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December",
                 ],
                 datasets: [
                     {
-                        label: "Yearly Net Income Sales",
+                        label: "Income Sales",
                         data: [
                             100000, 120000, 130000, 140000, 160000, 180000,
                             190000, 200000, 220000, 230000, 240000, 250000,
@@ -293,7 +304,7 @@ export default {
         },
         createLineChart(ctx) {
             const lineChart = new Chart(ctx, {
-                type: "line",
+                type: "bar",
                 data: this.lineChartData,
                 options: {
                     scales: {

@@ -18,9 +18,6 @@ class PaymentAppointment extends Model
             $model->balance = $model->fee;
         });
     }
-    
-    public $timestamps = false;
-
     public function appointment(){
         return $this->belongsTo(Appointment::class, 'appointment_id');
     }

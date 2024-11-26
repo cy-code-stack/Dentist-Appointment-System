@@ -6,33 +6,33 @@
 
 @section('content')
     <div class="container-fluid min-vh-100">
-        <div class="company-logo  align-items-center">
+        <!-- Company Logo and Description -->
+        <div class="company-logo text-center py-4">
             <a href="/">
-                <img src="{{ asset('images/logo.png') }}" alt="logo-img" class="image-fluid mx-auto d-block mt-2" height="130">
-                <p class="text-primary text-center fw-semibold fs-2 mb-0">Graces Dental Clinic</p>
+                <img src="{{ asset('images/logo.png') }}" alt="logo-img" class="img-fluid mx-auto d-block" style="max-height: 100px;">
+                <p class="text-primary fw-semibold fs-2 mb-0">Graces Dental Clinic</p>
             </a>
-            <p class="fs-4 fw-medium text-center">Sign in</p>
-                <p class="fs-6 text-center">Make certain that your account is already verified before entering your
-                    credentials.</p>
+            <p class="fs-4 fw-medium">Sign in</p>
+            <p class="fs-6">Make certain that your account is already verified before entering your credentials.</p>
         </div>
-        <div class="logo-txt container d-flex justify-content-center align-items-center">
-            <div class="sign-up-img col col-lg-5 d-flex flex-column d-flex justify-content-center align-items-center bg-white">
-                <img src="{{ asset('images/sign-in.png') }}" class="image-fluid mx-auto d-block" alt="sign-in-logo">
-            </div>
-            <div class="col col-lg-5 bg-info rounded-end-4 p-4">
+
+        <!-- Sign-In Form -->
+        <div class="logo-txt container d-flex flex-column justify-content-center align-items-center mt-4">
+            <!-- Form Section -->
+            <div class="col-12 col-lg-7 bg-info rounded-4 p-4">
                 <form action="{{ route('authenticate') }}" method="POST">
                     @csrf
                     <div class="input-container mt-3">
-                        <div class="input-item mb-2">
-                            <label for="" class="form-label text-white">Email</label>
-                            <div class="input-icon d-flex align-items-center">
-                                <input type="email" name="email" id="email" class="form-control p-3"
-                                    placeholder="E-mail">
-                            </div>
+                        <!-- Email Input -->
+                        <div class="input-item mb-3">
+                            <label for="email" class="form-label text-white">Email</label>
+                            <input type="email" name="email" id="email" class="form-control p-3" placeholder="E-mail">
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        
+                        <!-- Password Input -->
                         <div class="input-item mb-2">
                             <label for="" class="form-label text-white">Password</label>
                             <div class="input-icon d-flex align-items-center">
@@ -44,25 +44,29 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="input-item mb-2 d-flex justify-content-end align-items-center">
-                            {{-- <div class="remember-container">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label text-white">Remember</label>
-                            </div> --}}
+
+                        <!-- Forgot Password Link -->
+                        <div class="mb-3 d-flex justify-content-end">
                             <a href="{{ route('forgot') }}">
-                                <p class="text-white fs-6">Forgot Password</p>
+                                <p class="text-white fs-6">Forgot Password?</p>
                             </a>
                         </div>
-                        <div class="sign-in-btn mb-2">
+
+                        <!-- Submit Button and Sign-up Link -->
+                        <div class="sign-in-btn mb-3">
                             <button type="submit" class="btn w-100 btn-primary text-white fs-5 mt-2 mb-3">Sign in</button>
-                            <p class="fs-6 text-center mb-3"><small class="me-2">Don't have an account?</small><a href="{{ route('signup') }}"
-                                class="fw-semibold text-white"><small>Sign up</small></a></p>
+                            <p class="fs-6 text-center mb-3">
+                                <small class="me-2">Don't have an account?</small>
+                                <a href="{{ route('signup') }}" class="fw-semibold text-white"><small>Sign up</small></a>
+                            </p>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+
 
     <script>
         const togglePassword = document.querySelector('#togglePassword');

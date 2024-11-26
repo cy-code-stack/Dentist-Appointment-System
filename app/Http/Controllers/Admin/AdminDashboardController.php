@@ -29,7 +29,11 @@ class AdminDashboardController extends Controller
         foreach($records as $record){
             $data[intval($record->month)] = $record->count;
         }
-        
+
         return $data;
+    }
+
+    public function sales(){
+        //this would be the sales report dashboard
     }
 }
