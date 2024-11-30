@@ -32,17 +32,37 @@
 
 <body class="hold-transition sidebar-mini overflow-auto">
     <div class="wrapper" id="app">
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light sticky-md-top">
-            <ul class="navbar-nav">
-                {{-- <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" role="button"><i
-                            class="fas fa-bars"></i></a>
-                </li> --}}
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/user/staff/dashboard" class="nav-link ms-4">Assistant Dashboard</a>
-                </li>
-            </ul>
-        </nav>
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light sticky-md-top">
+        <ul class="navbar-nav">
+            <!-- Left navbar links -->
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="/user/staff/dashboard" class="nav-link ms-4">Assistant Dashboard</a>
+            </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ms-auto me-3">
+            <li class="nav-item dropdown">
+                <a class="nav-link position-relative" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                    <i class="fa-solid fa-bell fs-4"></i>
+                    @if($unreadCount > 0)
+                        <span class="position-absolute top-2 start-98 translate-middle badge rounded-pill bg-danger">{{ $unreadCount }}</span>
+                    @endif
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                    @foreach ($notifications as $notification)
+                        <li>
+                            <a class="dropdown-item text-primary fs-6">
+                                <small><strong>{{ $notification->data['event'] }}</strong></small><br>
+                                <small>{{ $notification->data['name'] }}</small><br>
+                                <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </li>
+        </ul>
+    </nav>
         <aside class="main-sidebar sidebar-light-primary elevation-1 fixed-start">
             <a href="/user/staff/dashboard" class="brand-link text-decoration-none">
                 <img src="{{ asset('images/logo.png') }}" alt="school logo" class="brand-image img-circle elevation-3"
@@ -139,20 +159,9 @@
     {{-- <script src="{{ asset('/js/app.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-5nt9G0GDdOTIwjX0uizG9xXLEFcXDQhg7lsCxvK2ebCkqQ+FgH0ODICqYGD0CUGe" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
-        integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

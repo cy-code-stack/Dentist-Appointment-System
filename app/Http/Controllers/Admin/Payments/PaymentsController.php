@@ -70,7 +70,7 @@ class PaymentsController extends Controller
         ]);
 
         $appointmentbalance = PaymentAppointment::where('appointment_id', $paymentAppointment->appointment_id)->sum('balance');
-        
+
         if($appointmentbalance <= 0){
             $appointmentbalance->status->update([
                 'status' => 'Already Paid',

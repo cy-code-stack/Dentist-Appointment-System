@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Patient;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Services;
+use App\Notifications\AppointmentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BookAppointmentVerification;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PatientController extends Controller
 {
@@ -34,7 +37,7 @@ class PatientController extends Controller
 
 
         $appoint = $request->all();
-        $appoint['patient_id'] = \Auth::user()->id;
+        $appoint['patient_id'] = Auth::user()->id;
         $data = Appointment::create($appoint);
 
         $user_data = Appointment::with('patient', 'appointServices')->where('id', $data->id)->first();
@@ -52,6 +55,12 @@ class PatientController extends Controller
         ];
 
         $result = Mail::to($user_data->patient->email)->send(new BookAppointmentVerification($bookmailData));
+
+        $users = User::where('role', 'Assistant')->get();
+
+        foreach ($users as $user) {
+            $user->notify(new AppointmentNotification($data));
+        }
 
         if ($result) {
             return response()->json([

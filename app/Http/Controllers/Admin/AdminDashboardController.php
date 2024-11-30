@@ -34,6 +34,21 @@ class AdminDashboardController extends Controller
     }
 
     public function sales(){
-        //this would be the sales report dashboard
+        $records = DB::table('payment_appointments as pa')
+            ->select(
+                DB::raw('DATE_FORMAT(pa.created_at, "%m") as month'),
+                DB::raw('SUM(pa.fee) as total_fee')
+            )
+            ->groupBy('month')
+            ->get();
+        
+        $monthlyFees = array_fill(1, 12, 0);
+
+        foreach ($records as $record) {
+            $monthIndex = (int)$record->month;
+            $monthlyFees[$monthIndex] = $record->total_fee;
+        }
+
+        return $monthlyFees;
     }
 }

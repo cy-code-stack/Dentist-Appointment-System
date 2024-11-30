@@ -154,13 +154,20 @@ export default {
                         title: "Record has been saved!",
                         showConfirmButton: false,
                         timer: 2000,
+                    }).then(() => {
+                        this.clearForm();
+                        this.displayPayment();
                     });
-                    this.displayPayment();
                 })
                 .catch((error) => {
                     console.error(error);
                 });
             this.showModal = false;
+        },
+        clearForm(){
+            this.newTooth.tooth = '';
+            this.newTooth.surface = '';
+            this.newTooth.fee = '';
         },
     },
     mounted() {

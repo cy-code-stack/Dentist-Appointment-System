@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\Profile\AdminProfileController;
 use App\Http\Controllers\Admin\Refer\PatientInformationController;
 use App\Http\Controllers\Admin\Refer\DiagnosticController;
 use App\Http\Controllers\Admin\Transaction\TransactionController;
+use App\Http\Controllers\NotificationController;
 //End of Admin
 
 //Staff
@@ -72,7 +73,6 @@ Route::get('/', function () { return view('landing_page');});
     Route::get('/patient/invoice/print/{id}', [PrintController::class, 'downloadPrint'])->name('invoive.print');
 //end
 
-
 // Routes for authenticated users
 Route::middleware(['preventBackHistory', 'auth'])->group(function () {
 
@@ -112,6 +112,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
         //Start of Admin Routes
             Route::get('/user/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin');
             Route::get('/user/admin/count', [AdminDashboardController::class, 'countPatient']);
+            Route::get('/user/admin/sales/count', [AdminDashboardController::class, 'sales']);
 
             //Manage User
                 Route::get('/user/admin/manage/user', [ManageStaffController::class, 'showUser']);

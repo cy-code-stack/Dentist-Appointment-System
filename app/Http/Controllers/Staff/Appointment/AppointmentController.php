@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReschedAppointmentMail;
 use App\Mail\AbortAppointmentMail;
-use App\Models\PaymentAppointment;
-use App\Models\PaymentItem;
 
 class AppointmentController extends Controller
 {

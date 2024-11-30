@@ -198,18 +198,18 @@
                             </nav>
                         </div>
                         <div class="container-fluid">
-                            <canvas id="barChart" class="chart"></canvas>
-                            <p class="text-center fw-medium fs-4 mt-4">Date Filter</p>
+                            <p class="text-center fw-medium fs-4">Date Filter</p>
                             <div class="d-flex justify-content-between align-items-center mt-3 mb-2 gap-2">
                                 <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1">Start Date</span>
-                                    <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" id="basic-addon1">Start Month</span>
+                                    <input type="date" class="form-control" v-model="startDate" @change="fetchAndRenderCharts">
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1">End Date</span>
-                                    <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" id="basic-addon1">End Month</span>
+                                    <input type="date" class="form-control" v-model="endDate" @change="fetchAndRenderCharts">
                                 </div>
                             </div>
+                            <canvas id="barChart" class="chart"></canvas>
                             <canvas id="lineChart" class="chart"></canvas>
                         </div>
                     </div>
@@ -226,111 +226,113 @@ import Chart from "chart.js/auto";
 export default {
     data() {
         return {
-            lineChartData: {
-                labels: [
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December",
-                ],
-                datasets: [
-                    {
-                        label: "Income Sales",
-                        data: [
-                            100000, 120000, 130000, 140000, 160000, 180000,
-                            190000, 200000, 220000, 230000, 240000, 250000,
-                        ],
-                        borderColor: "rgba(54, 162, 235)",
-                        borderWidth: 2,
-                        fill: false,
-                    },
-                ],
-            },
-            barChart: null, 
+            barChart: null,
+            lineChart: null, 
+            startDate: null,
+            endDate: null, 
         };
     },
     methods: {
+        fetchAndRenderCharts() {
+            const barCtx = document.getElementById("barChart");
+            const lineCtx = document.getElementById("lineChart");
+
+            if (this.barChart) this.barChart.destroy();
+            if (this.lineChart) this.lineChart.destroy();
+
+            this.createBarChart(barCtx);
+            this.createLineChart(lineCtx);
+        },
         createBarChart(ctx) {
-            axios.get('/user/admin/count').then((response) => {
-                    const barChart = new Chart(ctx, {
-                    type: "bar",
-                    data: {
-                    labels: [
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "August",
-                        "September",
-                        "October",
-                        "November",
-                        "December",
-                    ],
-                        datasets: [
-                            {
-                                label: "Patient Catered",
-                                data: Object.values(response.data),
-                                backgroundColor: "rgba(13, 110, 253)",
-                                borderRadius: 5,
-                            },
-                        ],
-                    },
-                    options: {
-                        responsive:true,
-                        maintainAspectRatio:true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                max: Math.max(...Object.values(response.data)) + 5,
+            axios.get('/user/admin/count', {
+                    params: { start_date: this.startDate, end_date: this.endDate },
+                })
+                .then((response) => {
+                    this.barChart = new Chart(ctx, {
+                        type: "bar",
+                        data: {
+                            labels: [
+                                "January", "February", "March", "April", "May", 
+                                "June", "July", "August", "September", 
+                                "October", "November", "December"
+                            ],
+                            datasets: [
+                                {
+                                    label: "Patient Catered",
+                                    data: Object.values(response.data),
+                                    backgroundColor: "rgba(13, 110, 253)",
+                                    borderRadius: 5,
+                                },
+                            ],
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: Math.max(...Object.values(response.data)) + 5,
+                                },
                             },
                         },
-                    },
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
-            }).catch((error) =>{
-                console.log(error);
-                
-            });
         },
         createLineChart(ctx) {
-            const lineChart = new Chart(ctx, {
-                type: "bar",
-                data: this.lineChartData,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
+            axios.get('/user/admin/sales/count', {
+                    params: { start_date: this.startDate, end_date: this.endDate },
+                })
+                .then((response) => {
+                    this.lineChart = new Chart(ctx, {
+                        type: "line",
+                        data: {
+                            labels: [
+                                "January", "February", "March", "April", "May", 
+                                "June", "July", "August", "September", 
+                                "October", "November", "December"
+                            ],
+                            datasets: [
+                                {
+                                    label: "Income Sales",
+                                    data: Object.values(response.data),
+                                    borderColor: "rgba(54, 162, 235)",
+                                    borderWidth: 1,
+                                    fill: false,
+                                },
+                            ],
                         },
-                    },
-                },
-            });
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: Math.max(...Object.values(response.data)) + 1000,
+                                },
+                            },
+                        },
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
     },
     mounted() {
-        const barCtx = document.getElementById("barChart");
-        const lineCtx = document.getElementById("lineChart");
+        const today = new Date();
+        const startOfYear = new Date(today.getFullYear(), 0, 1).toISOString().slice(0, 10);
+        const endOfYear = new Date(today.getFullYear(), 11, 31).toISOString().slice(0, 10);
 
-        if (!barCtx || !lineCtx) {
-            console.error("Could not find canvas elements");
-            return;
-        }
-        
-        this.createBarChart(barCtx);
-        this.createLineChart(lineCtx);
-    
+        this.startDate = startOfYear;
+        this.endDate = endOfYear;
+
+        this.fetchAndRenderCharts();
     },
 };
 </script>
+
 
 <style scoped>
 .main-container-card {
