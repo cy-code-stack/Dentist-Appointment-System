@@ -161,6 +161,7 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Tooth Restoration</h5>
                             <p class="card-text text-muted">Restoration of damaged or decayed teeth using durable and natural-looking materials to restore functionality and aesthetics.</p>
+                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -170,6 +171,7 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Tooth Extraction</h5>
                             <p class="card-text text-muted">Safe and professional removal of damaged or problematic teeth to alleviate pain and prevent further oral health issues.</p>
+                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -218,6 +220,7 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Tooth Cleaning</h5>
                             <p class="card-text text-muted">Regular dental cleaning to remove plaque and stains, ensuring optimal oral health and a fresh, clean smile.</p>
+                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>

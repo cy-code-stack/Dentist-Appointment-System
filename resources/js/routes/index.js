@@ -30,6 +30,9 @@ import Teeth from '../components/Admin/Refer/Teeth.vue';
 import ChildTeeth from '../components/Admin/Refer/ChildTeeth.vue';
 import PaymentInfo from '../components/Admin/Refer/Payments/PaymentInfo.vue';
 import AddToothPayment from '../components/Admin/Refer/Payments/AddToothPayment.vue';
+import IndexRecords from '../components/Admin/Records/IndexViewRecord.vue';
+import IndexViewRecord from '../components/Admin/Records/Forms/IndexViewForm.vue';
+import TeethRecord from '../components/Admin/Records/Forms/TeethRecord.vue';
 
 
 const routes = [
@@ -111,6 +114,21 @@ const routes = [
         path: '/user/admin/refer',
         name: 'admin-refer',
         component: IndexReferPatients,
+    },
+    {
+        path: '/user/admin/record',
+        name: 'admin-record',
+        component: IndexRecords,
+    },
+    {
+        path: '/user/admin/record/view/:id',
+        name: 'admin-view',
+        component: IndexViewRecord,
+    },
+    {
+        path: '/user/admin/record/teeth',
+        name: 'admin-teeth',
+        component: TeethRecord,
     },
     {
         path: '/user/admin/view/:id',

@@ -70,7 +70,7 @@ export default {
             try {
                 const response = await axios.get('/user/staff/calendar/display/appointment');
                 return response.data.map(appointment => ({
-                    title: `Appointment for ${appointment.patient?.firstname} ${appointment.patient?.lastname}`,
+                    title: `Appointment ${appointment.appoint_services?.services_name}`,
                     start: appointment.sched_date,
                     end: appointment.sched_date,
                     color: appointment.color || '#14A44D',

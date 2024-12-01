@@ -46,7 +46,7 @@ class PatientInformationController extends Controller
             'place_of_birth' => 'required',   
             'nationality' => 'required',   
             'guardian' => 'required',   
-            'reffered_by' => 'required',   
+            'referred_by' => 'required', 
             'chief_complaint' => 'required',   
             'previous_dentist' => 'required',   
             'last_dental_visit' => 'required',   

@@ -50,11 +50,9 @@ export default {
         async displayAppointment() {
             try {
                 const response = await axios.get('/admin/calendar/display/appointments');
-                console.log(response);
-                
                 const appointmentEvents = response.data.map(appointment => ({
                     // for ${appointment.patient?.firstname} ${appointment.patient?.lastname}
-                    title: `Appointment for ${appointment.appoint_services?.services_name}`,
+                    title: `Appointment ${appointment.appoint_services?.services_name}`,
                     start: appointment.sched_date,
                     end: appointment.sched_date,
                     color: appointment.color || '#14A44D',

@@ -15,9 +15,6 @@ class PatientInformationRecord extends Model
         return $this->belongsTo(User::class, 'user_id'); 
     }
 
-    public function diagnostic(){
-        return $this->belongsTo(PatientDiagnostic::class, 'diagnostic_id');
-    }
     public function diagnostics()
     {
         return $this->hasMany(PatientDiagnostic::class, 'patient_information_id'); 

@@ -137,8 +137,7 @@ export default {
     methods:{
         displayAppointment(){
             axios.get('/user/staff/appointment/display').then((response)=>{
-                // console.log(response);
-                this.listofAppointment = response.data.map((appoint)=> ({
+                this.listofAppointment = response.data.data.map((appoint)=> ({
                     ...appoint,
                     Pending: appoint.appnt_status === "Pending",
                     Ongoing: appoint.appnt_status === "Ongoing",
@@ -164,34 +163,6 @@ export default {
             this.selected_resched = selected_resched;
             $('#resched-appointment-modal').modal("show");
         }
-
-
-        // abortAppointment(id){
-        //     Swal.fire({
-        //         title: "Are you sure?",
-        //         text: "You won't be able to revert this!",
-        //         icon: "warning",
-        //         showCancelButton: true,
-        //         confirmButtonColor: "#3085d6",
-        //         cancelButtonColor: "#d33",
-        //         confirmButtonText: "Yes, decline it!",
-        //     }).then((data) => {
-        //         if (data.isConfirmed) {
-        //             axios
-        //                 .put("/user/staff/appointment/declined/" + id)
-        //                 .then((response) => {
-        //                     Swal.fire("Declined!", "Appointment has been decline.", "success");
-        //                     this.displayAppointment();
-        //                 });
-        //         }
-        //     }).catch((error) => {
-        //         Swal.fire({
-        //             icon: "error",
-        //             text: "Something went wrong!",
-        //         });
-        //         console.log(error);
-        //     });
-        // },
     },
     mounted(){
         this.displayAppointment();

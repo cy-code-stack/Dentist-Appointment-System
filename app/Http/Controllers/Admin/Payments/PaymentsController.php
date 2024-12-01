@@ -71,10 +71,13 @@ class PaymentsController extends Controller
 
         $appointmentbalance = PaymentAppointment::where('appointment_id', $paymentAppointment->appointment_id)->sum('balance');
 
-        if($appointmentbalance <= 0){
-            $appointmentbalance->status->update([
+        if($newbalance <= 0){
+            $paymentAppointment->update([
                 'status' => 'Already Paid',
             ]);
+        }
+
+        if($appointmentbalance <= 0){
             $appointment = Appointment::find($paymentAppointment->appointment_id);
             $appointment->update([
                 'appnt_status' => 'Completed',

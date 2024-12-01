@@ -2,91 +2,82 @@
     <div class="container-fluid">
         <p class="text-center fs-1 text-primary fw-semibold mb-1">Graces Dental Clinic</p>
         <p class="text-center fs-4 text-success fw-semibold">Patient Information Record</p>
-
-        <form @submit.prevent="submitInformation">
             <div class="card p-3 shadow-sm">
                 <div class="title-form mb-3">
-                    <p class="fs-5 fw-semibold text-primary">Personal Information</p>
+                    <p class="fs-5 fw-semibold text-primary">Personal appointment</p>
                 </div>
                 <div class="container-fluid">
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label class="form-label">Firstname</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.firstname" readonly>
+                            <input type="text" class="form-control rounded" :value="transData.user.firstname" readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Middle Initial</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.middle_initial" readonly>
+                            <input type="text" class="form-control rounded" :value="transData.user.middle_initial" readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Lastname</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.lastname" readonly>
+                            <input type="text" class="form-control rounded" :value="transData.user.lastname" readonly>
                         </div>
                     </div>
 
                     <div class="row g-3 mt-3">
                         <div class="col-md-4">
                             <label class="form-label">Birthdate</label>
-                            <input type="date" class="form-control rounded" v-model="information.birthdate">
-                            <div v-if="errors.birthdate" class="text-danger mt-1"><small>{{ errors.birthdate[0] }}</small></div>
+                            <input type="date" class="form-control rounded" :value="transData.birthdate" readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Age</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.age" readonly>
+                            <input type="text" class="form-control rounded" :value="transData.user.age" readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Religion</label>
-                            <input type="text" class="form-control rounded" v-model="information.religion">
-                            <div v-if="errors.religion" class="text-danger mt-1"><small>{{ errors.religion[0] }}</small></div>
+                            <input type="text" class="form-control rounded" :value="transData.religion" readonly>
                         </div>
                     </div>
 
                     <div class="row g-3 mt-3">
                         <div class="col-md-6">
                             <label class="form-label">Place of Birth</label>
-                            <input type="text" class="form-control rounded" v-model="information.place_of_birth">
-                            <div v-if="errors.place_of_birth" class="text-danger mt-1"><small>{{ errors.place_of_birth[0] }}</small></div>
+                            <input type="text" class="form-control rounded" :value="transData.place_of_birth" readonly>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Nationality</label>
-                            <input type="text" class="form-control rounded" v-model="information.nationality">
-                            <div v-if="errors.nationality" class="text-danger mt-1"><small>{{ errors.nationality[0] }}</small></div>
+                            <input type="text" class="form-control rounded" :value="transData.nationality" readonly>
                         </div>
                     </div>
 
                     <div class="row g-3 mt-3">
                         <div class="col-md-6">
                             <label class="form-label">Home Address</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.home_address" readonly>
+                            <input type="text" class="form-control rounded" :value="transData.user.home_address" readonly>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Contact Number</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.phone_number" readonly>
+                            <input type="text" class="form-control rounded" :value="transData.user.phone_number" readonly>
                         </div>
                     </div>
 
                     <div class="row g-3 mt-3">
                         <div class="col-md-6">
                             <label class="form-label">Occupation</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.occupation" readonly>
+                            <input type="text" class="form-control rounded" :value="transData.user.occupation" readonly>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Parents or Guardian</label>
-                            <input type="text" class="form-control rounded" v-model="information.guardian">
-                            <div v-if="errors.guardian" class="text-danger mt-1"><small>{{ errors.guardian[0] }}</small></div>
+                            <input type="text" class="form-control rounded" :value="transData.guardian" readonly>
                         </div>
                     </div>
 
                     <div class="row g-3 mt-3">
                         <div class="col-md-6">
                             <label class="form-label">Chief Complaint</label>
-                            <input type="text" class="form-control rounded" v-model="information.chief_complaint">
-                            <div v-if="errors.chief_complaint" class="text-danger mt-1"><small>{{ errors.chief_complaint[0] }}</small></div>
+                            <input type="text" class="form-control rounded" :value="transData.chief_complaint" readonly>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Referred by</label>
-                            <input type="text" class="form-control rounded" v-model="information.referred_by">
-                            <div v-if="errors.referred_by" class="text-danger mt-1"><small>{{ errors.referred_by[0] }}</small></div>
+                            <input type="text" class="form-control rounded" :value="transData.referred_by" readonly>
                         </div>
                     </div>
                 </div>
@@ -101,17 +92,11 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Previous Dentist</label>
-                            <input type="text" class="form-control rounded" v-model="information.previous_dentist">
-                            <div v-if="errors.previous_dentist" class="text-danger mt-1">
-                                <small class="fw-medium">{{ errors.previous_dentist[0] }}</small>
-                            </div>
+                            <input type="text" class="form-control rounded" :value="transData.previous_dentist" readonly>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Last Dental Visit</label>
-                            <input type="text" class="form-control rounded" v-model="information.last_dental_visit">
-                            <div v-if="errors.last_dental_visit" class="text-danger mt-1">
-                                <small class="fw-medium">{{ errors.last_dental_visit[0] }}</small>
-                            </div>
+                            <input type="text" class="form-control rounded" :value="transData.last_dental_visit" readonly>
                         </div>
                     </div>
                 </div>
@@ -128,14 +113,12 @@
                     <!-- Physician Name -->
                     <div class="input-group me-2 mb-3 mb-md-0" style="flex: 1 1 45%">
                         <span class="input-group-text">Name of the Physician</span>
-                        <input type="text" class="form-control" v-model="information.physician_name">
-                        <div v-if="errors.physician_name" class="text-danger"><small class="fw-medium">{{ errors.physician_name[0] }}</small></div>
+                        <input type="text" class="form-control" :value="transData.physician_name" readonly>
                     </div>
                     <!-- Specialty -->
                     <div class="input-group" style="flex: 1 1 45%">
                         <span class="input-group-text">Specialty (if applicable)</span>
-                        <input type="text" class="form-control" v-model="information.specialty">
-                        <div v-if="errors.specialty" class="text-danger"><small class="fw-medium">{{ errors.specialty[0] }}</small></div>
+                        <input type="text" class="form-control" :value="transData.specialty" readonly>
                     </div>
                 </div>
 
@@ -144,14 +127,12 @@
                     <!-- Office Address -->
                     <div class="input-group me-2 mb-3 mb-md-0" style="flex: 1 1 45%">
                         <span class="input-group-text">Office Address</span>
-                        <input type="text" class="form-control" v-model="information.office_address">
-                        <div v-if="errors.office_address" class="text-danger"><small class="fw-medium">{{ errors.office_address[0] }}</small></div>
+                        <input type="text" class="form-control" :value="transData.office_address" readonly>
                     </div>
                     <!-- Office Number -->
                     <div class="input-group" style="flex: 1 1 45%">
                         <span class="input-group-text">Office Number</span>
-                        <input type="text" class="form-control" v-model="information.office_number">
-                        <div v-if="errors.office_number" class="text-danger"><small class="fw-medium">{{ errors.office_number[0] }}</small></div>
+                        <input type="text" class="form-control" :value="transData.office_number" readonly>
                     </div>
                 </div>
             </div>
@@ -163,14 +144,13 @@
                     </div>
                     <div class="checkboxs d-flex justify-content-center align-items-center">
                         <div class="form-check me-2">
-                            <input class="form-check-input" type="radio" value="Yes" v-model="information.good_health">
+                            <input class="form-check-input" type="radio" value="Yes" v-model="transData.good_health">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="No" v-model="information.good_health">
+                            <input class="form-check-input" type="radio" value="No" v-model="transData.good_health">
                             <label class="form-check-label">No</label>
                         </div>
-                        <div v-if="errors.good_health" class="text-danger d-block"><small class="fw-medium">{{ errors.good_health[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid mb-2">
@@ -181,8 +161,7 @@
                     </div>
                     <div class="ms-5 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, what is the condition being treated?</p>
-                        <input type="text" class="text-input ms-3" v-model="information.medical_treatment">
-                        <div v-if="errors.medical_treatment" class="text-danger"><small class="fw-medium">{{ errors.medical_treatment[0] }}</small></div>
+                        <input type="text" class="text-input ms-3" v-model="transData.medical_treatment" readonly>
                     </div>
                 </div>
                 <div class="container-fluid mb-2">
@@ -193,8 +172,7 @@
                     </div>
                     <div class="ms-5 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, what illness or operation?</p>
-                        <input type="text" class="text-input ms-3" v-model="information.surgical_operation">
-                        <div v-if="errors.surgical_operation" class="text-danger"><small class="fw-medium">{{ errors.surgical_operation[0] }}</small></div>
+                        <input type="text" class="text-input ms-3" v-model="transData.surgical_operation" readonly>
                     </div>
                 </div>
                 <div class="container-fluid mb-2">
@@ -205,8 +183,7 @@
                     </div>
                     <div class="ms-5 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, when and why?</p>
-                        <input type="text" class="text-input" v-model="information.hospitalized">
-                        <div v-if="errors.hospitalized" class="text-danger"><small class="fw-medium">{{ errors.hospitalized[0] }}</small></div>
+                        <input type="text" class="text-input" v-model="transData.hospitalized" readonly>
                     </div>
                 </div>
                 <div class="container-fluid mb-2">
@@ -217,8 +194,7 @@
                     </div>
                     <div class="ms-5 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, pls. specify?</p>
-                        <input type="text" class="text-input ms-3" v-model="information.prescribtion_non_rescribtion_medication">
-                        <div v-if="errors.prescribtion_non_rescribtion_medication" class="text-danger"><small class="fw-medium">{{ errors.prescribtion_non_rescribtion_medication[0] }}</small></div>
+                        <input type="text" class="text-input ms-3" v-model="transData.prescribtion_non_rescribtion_medication" readonly>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -227,14 +203,13 @@
                     </div>
                     <div class="checkboxs d-flex justify-content-center align-items-center">
                         <div class="form-check me-2">
-                            <input class="form-check-input" type="radio" v-model="information.tabacco_products" value="Yes">
+                            <input class="form-check-input" type="radio" value="Yes" v-model="transData.tabacco_products">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" v-model="information.tabacco_products" value="No">
+                            <input class="form-check-input" type="radio" value="No" v-model="transData.tabacco_products">
                             <label class="form-check-label">No</label>
                         </div>
-                        <div v-if="errors.tabacco_products" class="text-danger d-block"><small class="fw-medium">{{ errors.tabacco_products[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -243,14 +218,13 @@
                     </div>
                     <div class="checkboxs d-flex justify-content-center align-items-center">
                         <div class="form-check me-2">
-                            <input class="form-check-input" type="radio" value="Yes" v-model="information.dangerous_drugs">
+                            <input class="form-check-input" type="radio" value="Yes" v-model="transData.dangerous_drugs">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="No" v-model="information.dangerous_drugs">
+                            <input class="form-check-input" type="radio" value="No" v-model="transData.dangerous_drugs">
                             <label class="form-check-label">No</label>
                         </div>
-                        <div v-if="errors.dangerous_drugs" class="text-danger d-block"><small class="fw-medium">{{ errors.dangerous_drugs[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid">
@@ -260,8 +234,7 @@
                     <div class="checkboxs ms-5 d-flex justify-content-start align-items-center">
                         <div class="form-check">
                             <label class="form-check-label me-2 mb-1">Include what type of allergies </label>
-                            <input type="textarea" class="text-input w-100" v-model="information.allergy" placeholder="Type N/A if no allergies">
-                            <div v-if="errors.allergy" class="text-danger"><small class="fw-medium">{{ errors.allergy[0] }}</small></div>
+                            <input type="textarea" class="text-input w-100" v-model="transData.allergy" readonly>
                         </div>
                     </div>
                 </div>
@@ -271,14 +244,13 @@
                     </div>
                     <div class="checkboxs d-flex justify-content-center align-items-center">
                         <div class="form-check me-2">
-                            <input class="form-check-input" type="radio" value="Yes" v-model="information.pregnant">
+                            <input class="form-check-input" type="radio" value="Yes" v-model="transData.pregnant">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="No" v-model="information.pregnant">
+                            <input class="form-check-input" type="radio" value="No" v-model="transData.pregnant">
                             <label class="form-check-label">No</label>
                         </div>
-                        <div v-if="errors.pregnant" class="text-danger"><small class="fw-medium">{{ errors.pregnant[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -287,14 +259,13 @@
                     </div>
                     <div class="checkboxs d-flex justify-content-center align-items-center">
                         <div class="form-check me-2">
-                            <input class="form-check-input" type="radio" value="Yes" v-model="information.nursing_mother">
+                            <input class="form-check-input" type="radio" value="Yes" v-model="transData.nursing_mother">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="No" v-model="information.nursing_mother">
+                            <input class="form-check-input" type="radio" value="No" v-model="transData.nursing_mother">
                             <label class="form-check-label">No</label>
                         </div>
-                        <div v-if="errors.nursing_mother" class="text-danger"><small class="fw-medium">{{ errors.nursing_mother[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -303,25 +274,22 @@
                     </div>
                     <div class="checkboxs d-flex justify-content-center align-items-center">
                         <div class="form-check me-2">
-                            <input class="form-check-input" type="radio" value="Yes" v-model="information.birth_control_pills">
+                            <input class="form-check-input" type="radio" value="Yes" v-model="transData.birth_control_pills">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" value="No" v-model="information.birth_control_pills">
+                            <input class="form-check-input" type="radio" value="No" v-model="transData.birth_control_pills">
                             <label class="form-check-label">No</label>
                         </div>
-                        <div v-if="errors.birth_control_pills" class="text-danger"><small class="fw-medium">{{ errors.birth_control_pills[0] }}</small></div>
                     </div>
                 </div>
                 <div class="container-fluid d-flex justify-content-start align-items-center mb-1">
                     <p class="fs-6 mb-0">12. Blood Type: </p>
-                    <input type="text" class="text-input ms-3" v-model="information.blood_type">
-                    <div v-if="errors.blood_type" class="text-danger"><small class="fw-medium">{{ errors.blood_type[0] }}</small></div>
+                    <input type="text" class="text-input ms-3" v-model="transData.blood_type" readonly>
                 </div>
                 <div class="container-fluid d-flex justify-content-start align-items-center">
                     <p class="fs-6 mb-0">13. Blood Pressure: </p>
-                    <input type="text" class="text-input ms-3" v-model="information.blood_pressure">
-                    <div v-if="errors.blood_pressure" class="text-danger"><small class="fw-medium">{{ errors.blood_pressure[0] }}</small></div>
+                    <input type="text" class="text-input ms-3" v-model="transData.blood_pressure" readonly>
                 </div>
                 <div class="container-fluid mb-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -331,129 +299,47 @@
                     </div>
                     <div class="ms-5 mb-3 d-flex justify-content-start align-items-center">
                         <p class="fs-6 mb-0">If so, what medications are you taking?</p>
-                        <input type="text" class="text-input ms-3" v-model="information.health_problem">
-                        <div v-if="errors.health_problem" class="text-danger"><small class="fw-medium">{{ errors.health_problem[0] }}</small></div>
+                        <input type="text" class="text-input ms-3" v-model="transData.health_problem" readonly>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary btn-sm">Next Page</button>
+                    <router-link to="/user/admin/record/teeth/">
+                        <button type="submit" class="btn btn-primary">View Diagnostics</button>
+                    </router-link>
                 </div>
             </div>
-        </form>
     </div>
 </template>
 <script>
 import axios from 'axios';
-import Swal from 'sweetalert2';
-
 export default {
     data() {
         return {
-            patientData: {
-                patient: {} 
-            },
-            information: {
-                user_id: '',
-                appointment_id: '',
-                birthdate: '',
-                religion: '',
-                place_of_birth: '',
-                nationality: '',
-                guardian: '',
-                referred_by: '',
-                chief_complaint: '',
-                previous_dentist: '',
-                last_dental_visit: '',
-                physician_name: '',
-                specialty: '',
-                office_address: '',
-                office_number: '',
-                good_health: '',
-                medical_treatment: '',
-                surgical_operation: '',
-                hospitalized: '',
-                prescribtion_non_rescribtion_medication: '',
-                tabacco_products: '',
-                dangerous_drugs: '',
-                allergy: '',
-                pregnant: '',
-                nursing_mother: '',
-                birth_control_pills: '',
-                blood_type: '',
-                blood_pressure: '',
-                health_problem: ''
-            },
-            errors: {},
+            transData: {
+                appointment: {},
+                user: {},
+            }
         };
     },
     methods: {
-        getUrlId(){
-            const url = window.location.href;
-            const urlSegments = url.split('/').filter(Boolean)
-            return urlSegments[urlSegments.length - 1];
-        },
-        submitInformation() {
-            if (!this.patientData.patient.id) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Missing Patient ID",
-                    text: "Please select a patient before submitting the form.",
-                });
+        getDataBasedOnId() {
+            const id = this.$route.params.id;
+            if (!id) {
+                console.error('user ID not found in route params.');
                 return;
             }
-            
-            this.information.user_id = this.patientData.patient.id;
-            this.information.appointment_id = this.getUrlId();
-
-            axios.post('/admin/patients/information', this.information)
-                .then((response) => {
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Information has been added!",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    }).then(() => {
-                        const patientAge = this.patientData.patient.age;
-                        if (patientAge < 12) {
-                            this.$router.push(`/user/admin/child/${response.data.data.id}`);
-                        } else {
-                            this.$router.push(`/user/admin/diagnose/${response.data.data.id}`);
-                        }
-                    });
-                })
-                .catch((error) => {
-                    if (error.response && error.response.data && error.response.data.errors) {
-                        this.errors = error.response.data.errors;
-                    } else {
-                        console.error('Error submitting information:', error);
-                        Swal.fire({
-                            icon: "error",
-                            title: "Submission Failed",
-                            text: "An unexpected error occurred. Please try again later.",
-                        });
-                    }
-                });
-        },
-
-        getPatientBasedOnId() {
-            const patientId = this.$route.params.id;
-            if (!patientId) {
-                console.error('Patient ID not found in route params.');
-                return;
-            }
-            axios.get(`/admin/patients/index/${patientId}`)
+            axios.get(`/admin/record/view/${id}`)
                 .then(response => {
-                    this.patientData = response.data;
-                    console.log('Patient data loaded:', this.patientData);
+                    this.transData = response.data.data;
+                    console.log('user data loaded:', this.transData);
                 })
                 .catch(error => {
-                    console.error('Error fetching patient data:', error);
+                    console.error('Error fetching user data:', error.response?.data?.message || error.message);
                 });
         }
     },
     mounted() {
-        this.getPatientBasedOnId();
+      this.getDataBasedOnId();
     }
 }
 </script>

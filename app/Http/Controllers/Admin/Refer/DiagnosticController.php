@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Refer;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdultTeeth;
-use App\Models\Appointment;
 use App\Models\ChildDiagnostic;
 use App\Models\ChildTeeth;
 use App\Models\PatientDiagnostic;

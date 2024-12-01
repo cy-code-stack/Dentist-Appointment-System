@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\Archive\AdminArchiveController;
 use App\Http\Controllers\Admin\Calendar\AdminCalendarController;
 use App\Http\Controllers\Admin\Payments\PaymentsController;
 use App\Http\Controllers\Admin\Profile\AdminProfileController;
+use App\Http\Controllers\Admin\Record\PatientRecordController;
 use App\Http\Controllers\Admin\Refer\PatientInformationController;
 use App\Http\Controllers\Admin\Refer\DiagnosticController;
 use App\Http\Controllers\Admin\Transaction\TransactionController;
@@ -177,6 +178,12 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::post('/admin/profile/changePass', [AdminProfileController::class,'updatePassword']);
                 Route::delete('/admin/profile/userDestroy', [AdminProfileController::class,'destroyUser']);
             //End Profile
+
+            //Patient Records Section 
+                Route::get('/admin/record/display', [PatientRecordController::class, 'index']);
+                Route::get('/admin/record/view/{id}', [PatientRecordController::class, 'show']);
+                Route::get('/admin/record/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);
+            //End Patient Records Section 
         //End of Admin Routes
     });  
     

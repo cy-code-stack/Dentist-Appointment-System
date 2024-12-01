@@ -34,4 +34,8 @@ class Appointment extends Model
     public function payment(){
         return $this->belongsTo(PaymentAppointment::class, 'id','appointment_id');
     }
+
+    public function information(){
+        return $this->belongsTo(PatientInformationRecord::class, 'id', 'appointment_id');
+    }
 }
