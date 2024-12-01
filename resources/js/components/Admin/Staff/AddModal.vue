@@ -173,9 +173,9 @@ export default {
                 email: "",
                 password: "",
                 phone_number: "",
-                role: "Assistant", // Set a default role if desired
+                role: "Assistant",
             },
-            errors: {}, // Object to store validation errors
+            errors: {}, 
         };
     },
     methods: {
@@ -247,16 +247,14 @@ export default {
                 email: "",
                 password: "",
                 phone_number: "",
-                role: "Patient", // Reset to default role if desired
+                role: "Assistant", // Reset to default role if desired
             };
             this.errors = {}; // Reset the errors
         },
 
         generatePassword(role) {
             switch (role) {
-                case "Patient":
-                    return "Patient123!!";
-                case "Staff":
+                case "Assistant":
                     return "Staff123!!";
                 default:
                     return "";
