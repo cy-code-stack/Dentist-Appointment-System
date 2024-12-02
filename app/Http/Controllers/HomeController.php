@@ -30,7 +30,7 @@ class HomeController extends Controller
     }
 
     public function adminIndex(){
-        return view('admin.AdminDashboard');
+        return view('Admin.AdminDashboard');
     }
 
     public function indexuserPatient(){

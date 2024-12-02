@@ -22,7 +22,7 @@ class AdminArchiveController extends Controller
      */
     public function showStaffArchive()
     {
-        $user = User::whereNotIn('role', ['Dentist', 'Patient'])->where('status', '=', 'archive')->get();
+        $user = User::whereNotIn('role', ['Dentist', 'Patient'])->where('status', 'archive')->get();
 
         return response()->json([
             'status' => 'success',
@@ -31,7 +31,7 @@ class AdminArchiveController extends Controller
     }
 
     public function showReferArchive(){
-        $refer = Appointment::whereNotIn('appnt_status', ['Declined', 'Pending', 'Ongoing'])->with('patient', 'services')->get();
+        $refer = Appointment::whereNotIn('appnt_status', ['Declined', 'Pending', 'Ongoing'])->with('patient', 'appointServices')->get();
 
         return response()->json([
             'status' => 'success',
