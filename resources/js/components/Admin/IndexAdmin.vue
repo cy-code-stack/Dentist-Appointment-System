@@ -267,7 +267,9 @@ export default {
         },
         
         createPieChart(ctx) {
-            axios.get('/user/admin/patient/demographics').then((response)=>{
+            axios.get('/user/admin/patient/demographics', {
+                params: { start_date: this.startDate, end_date: this.endDate },
+            }).then((response)=>{
                     const data = {
                         labels: ["Male", "Female"],
                         datasets: [{
