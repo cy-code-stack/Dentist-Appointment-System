@@ -23,25 +23,25 @@ class Authentication extends Controller
 {
     public function index()
     {
-        return view("auth.signin");
+        return view("Auth.signin");
     }
 
     public function indexSignup()
     {
-        return view("auth.signup");
+        return view("Auth.signup");
     }
 
     public function indexVerify(){
-        return view("auth.verify");
+        return view("Auth.verify");
     }
 
     public function indexForgot()
     {
-        return view("auth.forgot");
+        return view("Auth.forgot");
     }
 
     public function resetPass($token){
-        return view("auth.reset", ['token' => $token]);
+        return view("Auth.reset", ['token' => $token]);
     }
 
 
