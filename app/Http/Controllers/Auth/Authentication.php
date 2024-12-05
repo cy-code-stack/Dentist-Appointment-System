@@ -61,7 +61,6 @@ class Authentication extends Controller
         'password' => [
             'required',
             'min:8',
-            'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
             'confirmed'
         ],
     ], [
@@ -82,7 +81,6 @@ class Authentication extends Controller
         'age.numeric' => 'Phone number must contain only numbers.',
         'password.required' => 'Please enter your password.',
         'password.min' => 'Password must be at least 8 characters long.',
-        'password.regex' => 'Password must contain at least one letter, one number, one special character, and one uppercase letter.',
         'password.confirmed' => 'The password does not match.'
     ]);
 

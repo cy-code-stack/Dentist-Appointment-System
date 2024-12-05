@@ -146,7 +146,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             //End of Refer Patients
 
             //Payments
-                Route::get('/admin/patients/payment/show', [PaymentsController::class, 'show']);
+                Route::get('/admin/patients/payment/show/{id}', [PaymentsController::class, 'show']);
                 Route::post('/admin/patients/pay/store', [PaymentsController::class, 'store']);
                 Route::post('/admin/patients/pay/item', [PaymentsController::class, 'addPayment']);
                 Route::get('/admin/patients/payment/history/show/{id}', [PaymentsController::class, 'getPaymentHistory']);

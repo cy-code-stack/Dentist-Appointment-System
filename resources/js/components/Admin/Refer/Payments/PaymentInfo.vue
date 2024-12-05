@@ -119,7 +119,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            payments: [],
+            payments: [],            
             showModal: false, 
             newTooth: { 
                 appointment_id: '',
@@ -128,26 +128,27 @@ export default {
                 fee: null,
             },
         };
+        
     },
     methods: {
         getUrlId(){
-            const url = window.location.href;
-            const urlSegments = url.split('/');
-            return urlSegments[urlSegments.length - 1];
+            const url = new URL(window.location.href);
+            const segments = url.pathname.split('/');
+            return segments[segments.length - 1];
         },
-        displayPayment() {
-            axios.get('/admin/patients/payment/show')
+        displayPayment(id) {
+            axios.get('/admin/patients/payment/show/' + id)
                 .then(response => {
                     this.payments = response.data.data;
                 })
                 .catch(error => {
                     console.log(error);
-                });
+            });
         },
         handleSubmit() {
             this.newTooth.appointment_id = this.getUrlId();
             axios.post('/admin/patients/pay/store', this.newTooth)
-                .then((response) => {
+                .then(() => {
                     Swal.fire({
                         position: "center",
                         icon: "success",
@@ -167,11 +168,11 @@ export default {
         clearForm(){
             this.newTooth.tooth = '';
             this.newTooth.surface = '';
-            this.newTooth.fee = '';
+            this.newTooth.fee = null;
         },
     },
     mounted() {
-        this.displayPayment();
+        this.displayPayment(this.getUrlId());
     },
 };
 </script>

@@ -114,7 +114,6 @@ export default {
             return urlSegments[urlSegments.length - 1].split('?')[0];
         },
         getpaymentHistory(id){
-            console.log('test');
             axios.get('/admin/patients/payment/history/show/' + id)
                 .then((response) => {
                     this.historyPayment = response.data.data.items;
