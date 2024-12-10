@@ -16,12 +16,6 @@
                             aria-label="Search"
                         />
                     </form>
-                    <!-- <select class="form-control form-control-sm">
-                        <option selected disabled>Filter</option>
-                        <option value="">Pending</option>
-                        <option value="">Completed</option>
-                        <option value="">Decline</option>
-                    </select> -->
                 </div>
             </div>
         </div>

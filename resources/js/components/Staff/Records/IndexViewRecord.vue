@@ -50,7 +50,7 @@ export default {
     },
     methods: {
         displayPatients(){
-            axios.get('/admin/record/display').then((response) =>{
+            axios.get('/user/staff/display').then((response) =>{
                 this.patients = response.data.data;
             }).catch((error) =>{
                 console.log(error);

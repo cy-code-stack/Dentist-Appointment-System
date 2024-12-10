@@ -6,19 +6,10 @@
         <div class="d-flex justify-content-end align-items-center mb-2">
             <div class="sort">
                 <div class="select-input d-flex justify-content-center align-items-center">
-                    <!-- <form class="d-flex" role="search">
-                        <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search">
-                    </form> -->
                     <button class="btn btn-info btn-sm text-white" @click="addServices">
                         <i class="fa-solid fa-plus me-2"></i>
                         <span>Add Services</span>
                     </button>
-                    <!-- <select class="form-control form-control-sm">
-                        <option selected disabled>Filter</option>
-                        <option value="">Pending</option>
-                        <option value="">Completed</option>
-                        <option value="">Decline</option>
-                    </select> -->
                 </div>
             </div>
         </div>

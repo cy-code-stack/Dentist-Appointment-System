@@ -1,56 +1,47 @@
 <template>
-    <div class="modal fade" id="abort-appointment-modal">
-        <div class="modal-dialog modal-md">
+    <div class="modal fade" id="abort-appointment-modal" tabindex="-1" aria-labelledby="abort-appointment-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-sm" :class="{'modal-dialog-sm': isSmallScreen}">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="container">
-                        <div class="d-flex justify-content-between w-100 mb-2">
-                            <p class="fs-5 fw-medium">Abort Appointment</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="fs-5 fw-medium mb-0">Abort Appointment</p>
                             <button type="button" class="btn-close btn-black" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="company-serv card w-100 mb-3 d-flex flex-column p-3">
-                            <div class="form-group mb-1 d-flex justify-content-between w-100">
-                                <div class="me-1 mb-1">
-                                    <label class="form-label mb-0">Firstname</label>
-                                    <input type="text" class="form-control" v-model="abortApp.firstname" disabled />
+                            <div class="form-group mb-3">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <label class="form-label">Firstname</label>
+                                        <input type="text" class="form-control" v-model="abortApp.firstname" disabled />
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <label class="form-label">Lastname</label>
+                                        <input type="text" class="form-control" v-model="abortApp.lastname" disabled />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="form-label mb-0">Lastname</label>
-                                    <input type="text" class="form-control" v-model="abortApp.lastname" disabled />
-                                </div>
                             </div>
-                            <div class="input-group mb-1">
-                                <textarea
-                                    class="form-control"
-                                    name="abort_reason"
-                                    placeholder="Please state your reason"
-                                    v-model="abortApp.abort_reason"
-                                    style="resize: none; min-height: 300px !important;"
-                                ></textarea>
+                            <div class="form-group mb-2">
+                                <label class="form-label">Reason for Abortion</label>
+                                <textarea class="form-control" v-model="abortApp.abort_reason" placeholder="Please state your reason"></textarea>
                             </div>
-                            <div v-if="errors.abort_reason" class="text-danger mb-2 mt-1">
-                                <small class="fw-medium">{{ errors.abort_reason[0] }}</small>
+                            <div v-if="errors.abort_reason" class="text-danger mb-3">
+                                <small>{{ errors.abort_reason[0] }}</small>
                             </div>
-                            <div class="active-btn">
+                            <div class="d-flex justify-content-center">
                                 <button
                                     type="button"
-                                    class="btn btn-danger text-white btn-md-1 w-100"
+                                    class="btn btn-danger text-white w-100"
                                     @click="abortAppointment(abortApp.id)"
                                 >
                                     Abort Appointment
                                 </button>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
-<style>
-    @import "/resources/css/Patient/indexpatient.css";
-</style>
 
 <script>
 import axios from 'axios';
@@ -68,6 +59,11 @@ export default {
             },
             errors: {},
         };
+    },
+    computed: {
+        isSmallScreen() {
+            return window.innerWidth <= 576; // Adjust this threshold if needed
+        }
     },
     methods: {
         async abortAppointment(id) {
@@ -136,4 +132,3 @@ export default {
     },
 };
 </script>
-

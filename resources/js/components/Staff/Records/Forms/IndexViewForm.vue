@@ -328,7 +328,7 @@ export default {
                 console.error('user ID not found in route params.');
                 return;
             }
-            axios.get(`/admin/record/view/${id}`)
+            axios.get(`/user/staff/view/${id}`)
                 .then(response => {
                     this.transData = response.data.data;
                     console.log('user data loaded:', this.transData);

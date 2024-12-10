@@ -65,7 +65,7 @@ class PatientController extends Controller
         if ($result) {
             return response()->json([
                 'status' => 'success',
-                'message' => 'User verified and email sent successfully',
+                'message' => 'Email sent successfully',
                 'data' => $data,
             ], 200);
         } else {

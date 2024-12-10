@@ -36,7 +36,7 @@ class PaymentsController extends Controller
      */
     public function show($id)
     {
-        $record = PaymentAppointment::where('appointment_id', $id)->get();
+        $record = PaymentAppointment::where('appointment_id', $id)->with('appointment.appointServices')->get();
         return response()->json([
             'status' => 'success',
             'data' => $record,

@@ -1,49 +1,64 @@
 <template>
-    <div class="modal fade" id="add-event-calendar-modal">
-        <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal fade" id="add-event-calendar-modal" tabindex="-1" aria-labelledby="addEventLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEventLabel">Add Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
-                    <div class="container">
-                        <form @submit.prevent="submitEvent">
-                            <div class="d-flex justify-content-between w-100">
-                                <p class="fs-5 fw-medium">Add Event</p>
-                                <button
-                                    type="button"
-                                    class="btn-close btn-black"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                ></button>
+                    <form @submit.prevent="submitEvent">
+                        <div class="form-check form-switch d-flex align-items-center mb-3">
+                            <input class="form-check-input me-2" v-model="event.is_appointment" type="checkbox" role="switch">
+                            <label class="form-check-label">Allow Appointment</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="eventName" class="form-label">Event Name</label>
+                            <input
+                                type="text"
+                                id="eventName"
+                                class="form-control"
+                                v-model="event.event_name"
+                                :class="{ 'is-invalid': errors.event_name }"
+                            />
+                            <div v-if="errors.event_name" class="invalid-feedback">
+                                {{ errors.event_name[0] }}
                             </div>
-                            <div class="company-serv card w-100 mb-3 d-flex align-items-between justify-content-between p-3">
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Event Name</label>
-                                    <input type="text" name="event_name" class="form-control" v-model="event.event_name"/>
-                                    <div v-if="errors.event_name" class="text-danger">
-                                        <small class="fw-medium">{{ errors.event_name[0] }}</small>
-                                    </div>
-                                </div>
-                                <div class="form-group w-100 mb-1">
-                                    <label class="form-label mb-1">Start Date</label>
-                                    <input type="date" class="form-control" name="start_date" :min="minDate" v-model="event.start_date"/>
-                                    <div v-if="errors.start_date" class="text-danger">
-                                        <small class="fw-medium">{{ errors.start_date[0] }}</small>
-                                    </div>
-                                </div>
-                                <div class="form-group w-100">
-                                    <label class="form-label mb-1">End Date</label>
-                                    <input type="date" class="form-control" name="end_date" :min="event.start_date" v-model="event.end_date"/>
-                                    <div v-if="errors.end_date" class="text-danger">
-                                        <small class="fw-medium">{{ errors.end_date[0] }}</small>
-                                    </div>
-                                </div>
-                                <div class="active-btn">
-                                    <button type="submit" class="btn btn-success text-white btn-md-1 w-100">
-                                        Add Event
-                                    </button>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="startDate" class="form-label">Start Date</label>
+                                <input
+                                    type="date"
+                                    id="startDate"
+                                    class="form-control"
+                                    v-model="event.start_date"
+                                    :min="minDate"
+                                    :class="{ 'is-invalid': errors.start_date }"
+                                />
+                                <div v-if="errors.start_date" class="invalid-feedback">
+                                    {{ errors.start_date[0] }}
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-md-6">
+                                <label for="endDate" class="form-label">End Date</label>
+                                <input
+                                    type="date"
+                                    id="endDate"
+                                    class="form-control"
+                                    v-model="event.end_date"
+                                    :min="event.start_date"
+                                    :class="{ 'is-invalid': errors.end_date }"
+                                />
+                                <div v-if="errors.end_date" class="invalid-feedback">
+                                    {{ errors.end_date[0] }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-success">Add Event</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -61,6 +76,7 @@ export default {
                 event_name: '',
                 start_date: '',
                 end_date: '',
+                is_appointment: '',
             },
             minDate: "",
             errors: {},
@@ -82,6 +98,7 @@ export default {
                 event_name: '',
                 start_date: '',
                 end_date: '',
+                is_appointment: false,
             };
             this.errors = {};
         },
@@ -109,6 +126,34 @@ export default {
     },
     mounted() {
         this.restrictDate();
-    }
+    },
 };
 </script>
+
+<style scoped>
+.modal-title {
+    font-weight: 600;
+    color: #333;
+}
+.modal-body {
+    padding: 1.5rem;
+}
+.form-label {
+    font-weight: 500;
+}
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+.is-invalid {
+    border-color: #dc3545;
+}
+.invalid-feedback {
+    font-size: 0.875rem;
+}
+
+</style>

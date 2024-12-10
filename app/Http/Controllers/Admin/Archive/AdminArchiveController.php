@@ -31,7 +31,7 @@ class AdminArchiveController extends Controller
     }
 
     public function showReferArchive(){
-        $refer = Appointment::whereNotIn('appnt_status', ['Declined', 'Pending', 'Ongoing'])->with('patient', 'appointServices')->get();
+        $refer = Appointment::whereNotIn('appnt_status', ['Declined', 'Pending Approval', 'Pending'])->with('patient', 'appointServices')->get();
 
         return response()->json([
             'status' => 'success',
@@ -68,7 +68,7 @@ class AdminArchiveController extends Controller
     public function restoreArchiveRefer(Request $request, $id)
     {
         $refer = Appointment::findOrFail($id);
-        $request['appnt_status'] = 'Ongoing';
+        $request['appnt_status'] = 'Pending';
 
         $refer->update($request->all());
 

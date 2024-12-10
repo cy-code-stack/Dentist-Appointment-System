@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 //Patient View
-import PatientIndexPage from "../components/Patient/PatientIndex.vue";
+// import PatientIndexPage from "../components/Patient/PatientIndex.vue";
 import IndexCalendarEventPage from "../components/Patient/Calendar/IndexCalendarEvent.vue"
 import PatientIndexAppointment from '../components/Patient/Patient_Appointment/IndexAppointment.vue';
 import IndexPatientProfile from '../components/Patient/Profile/IndexPatientProfile.vue';
@@ -13,15 +13,18 @@ import IndexStaffAppointment from "../components/Staff/Appointments/IndexStaffAp
 import IndexStaffServices from "../components/Staff/Services/IndexStaffServices.vue";
 import IndexStaffProfile from "../components/Staff/Profile/IndexStaffProfile.vue";
 import IndexArchieve from '../components/Staff/Archieve/IndexArchieve.vue';
-import IndexStaffInquiry from '../components/Staff/Inquiry/IndexInquiry.vue'
-import IndexStaffCallendarEvent from '../components/Staff/Callendar/IndexEventCallendar.vue'
+import IndexTransaction from "../components/Staff/Transaction/IndexTransaction.vue";
+import IndexRecords from "../components/Staff/Records/IndexViewRecord.vue";
+import IndexStaffInquiry from '../components/Staff/Inquiry/IndexInquiry.vue';
+import IndexStaffCallendarEvent from '../components/Staff/Callendar/IndexEventCallendar.vue';
+import IndexViewRecord from '../components/Staff/Records/Forms/IndexViewForm.vue';
+import TeethRecord from '../components/Staff/Records/Forms/TeethRecord.vue';
 
 // Admin View
 import IndexAdminPage from "../components/Admin/IndexAdmin.vue"
 import IndexManageStaff from "../components/Admin/Staff/IndexManageStaff.vue"
 import IndexReferPatients from "../components/Admin/Refer/IndexRefer.vue"
 import IndexManageServices from "../components/Admin/Services/IndexManageServices.vue";
-import IndexTransaction from "../components/Admin/Transaction/IndexTransaction.vue";
 import IndexAdminProfile from "../components/Admin/Profile/IndexAdminProfile.vue";
 import IndexAdminArchive from '../components/Admin/Archive/IndexAdminArchive.vue';
 import IndexAdminCalendar from '../components/Admin/Calendar/IndexAdminCalendar.vue';
@@ -30,19 +33,17 @@ import Teeth from '../components/Admin/Refer/Teeth.vue';
 import ChildTeeth from '../components/Admin/Refer/ChildTeeth.vue';
 import PaymentInfo from '../components/Admin/Refer/Payments/PaymentInfo.vue';
 import AddToothPayment from '../components/Admin/Refer/Payments/AddToothPayment.vue';
-import IndexRecords from '../components/Admin/Records/IndexViewRecord.vue';
-import IndexViewRecord from '../components/Admin/Records/Forms/IndexViewForm.vue';
-import TeethRecord from '../components/Admin/Records/Forms/TeethRecord.vue';
+
 
 
 const routes = [
+    // {
+    //     path: '/user/patient/booking',
+    //     name: 'patient-booking',
+    //     component: PatientIndexPage
+    // },
     {
         path: '/user/patient/booking',
-        name: 'patient-booking',
-        component: PatientIndexPage
-    },
-    {
-        path: '/user/patient/calendar/event',
         name: 'calendar-event',
         component: IndexCalendarEventPage
     },
@@ -97,6 +98,16 @@ const routes = [
         name: 'staff-archieve',
         component: IndexArchieve,
     },
+    {
+        path: '/user/staff/trasanction',
+        name: 'admin-transaction',
+        component: IndexTransaction,
+    },
+    {
+        path: '/user/staff/record',
+        name: 'admin-record',
+        component: IndexRecords,
+    },
     // End  of Staff Page
 
     // Start of Admin Page
@@ -116,17 +127,12 @@ const routes = [
         component: IndexReferPatients,
     },
     {
-        path: '/user/admin/record',
-        name: 'admin-record',
-        component: IndexRecords,
-    },
-    {
-        path: '/user/admin/record/view/:id',
+        path: '/user/staff/record/view/:id',
         name: 'admin-view',
         component: IndexViewRecord,
     },
     {
-        path: '/user/admin/record/teeth',
+        path: '/user/staff/record/teeth',
         name: 'admin-teeth',
         component: TeethRecord,
     },
@@ -165,11 +171,6 @@ const routes = [
         path: '/user/admin/services',
         name: 'admin-services',
         component: IndexManageServices,
-    },
-    {
-        path: '/user/admin/trasanction',
-        name: 'admin-transaction',
-        component: IndexTransaction,
     },
     {
         path: '/user/admin/profile',

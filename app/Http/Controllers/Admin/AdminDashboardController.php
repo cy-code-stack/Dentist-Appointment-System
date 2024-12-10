@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Appointment;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
@@ -16,18 +13,6 @@ class AdminDashboardController extends Controller
     
     public function index(){
         return view("Admin.AdminDashboard");
-    }
-
-
-    public function demographics(){
-        $records = User::whereIn('sex', ['Male', 'Female'])->get();
-        $maleCount = $records->where('sex', 'Male')->count();
-        $femaleCount = $records->where('sex', 'Female')->count();
-
-        return response()->json([
-            'Male' => $maleCount,
-            'Female' => $femaleCount,
-        ]);
     }
 
     

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Patient\View_Appointment;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ViewAppointmentController extends Controller
 {
@@ -13,7 +13,7 @@ class ViewAppointmentController extends Controller
         $userId = Auth::user()->id;
         $data = Appointment::where('patient_id', $userId)
                             ->with('appointServices', 'patient')
-                            ->orderBy('services_id','DESC')
+                            ->orderBy('id','DESC')
                             ->get();
         return $data;
     }
@@ -23,4 +23,28 @@ class ViewAppointmentController extends Controller
         return response()->json($data);
     }
 
+    public function declineAppointment(Request $request, $id)
+    {
+        $appointment = Appointment::find($id);
+
+        if (!$appointment) {
+            return response()->json([
+                'error' => 'Appointment not found',
+            ], 404);
+        }
+
+        if ($request->has('reason')) {
+            $appointment->appnt_status = 'Declined'; 
+            $appointment->abort_reason = $request->input('reason');
+            $appointment->save();
+
+            return response()->json([
+                'message' => 'Appointment decline successfully',
+            ]);
+        }
+
+        return response()->json([
+            'error' => 'Reason is required for cancellation',
+        ], 400);
+    }
 }

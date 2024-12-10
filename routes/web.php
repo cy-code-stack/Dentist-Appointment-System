@@ -87,13 +87,14 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             //End of Book Appointment Section
 
             //Start of Calendar Event Routes
-                // Route::get('/user/patient/display/calendar', [CalendarEventControllerPatient::class, 'displayEvnt']);
+                Route::get('/user/patient/display/event', [CalendarEventControllerPatient::class, 'displayEvnt']);
                 Route::get('/user/patient/display/appointment', [CalendarEventControllerPatient::class, 'displayAppointment']);
             //End of Calendar Event Routes
 
             //Start of View Appointment Routes
                 Route::get('/user/patient/appointment/view', [ViewAppointmentController::class,'displayAppointmentDate']);
                 Route::put('/user/patient/appointment/view/{id}', [ViewAppointmentController::class,'displayAppointmentInfo']);
+                Route::put('/user/patient/appointment/decline/{id}', [ViewAppointmentController::class,'declineAppointment']);
             //End of View Appointment Routes
 
             //Start of Profile Page
@@ -168,7 +169,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
 
 
             //Transaction Section
-                Route::get('/admin/transaction/display', [TransactionController::class, 'show']);
+                // Route::get('/admin/transaction/display', [TransactionController::class, 'show']);
             //End of transaction Section
 
             //Profile Page Section
@@ -181,9 +182,9 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             //End Profile
 
             //Patient Records Section 
-                Route::get('/admin/record/display', [PatientRecordController::class, 'index']);
-                Route::get('/admin/record/view/{id}', [PatientRecordController::class, 'show']);
-                Route::get('/admin/record/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);
+                // Route::get('/admin/record/display', [PatientRecordController::class, 'index']);
+                // Route::get('/admin/record/view/{id}', [PatientRecordController::class, 'show']);
+                // Route::get('/admin/record/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);
             //End Patient Records Section 
         //End of Admin Routes
     });  
@@ -203,10 +204,10 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
 
             //Start of Appointment Routes
                 Route::get('/user/staff/appointment/display', [AppointmentController::class, 'showAppointment']);
-                // Route::delete('/user/staff/delete/appointment/{id}', [AppointmentController::class, 'destroyAppointment']);
                 Route::put('/user/staff/recomend/doctor/{id}', [AppointmentController::class, 'recoAppointment']);
                 Route::put('/user/staff/appointment/abort/{id}', [AppointmentController::class, 'abortAppointment']);
                 Route::put('/user/staff/appointment/resched/{id}', [AppointmentController::class,'reschedAppointment']);
+                Route::put('/user/staff/appointment/approved/{id}', [AppointmentController::class,'approvedAppointment']);
             //End of Appointment Routes
 
             //Start of Calendar Event Routes
@@ -226,6 +227,16 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::put('/user/staff/archieve/restore/{id}', [ArchieveController::class, 'updateArchieve']);
                 Route::get('/user/staff/appointment/declined', [ArchieveController::class, 'showAppointmentDeclined']);
             //End of Archieve Section
+
+            //Transaction Section
+                Route::get('/user/staff/transaction/display', [TransactionController::class, 'show']);
+            //End of transaction Section
+
+             //Patient Records Section 
+                Route::get('/user/staff/display', [PatientRecordController::class, 'index']);
+                Route::get('/user/staff/view/{id}', [PatientRecordController::class, 'show']);
+                Route::get('/user/staff/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);
+            //End Patient Records Section
 
             //Start of Profile Section
                 Route::post('/user/assistant/profile/upload', [AssistantProfileController::class, 'uploadImage']);

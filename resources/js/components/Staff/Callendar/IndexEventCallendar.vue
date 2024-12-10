@@ -28,6 +28,7 @@ import AddEventCallendarModal from "./AddEventCallendarModal.vue";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { color } from "chart.js/helpers";
 export default {
     components: {
         FullCalendar,
@@ -54,27 +55,30 @@ export default {
             });
         },
         async displayEvent(){
-        try {
-            const response = await axios.get('/user/staff/event/display');
-            return response.data.map(event => ({
-                title: event.event_name,
-                start: event.start_date,
-                end: event.end_date,
-            }));
-        } catch (error) {
-            console.error("Error fetching events:", error);
-            return [];
-        }
-    },
+            try {
+                const response = await axios.get('/user/staff/event/display');
+                return response.data.map(event => ({
+                    title: event.event_name,
+                    start: event.start_date,
+                    end: event.end_date,
+                    color: event.is_appointment === 1 ? '#FFC107' : '#14A44D',
+                }));
+            } catch (error) {
+                console.error("Error fetching events:", error);
+                return [];
+            }
+        },
         async displayAppointment() {
             try {
                 const response = await axios.get('/user/staff/calendar/display/appointment');
-                return response.data.map(appointment => ({
-                    title: `Appointment ${appointment.appoint_services?.services_name}`,
-                    start: appointment.sched_date,
-                    end: appointment.sched_date,
-                    color: appointment.color || '#14A44D',
-                }));
+                return response.data
+                    .filter(appointment => appointment.appnt_status === 'Approved')
+                    .map(appointment => ({
+                        title: `Appointment ${appointment.patient?.firstname} ${appointment.patient?.lastname}`,
+                        start: appointment.sched_date,
+                        end: appointment.sched_date,
+                        color: "#004d24",
+                    }));
             } catch (error) {
                 console.error("Error fetching user appointments:", error);
                 return [];

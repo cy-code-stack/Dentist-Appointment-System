@@ -209,21 +209,13 @@
                                     <input type="date" class="form-control" v-model="endDate" @change="fetchAndRenderCharts">
                                 </div>
                             </div>
-                            <div class="d-flex flex-column mt-5 mb-2 gap-2">
-                                <p class="fs-4 fw-semibold">Patients Demographics</p>
-                                <canvas id="pieChart" class="chart"></canvas>
-                            </div>
                             <div class="d-flex flex-column mt-2 mb-2 gap-2">
-                                <p class="fs-4 fw-semibold">Patient Catered</p>
+                                <p class="fs-4 fw-semibold">Patient Report</p>
                                 <canvas id="barChart" class="chart"></canvas>
                             </div>
                             <div class="d-flex flex-column mt-2 mb-2 gap-2">
-                                <p class="fs-4 fw-semibold">Monthly Income</p>
+                                <p class="fs-4 fw-semibold">Sales</p>
                                 <canvas id="lineChart" class="chart"></canvas>
-                            </div>
-                            <div class="d-flex flex-column mt-2 mb-2 gap-2">
-                                <p class="fs-4 fw-semibold">Patient Appointment Data</p>
-                                <canvas id="scatterChart" class="chart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -242,8 +234,6 @@ export default {
         return {
             barChart: null,
             lineChart: null,
-            pieChart: null,
-            scatterChart: null,
             startDate: null,
             endDate: null,
         };
@@ -252,113 +242,14 @@ export default {
         fetchAndRenderCharts() {
             const barCtx = document.getElementById("barChart");
             const lineCtx = document.getElementById("lineChart");
-            const pieCtx = document.getElementById("pieChart");
-            const scatterCtx = document.getElementById("scatterChart");
 
             if (this.barChart) this.barChart.destroy();
             if (this.lineChart) this.lineChart.destroy();
-            if (this.pieChart) this.pieChart.destroy();
-            if (this.scatterChart) this.scatterChart.destroy();
 
             this.createBarChart(barCtx);
             this.createLineChart(lineCtx);
-            this.createPieChart(pieCtx);
-            this.createScatterChart(scatterCtx);
         },
         
-        createPieChart(ctx) {
-            axios.get('/user/admin/patient/demographics', {
-                params: { start_date: this.startDate, end_date: this.endDate },
-            }).then((response)=>{
-                    const data = {
-                        labels: ["Male", "Female"],
-                        datasets: [{
-                            data: Object.values(response.data), 
-                            backgroundColor: ["#89CFF0", "#FF69B4"],
-                            hoverOffset: 4,
-                        }]
-                    };
-
-                    this.pieChart = new Chart(ctx, {
-                        type: "pie",
-                        data: data,
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'center',
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(tooltipItem) {
-                                            return tooltipItem.label + ': ' + tooltipItem.raw + ' patients';
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }).catch((error) =>{
-                    console.log(error);
-                });
-        },
-
-        createScatterChart(ctx) {
-            const data = {
-                datasets: [{
-                    label: 'Patient Appointment Data',
-                    data: [
-                        { x: 1, y: 1200 }, 
-                        { x: 2, y: 750 },   
-                        { x: 3, y: 2000 },   
-                        { x: 4, y: 1300 },  
-                        { x: 5, y: 1500 },   
-                    ],
-                    backgroundColor: 'rgba(54, 162, 235, 1)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 3,
-                }]
-            };
-
-            this.scatterChart = new Chart(ctx, {
-                type: 'scatter',
-                data: data,
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            type: 'linear',
-                            position: 'bottom',
-                            title: {
-                                display: true,
-                                text: 'Appointment Number'
-                            }
-                        },
-                        y: {
-                            min: 0,
-                            max: 3000,
-                            title: {
-                                display: true,
-                                text: 'Payment Amount (Peso)'  
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    const appointmentNumber = tooltipItem.raw.x;
-                                    const paymentAmount = tooltipItem.raw.y;
-                                    return `Appointment ${appointmentNumber}: ₱ ${paymentAmount}`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        },
-
-
         createBarChart(ctx) {
             axios.get('/user/admin/count', {
                     params: { start_date: this.startDate, end_date: this.endDate },
@@ -413,7 +304,7 @@ export default {
                             ],
                             datasets: [
                                 {
-                                    label: "Monthly Income",
+                                    label: "Sales",
                                     data: Object.values(response.data),
                                     borderColor: "rgba(54, 162, 235)",
                                     borderWidth: 1,

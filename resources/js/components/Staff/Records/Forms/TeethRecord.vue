@@ -159,7 +159,7 @@ export default {
     },
     methods: {
         fetchDiagnostics() {
-            axios.get("/admin/patients/diagnostic")
+            axios.get("/user/staff/diagnostic")
                 .then(response => {
                     this.adultTeeth = response.data.map(tooth => ({
                         ...tooth,

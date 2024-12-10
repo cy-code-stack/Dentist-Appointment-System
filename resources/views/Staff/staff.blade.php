@@ -114,6 +114,18 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
+                            <router-link to="/user/staff/record" class="nav-link">
+                                <i class="nav-icon fa-solid fa-book-medical"></i>
+                                <p>Patient Records</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/user/staff/trasanction" class="nav-link">
+                                <i class="nav-icon fa-solid fa-money-bill"></i>
+                                <p>Transaction</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
                             <router-link to="/user/staff/callendar/event" class="nav-link">
                                 <i class="nav-icon fa-solid fa-calendar-check"></i>
                                 <p>

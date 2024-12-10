@@ -17,16 +17,9 @@
                     <div class="d-flex flex-column">
                         <p class="fs-6 fw-medium mb-2">Pick your service</p>
                         <div class="form-floating me-4">
-                            <select
-                                class="form-select"
-                                v-model="selectedServices"
-                            >
+                            <select class="form-select" v-model="selectedServices">
                                 <option selected disabled>Choose here</option>
-                                <option
-                                    v-for="item in services"
-                                    :key="item.id"
-                                    :value="item"
-                                >
+                                <option v-for="item in services" :key="item.id" :value="item">
                                     {{ item.services_name }}
                                 </option>
                             </select>
@@ -35,45 +28,23 @@
                     <div class="d-flex flex-column">
                         <p class="fs-6 fw-medium mb-2">Date</p>
                         <div class="form-floating me-4">
-                            <input
-                                type="date"
-                                name="date"
-                                id="date"
-                                v-model="appointmentData.sched_date"
-                                :min="minDate"
-                                :max="maxDate"
-                                @input="onDateChange"
-                            />
+                            <input type="date" name="date" id="date" v-model="appointmentData.sched_date" :min="minDate" :max="maxDate" @input="onDateChange"/>
                         </div>
                     </div>
                     <div class="d-flex flex-column">
                         <p class="fs-6 fw-medium mb-2">Time</p>
                         <div class="form-floating">
-                            <select
-                                class="form-select"
-                                v-model="appointmentData.sched_time"
-                            >
-                                <option
-                                    v-for="time in filteredTimes"
-                                    :key="time.value"
-                                    :value="time.value"
-                                    :disabled="time.disabled"
-                                >
+                            <select class="form-select" v-model="appointmentData.sched_time">
+                                <option v-for="time in filteredTimes" :key="time.value" :value="time.value" :disabled="time.disabled">
                                     {{ time.label }}
                                 </option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div
-                    class="container-fluid d-flex flex-column justify-content-end align-items-center"
-                >
+                <div class="container-fluid d-flex flex-column justify-content-end align-items-center">
                     <div class="form-floating">
-                        <button
-                            type="submit"
-                            class="btn btn-primary text-white"
-                            @click="submitAppointment"
-                        >
+                        <button type="submit" class="btn btn-primary text-white" @click="submitAppointment">
                         <p class="fs-5 fw-medium text-center mb-0">Book Appointment</p>
                         </button>
                     </div>
@@ -143,7 +114,7 @@ export default {
 
             formData.append("services_id", this.selectedServices?.id);
             formData.append("sched_date", this.appointmentData?.sched_date);
-            formData.append("sched_time", this.appointmentData?.sched_time); // 12-hour format
+            formData.append("sched_time", this.appointmentData?.sched_time);
 
             Swal.fire({
                 title: "Please wait...",

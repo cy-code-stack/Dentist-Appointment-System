@@ -59,7 +59,7 @@
                         </div>
                         <div class="text-center d-flex justify-content-center align-items-center col-lg-2">
                             <router-link :to="`/user/admin/view/${item.id}`">
-                                <button v-if="item.appnt_status === 'Ongoing'" type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm">
+                                <button v-if="item.appnt_status === 'Pending'" type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <i class="fa-solid fa-eye me-2"></i>
                                         <span>View</span>

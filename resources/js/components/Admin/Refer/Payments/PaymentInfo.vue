@@ -18,6 +18,7 @@
                 <table class="table table-striped table-hover table-bordered">
                    <thead>
                         <th>ID</th>
+                        <th>Service Rendered</th>
                         <th>Tooth</th>
                         <th>Surface</th>
                         <th>Fee</th>
@@ -28,6 +29,7 @@
                    <tbody>
                     <tr v-for="(item, index) in payments" :key="index">
                         <td>{{ item.id }}</td>
+                        <td>{{ item.appointment.appoint_services?.services_name }}</td>
                         <td>{{ item.tooth }}</td>
                         <td>{{ item.surface }}</td>
                         <td>{{ item.fee }}</td>

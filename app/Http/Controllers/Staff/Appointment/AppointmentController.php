@@ -26,12 +26,25 @@ class AppointmentController extends Controller
     public function showAppointment()
     {
         $appointment = Appointment::with('patient', 'appointServices')
-                        ->whereNotIn('appnt_status', ['Ongoing', 'Declined', 'Archive', 'Payment', 'Completed'])
+                        ->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Payment', 'Completed'])
                         ->get();
                         
         return response()->json([
             'status' => 'success',
             'data' => $appointment
+        ], 200);
+    }
+
+    public function approvedAppointment($id){
+        $appointment = Appointment::with('appointServices')->findOrFail($id);
+        $appointment->update([
+            'appnt_status' => 'Approved',
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Resched appointment successfully',
+            'data' => $appointment,
         ], 200);
     }
 
@@ -41,7 +54,7 @@ class AppointmentController extends Controller
     public function recoAppointment(Request $request, $id)
     {
         $appoint = Appointment::findOrFail($id);
-        $request['appnt_status'] = 'Ongoing';
+        $request['appnt_status'] = 'Pending';
         $appoint->update($request->all());
 
         return response()->json([

@@ -17,9 +17,7 @@
             </div>
         </div>
         <div class="table-responsive-lg">
-            <div
-                class="header d-flex p-2 justify-content-between align-items-center bg-info bg-gradient rounded-1 mb-2"
-            >
+            <div class="header d-flex p-2 justify-content-between align-items-center bg-info bg-gradient rounded-1 mb-2">
                 <div class="text-center col-lg-2">
                     <p class="fs-6 fw-semibold mb-0">Name</p>
                 </div>
@@ -54,26 +52,36 @@
                                 {{ appoint?.appoint_services?.services_name }}
                             </p>
                         </div>
-                        <div
-                            class="text-center justify-content-center col-lg-2">
-                            <p :class="{'fs-6 fw-medium mb-0 text-warning': appoint.Pending, 'fs-6 fw-medium mb-0 text-primary': appoint.Ongoing, 'fs-6 fw-medium mb-0 text-success': appoint.Completed, 'fs-6 fw-medium mb-0 text-danger': appoint.Declined}">
+                        <div class="text-center justify-content-center col-lg-2">
+                            <p :class="{
+                                'fs-6 fw-medium mb-0 text-warning': appoint.PendingApproval, 
+                                'fs-6 fw-medium mb-0 text-info': appoint.Approved, 
+                                'fs-6 fw-medium mb-0 text-primary': appoint.Pending, 
+                                'fs-6 fw-medium mb-0 text-success': appoint.Completed, 
+                                'fs-6 fw-medium mb-0 text-danger': appoint.Declined
+                            }">
                                 {{ appoint.appnt_status }}
                             </p>
                         </div>
                         <div class="text-center d-flex justify-content-center align-items-center col-lg-3">
-                            <button type="button" class="me-2 rounded-1 btn btn-info text-white btn-sm" v-if="appoint.Pending || appoint.Completed" @click="recomendDentist(appoint)">
+                            <button type="button" class="me-2 rounded-1 btn btn-info text-white btn-sm" v-if="appoint.appnt_status !== 'Pending Approval'" @click="recomendDentist(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-eye me-1"></i>
-                                    <span>Confirm</span>
+                                    <span>Recomend</span>
                                 </div>
                             </button>
-                            <button type="button" class="rounded-1 btn btn-success btn-sm me-2" @click="reschedPatient(appoint)">
+                            <button type="button" class="rounded-1 btn btn-success btn-sm me-2" v-if="appoint.appnt_status !== 'Pending Approval'" @click="reschedPatient(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-calendar-check me-1"></i>
                                     <span>Reschedule</span>
                                 </div>
                             </button>
-                            <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.Pending" @click="abortPatient(appoint)">
+                            <button type="button" class="rounded-1 btn btn-success btn-sm me-2" v-if="appoint.appnt_status === 'Pending Approval'" @click="approvedAppointment(appoint.id)">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <span>Approved Appointment</span>
+                                </div>
+                            </button>
+                            <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.appnt_status !== 'Pending Approval'" @click="abortPatient(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-ban me-1"></i>
                                     <span>Abort</span>
@@ -139,8 +147,9 @@ export default {
             axios.get('/user/staff/appointment/display').then((response)=>{
                 this.listofAppointment = response.data.data.map((appoint)=> ({
                     ...appoint,
+                    PendingApproval: appoint.appnt_status === "Pending Approval",
+                    Approved: appoint.appnt_status === "Approved",
                     Pending: appoint.appnt_status === "Pending",
-                    Ongoing: appoint.appnt_status === "Ongoing",
                     Completed: appoint.appnt_status === "Completed",
                     Declined: appoint.appnt_status === "Declined",
                 }));
@@ -162,7 +171,32 @@ export default {
         reschedPatient(selected_resched){
             this.selected_resched = selected_resched;
             $('#resched-appointment-modal').modal("show");
-        }
+        },
+        approvedAppointment(id) {
+            Swal.fire({
+                title: "Approved?",
+                text: "You won't be able to revert this!",
+                icon: "success",
+                confirmButtonColor: "#14A44D",
+                confirmButtonText: "Yes, Approved it!",
+            })
+                .then((data) => {
+                    if (data.isConfirmed) {
+                        axios.put("/user/staff/appointment/approved/" + id)
+                            .then((response) => {
+                                Swal.fire("Approved!", "Appointment has been approved.", "success");
+                                this.displayAppointment();
+                            });
+                    }
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        text: "Something went wrong!",
+                    });
+                    console.log(error);
+                });
+        },
     },
     mounted(){
         this.displayAppointment();

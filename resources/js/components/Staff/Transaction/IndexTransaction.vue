@@ -105,7 +105,7 @@ export default {
     },
     methods:{
         displayTransaction(){
-          axios.get('/admin/transaction/display').then((response)=>{
+          axios.get('/user/staff/transaction/display').then((response)=>{
             this.transaction = response.data.data;
           }).catch((error)=>{
             console.log(error);
