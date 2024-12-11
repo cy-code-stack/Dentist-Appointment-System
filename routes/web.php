@@ -95,6 +95,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::get('/user/patient/appointment/view', [ViewAppointmentController::class,'displayAppointmentDate']);
                 Route::put('/user/patient/appointment/view/{id}', [ViewAppointmentController::class,'displayAppointmentInfo']);
                 Route::put('/user/patient/appointment/decline/{id}', [ViewAppointmentController::class,'declineAppointment']);
+                Route::get('/user/patient/appointment/view/decline', [ViewAppointmentController::class,'declineListApp']);
             //End of View Appointment Routes
 
             //Start of Profile Page
@@ -232,7 +233,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::get('/user/staff/transaction/display', [TransactionController::class, 'show']);
             //End of transaction Section
 
-             //Patient Records Section 
+            //Patient Records Section 
                 Route::get('/user/staff/display', [PatientRecordController::class, 'index']);
                 Route::get('/user/staff/view/{id}', [PatientRecordController::class, 'show']);
                 Route::get('/user/staff/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);

@@ -158,9 +158,11 @@ export default {
         }
     },
     methods: {
-        fetchDiagnostics() {
-            axios.get("/user/staff/diagnostic")
+        fetchDiagnostics(id) {
+            axios.get("/user/staff/diagnostic/" + id)
                 .then(response => {
+                    console.log('Map Response', response.data);
+                    
                     this.adultTeeth = response.data.map(tooth => ({
                         ...tooth,
                         selectedDiseaseImage: null,

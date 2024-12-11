@@ -1,20 +1,9 @@
 <template>
     <div class="container-fluid">
         <h1 class="fw-bold mt-3">Book your appointment</h1>
-        <p class="fs-6 text-break">
-            Welcome to Graces Dental Clinic, where scheduling appointments
-            is simple and convenient. Whether you're an individual or
-            anyone in need of our service, we've got you covered. <br />The
-            appointment is simple yet effective. Choose your service, pick a
-            date and time, and book your appointment.
-            <br />Note: Please wait for the confirmation email and present
-            it to the Assistant at Graces Dental Clinic for confirmation.
-            This is <b>FIRST COME FIRST SERVE BASIS</b>.
-        </p>
-        <div class="calendar-container d-flex justify-content-center align-items-center p-3">
+        <div class="calendar-container d-flex justify-content-center align-items-center p-1">
             <FullCalendar :options="calendarOptions" />
         </div>
-
         <!-- Modal -->
         <div class="modal fade" id="dateModal" tabindex="-1" aria-labelledby="dateModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -25,6 +14,7 @@
                     </div>
                     <div class="modal-body">
                         <p>You selected: <b>{{ formattedSelectedDate }}</b></p>
+                        <p><strong>Slots: </strong>20</p>
                         <form @submit.prevent="bookAppointment">
                             <div class="mb-3">
                                 <label for="service" class="form-label">Service</label>
@@ -250,7 +240,7 @@ export default {
 <style scoped>
 .calendar-container {
     width: 100%;
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
 }
 

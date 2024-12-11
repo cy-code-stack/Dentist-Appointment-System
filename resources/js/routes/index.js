@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import IndexCalendarEventPage from "../components/Patient/Calendar/IndexCalendarEvent.vue"
 import PatientIndexAppointment from '../components/Patient/Patient_Appointment/IndexAppointment.vue';
 import IndexPatientProfile from '../components/Patient/Profile/IndexPatientProfile.vue';
+import DeclineAppointment from '../components/Patient/Decline/DeclineAppointment.vue';
 
 //Staff View
 import StaffIndexPage from "../components/Staff/StaffIndex.vue";
@@ -46,6 +47,11 @@ const routes = [
         path: '/user/patient/booking',
         name: 'calendar-event',
         component: IndexCalendarEventPage
+    },
+    {
+        path: '/user/patient/decline',
+        name: 'appointment-decline',
+        component: DeclineAppointment
     },
     {
         path: '/user/patient/appointment',
@@ -128,12 +134,12 @@ const routes = [
     },
     {
         path: '/user/staff/record/view/:id',
-        name: 'admin-view',
+        name: 'assistant-view',
         component: IndexViewRecord,
     },
     {
-        path: '/user/staff/record/teeth',
-        name: 'admin-teeth',
+        path: '/user/staff/record/teeth/:id',
+        name: 'assistant-teeth',
         component: TeethRecord,
     },
     {

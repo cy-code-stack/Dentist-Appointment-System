@@ -33,9 +33,10 @@
             <div class="header-nav col-lg-5">
                 <ul class="navbar-nav">
                     <li class="nav-item d-flex justify-content-start">
-                        <router-link to="/user/patient/booking" exact-active-class="active" class="nav-link text-white me-3">Booking an Appointment</router-link>
-                        <router-link to="/user/patient/appointment" exact-active-class="active" class="nav-link text-white me-3 ">List of Appointments</router-link>
-                        <router-link to="/user/patient/profile" exact-active-class="active" class="nav-link text-white me-3 ">Profile</outer-link>
+                        <router-link to="/user/patient/booking" exact-active-class="active" class="nav-link text-white me-2">Booking an Appointment</router-link>
+                        <router-link to="/user/patient/appointment" exact-active-class="active" class="nav-link text-white me-2 ">List of Appointments</router-link>
+                        <router-link to="/user/patient/decline" exact-active-class="active" class="nav-link text-white me-2">Decline Appointments</router-link>
+                        <router-link to="/user/patient/profile" exact-active-class="active" class="nav-link text-white me-2">Profile</outer-link>
                     </li>
                 </ul>
             </div>

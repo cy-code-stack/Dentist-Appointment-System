@@ -1,30 +1,23 @@
 <template>
     <div class="container-fluid">
-        <div
-            class="d-flex justify-content-center align-items-center pb-3"
-        >
+        <div class="d-flex justify-content-center align-items-center pb-3">
             <FullCalendar :options="calendarOptions" class="w-100 h-100"/>
         </div>
         <button
             class="btn btn-primary btn-lg rounded-circle position-fixed"
-            style="
-                min-width: 4.5rem !important;
-                min-height: 4.5rem !important;
-                bottom: 40px;
-                right: 30px;
-                z-index: 999;
-            "
-            @click="addEvent"
-        >
+            style="min-width: 4.5rem !important; min-height: 4.5rem !important; bottom: 40px; right: 30px; z-index: 999;"
+            @click="addEvent">
             <i class="fa-solid fa-plus fs-3 text-center"></i>
         </button>
 
         <add-event-callendar-modal @eventAdded="loadAllEvents"></add-event-callendar-modal>
+        <event-details-modal :event="selectedEvent" v-if="selectedEvent" @close="selectedEvent = null"></event-details-modal>
     </div>
 </template>
 
 <script>
 import AddEventCallendarModal from "./AddEventCallendarModal.vue";
+import EventDetailsModal from "./EventDetailsModal.vue";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -33,19 +26,30 @@ export default {
     components: {
         FullCalendar,
         AddEventCallendarModal,
+        EventDetailsModal,
     },
     data() {
         return {
+            selectedEvent: null, 
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: "dayGridMonth",
-                events: []
+                events: [],
+                eventClick: this.handleEventClick,
             },
         };
     },
     methods: {
         addEvent() {
            $("#add-event-calendar-modal").modal("show");
+        },
+        handleEventClick({ event }) {
+            this.selectedEvent = {
+                title: event.title,
+                start: event.start,
+                end: event.end,
+                extendedProps: event.extendedProps,
+            };
         },
         onEventAdded(event) {
             this.calendarOptions.events.push({
@@ -74,10 +78,16 @@ export default {
                 return response.data
                     .filter(appointment => appointment.appnt_status === 'Approved')
                     .map(appointment => ({
-                        title: `Appointment ${appointment.patient?.firstname} ${appointment.patient?.lastname}`,
+                        title: `Appointment for ${appointment.patient?.firstname} ${appointment.patient?.lastname}`,
                         start: appointment.sched_date,
                         end: appointment.sched_date,
                         color: "#004d24",
+                        extendedProps: {
+                            patientDetails: appointment.patient,
+                            status: appointment.appnt_status || 'Not Yet Approved',
+                            time: appointment.sched_time,
+                            service: appointment.appoint_services
+                        },
                     }));
             } catch (error) {
                 console.error("Error fetching user appointments:", error);
@@ -101,4 +111,8 @@ export default {
     }
 };
 </script>
-
+<style>
+.fc-event {
+    cursor: pointer;
+}
+</style>

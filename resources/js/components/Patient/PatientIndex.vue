@@ -2,16 +2,6 @@
     <div class="container-fluid">
         <div class="container">
             <h1 class="fw-bold mt-5">Book your appointment</h1>
-            <p class="fs-6 text-break lh-lg">
-                Welcome to Graces Dental Clinic, where scheduling appointments
-                is simple and convenient. Whether you're an individual or
-                anyone in need of our service, we've got you covered. <br />The
-                appointment is simple yet effective. Choose your service, pick a
-                date and time, and book your appointment.
-                <br />Note: Please wait for the confirmation email and present
-                it to the Assistant at Graces Dental Clinic for confirmation.
-                This is <b>FIRST COME FIRST SERVE BASIS</b>.
-            </p>
             <div class="container-md mt-5">
                 <div class="container-fluid d-flex justify-content-center mb-3">
                     <div class="d-flex flex-column">

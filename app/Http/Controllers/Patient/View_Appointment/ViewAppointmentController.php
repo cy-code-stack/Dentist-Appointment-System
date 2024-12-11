@@ -12,6 +12,7 @@ class ViewAppointmentController extends Controller
     public function displayAppointmentDate(){
         $userId = Auth::user()->id;
         $data = Appointment::where('patient_id', $userId)
+                            ->where('appnt_status', '!=', 'Declined')
                             ->with('appointServices', 'patient')
                             ->orderBy('id','DESC')
                             ->get();
@@ -47,4 +48,15 @@ class ViewAppointmentController extends Controller
             'error' => 'Reason is required for cancellation',
         ], 400);
     }
+
+    public function declineListApp()
+    {
+        $userId = Auth::user()->id;
+        $record = Appointment::where('patient_id', $userId)
+            ->where('appnt_status', 'Declined')
+            ->with('appointServices', 'patient')
+            ->get();
+        return $record;
+    }
+
 }

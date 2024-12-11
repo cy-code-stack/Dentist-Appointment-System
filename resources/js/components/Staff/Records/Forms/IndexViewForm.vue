@@ -303,8 +303,8 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <router-link to="/user/admin/record/teeth/">
-                        <button type="submit" class="btn btn-primary">View Diagnostics</button>
+                    <router-link :to='`/user/staff/record/teeth/${transData.id}`'>
+                        <button type="button" class="btn btn-primary">View Diagnostics</button>
                     </router-link>
                 </div>
             </div>

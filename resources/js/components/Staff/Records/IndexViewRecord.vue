@@ -23,7 +23,7 @@
                         <td>{{ item.appnt_status }}</td>
                         <td>
                             <div class="text-center d-flex align-items-center">
-                                <router-link :to="`/user/admin/record/view/${item.id}`">
+                                <router-link :to="`/user/staff/record/view/${item.id}`">
                                     <button type="button" class="rounded-1 btn btn-primary btn-sm">
                                         <div class="d-flex justify-content-center align-items-center">
                                             <span>View Form</span>

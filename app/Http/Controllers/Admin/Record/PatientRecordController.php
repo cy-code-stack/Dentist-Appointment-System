@@ -46,7 +46,7 @@ class PatientRecordController extends Controller
     }
 
     public function showDiagnostic($id){
-        $teeth = PatientDiagnostic::with('teeth', 'teethDisease')->find($id);
+        $teeth = PatientDiagnostic::where('patient_information_id', $id)->with('teeth', 'teethDisease')->get();
         if (!$teeth) {
             return response()->json(['message' => 'Diagnostic not found'], 404);
         }
