@@ -116,7 +116,7 @@
                         <li class="nav-item">
                             <router-link to="/user/staff/record" class="nav-link">
                                 <i class="nav-icon fa-solid fa-book-medical"></i>
-                                <p>Patient Records</p>
+                                <p>Patient History</p>
                             </router-link>
                         </li>
                         <li class="nav-item">

@@ -39,9 +39,8 @@ class CalendarEventController extends Controller
         return response()->json($event, 201);
     }
 
-
     public function displayAppointment(){
-        $data = Appointment::with('patient', 'appointServices')->where('appnt_status', '<>', 'Declined')->get();
+        $data = Appointment::with('patient', 'appointServices')->whereNotIn('appnt_status', ['Declined', 'Completed'])->get();
         return $data;
     }
 }

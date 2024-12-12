@@ -1,94 +1,59 @@
 <template>
-    <div class="modal fade" id="resched-appointment-modal">
+    <div class="modal fade" id="resched-appointment-modal" tabindex="-1" aria-labelledby="reschedModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="fs-5 fw-medium">Reschedule Appointment</p>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        
-                        <div class="form-group mb-2">
-                            <div class="d-flex justify-content-between">
-                                <div class="me-2">
-                                    <label class="form-label">Firstname</label>
-                                    <input type="text" class="form-control" v-model="appointment.firstname" disabled/>
-                                </div>
-                                <div>
-                                    <label class="form-label">Lastname</label>
-                                    <input type="text" class="form-control" v-model="appointment.lastname" disabled/>
-                                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reschedModalLabel">Reschedule Appointment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body overflow-auto">
+                    <form>
+                        <!-- Firstname and Lastname -->
+                        <div class="row g-1">
+                            <div class="col-md-6">
+                                <label class="form-label">Firstname</label>
+                                <input type="text" class="form-control" v-model="appointment.firstname" disabled/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Lastname</label>
+                                <input type="text" class="form-control"  v-model="appointment.lastname" disabled/>
                             </div>
                         </div>
 
-                        <div class="form-group mb-2">
+                        <!-- Email -->
+                        <div class="mt-3">
                             <label class="form-label">Email</label>
                             <input type="email" class="form-control" v-model="appointment.email" disabled/>
                         </div>
 
-                        <div class="d-flex justify-content-between mb-2">
-                            <div class="w-48">
+                        <!-- Date and Time -->
+                        <div class="row g-3 mt-1">
+                            <div class="col-md-6">
                                 <label class="form-label">Date</label>
                                 <input type="date" class="form-control" v-model="appointment.sched_date" :min="todayDate" @change="updateAvailableTimes"/>
                             </div>
-                            <div class="w-48">
+                            <div class="col-md-6">
                                 <label class="form-label">Time</label>
                                 <select class="form-control" v-model="appointment.sched_time">
                                     <option v-for="time in availableTimes" :key="time" :value="time">{{ time }}</option>
                                 </select>
                             </div>
                         </div>
-
-                        <div class="text-center">
-                            <button type="button" class="btn btn-success text-white w-100" @click="reschedAppointment(appointment.id)">Reschedule</button>
+                        <div class=" mt-2 text-center">
+                            <button 
+                                type="button" 
+                                class="btn btn-success text-white w-100" 
+                                @click="reschedAppointment(appointment.id)">
+                                Reschedule
+                            </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<style scoped>
-    .modal-body {
-        padding: 30px;
-    }
-
-    .d-flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .form-group {
-        margin-bottom: 1rem;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .w-48 {
-        width: 48%;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .btn-close {
-        color: #000;
-    }
-
-    .fs-5 {
-        font-size: 1.25rem;
-    }
-
-    .fw-medium {
-        font-weight: 500;
-    }
-</style>
 
 <script>
 import axios from 'axios';

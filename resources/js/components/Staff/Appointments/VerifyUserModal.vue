@@ -1,64 +1,73 @@
 <template>
+    <!-- Modal -->
     <div class="modal fade" id="verify-appointment-modal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="d-flex justify-content-between w-100">
-                            <p class="fs-5 fw-medium">Review Details</p>
-                            <button type="button" class="btn-close btn-black" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="company-serv card w-100 mb-3 d-flex align-items-between justify-content-center p-3">
-                            <p class="fw-medium mb-2">Please review the details</p>
-                                <div class="form-group mb-1 d-flex justify-content-center align-items-center w-100">
-                                    <div class="me-1">
-                                        <label class="form-label">Firstname</label>
-                                        <input type="text" class="form-control" v-model="user.firstname" disabled/>
-                                    </div>
-                                    <div class="me-1">
-                                        <label class="form-label">Lastname</label>
-                                        <input type="text" class="form-control" v-model="user.lastname" disabled/>
-                                    </div>
-                                    <div class="me-1">
-                                        <label class="form-label">Middle Initial</label>
-                                        <input type="text" class="form-control" :value="displayMiddleInitial" disabled/>
-                                    </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Review Details</h5>
+                    <button type="button" class="btn-close btn-black" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body overflow-auto">
+                    <div class="container-fluid">
+                        <p class="fw-medium">Please review the details</p>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 col-md-4 mb-2">
+                                    <label class="form-label">Firstname</label>
+                                    <input type="text" class="form-control" v-model="user.firstname" disabled />
                                 </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Home Address </label>
-                                    <input type="text" class="form-control" v-model="user.home_address"  disabled/>
+                                <div class="col-12 col-md-4 mb-2">
+                                    <label class="form-label">Lastname</label>
+                                    <input type="text" class="form-control" v-model="user.lastname" disabled />
                                 </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Email</label>
-                                    <input type="email" class="form-control" v-model="user.email"  disabled/>
+                                <div class="col-12 col-md-4 mb-2">
+                                    <label class="form-label">Middle Initial</label>
+                                    <input type="text" class="form-control" :value="displayMiddleInitial" disabled />
                                 </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Contact Number</label>
-                                    <input type="tel" class="form-control" v-model="user.phone_number"  disabled/>
-                                </div>
-                                <div class="form-group mb-1 d-flex justify-content-between w-100">
-                                    <div class="me-1">
-                                        <label class="form-label mb-0">Age</label>
-                                        <input type="text" class="form-control" v-model="user.age" disabled/>
-                                    </div>
-                                    <div class="me-1">
-                                        <label class="form-label mb-0">Sex</label>
-                                        <input type="text" class="form-control" v-model="user.sex" disabled/>
-                                    </div>
-                                    <div>
-                                        <label class="form-label mb-0">Marital Status</label>
-                                        <input type="tel" class="form-control" v-model="user.marital_status" disabled/>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-1">
-                                    <label class="form-label mb-1">Occupation</label>
-                                    <input type="tel" class="form-control" v-model="user.occupation"  disabled/>
-                                </div>
+                            </div>
                         </div>
 
-                        <div class="active-btn">
-                            <button type="submit" class="btn btn-success text-white btn-md-1 w-100" @click="recomendtoDen(user.id)">Recomend to the Dentist</button>
+                        <div class="form-group">
+                            <label class="form-label">Home Address</label>
+                            <input type="text" class="form-control" v-model="user.home_address" disabled />
                         </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" v-model="user.email" disabled />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Contact Number</label>
+                            <input type="tel" class="form-control" v-model="user.phone_number" disabled />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 col-md-4 mb-2">
+                                    <label class="form-label">Age</label>
+                                    <input type="text" class="form-control" v-model="user.age" disabled />
+                                </div>
+                                <div class="col-12 col-md-4 mb-2">
+                                    <label class="form-label">Sex</label>
+                                    <input type="text" class="form-control" v-model="user.sex" disabled />
+                                </div>
+                                <div class="col-12 col-md-4 mb-2">
+                                    <label class="form-label">Marital Status</label>
+                                    <input type="text" class="form-control" v-model="user.marital_status" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label">Occupation</label>
+                            <input type="text" class="form-control" v-model="user.occupation" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="active-btn">
+                        <button type="submit" class="btn btn-success text-white btn-md-1 w-100" @click="recomendtoDen(user.id)">Recommend to the Dentist</button>
                     </div>
                 </div>
             </div>
@@ -66,9 +75,6 @@
     </div>
 </template>
 
-<style>
-@import "/resources/css/Patient/indexpatient.css";
-</style>
 
 <script>
 import axios from 'axios';

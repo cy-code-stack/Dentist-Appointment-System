@@ -11,6 +11,7 @@
                         <th>Name</th>
                         <th>Services</th>
                         <th>Schedule Date</th>
+                        <th>Date Visit</th>
                         <th>Status</th>
                         <th>Actions</th>
                    </thead>
@@ -19,7 +20,8 @@
                         <td>{{ item.id }}</td>
                         <td>{{ item.patient?.firstname }} {{ item.patient?.middle_initial }} {{ item.patient?.lastname }}</td>
                         <td>{{ item.appoint_services?.services_name }}</td>
-                        <td>{{ item.sched_date }}</td>
+                        <td>{{ formatWordyDate(item.sched_date) }}</td>
+                        <td>{{ formatWordyDate(item.sched_date) }}</td>
                         <td>{{ item.appnt_status }}</td>
                         <td>
                             <div class="text-center d-flex align-items-center">
@@ -42,19 +44,27 @@
 
 <script>
 import axios from 'axios';
+
 export default {
     data() {
-        return{
+        return {
             patients: [],
-        }
+        };
     },
     methods: {
-        displayPatients(){
-            axios.get('/user/staff/display').then((response) =>{
-                this.patients = response.data.data;
-            }).catch((error) =>{
-                console.log(error);
-            });
+        displayPatients() {
+            axios.get('/user/staff/display')
+                .then((response) => {
+                    this.patients = response.data.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        formatWordyDate(date) {
+            if (!date) return '';
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(date).toLocaleDateString('en-US', options);
         },
     },
     mounted() {
