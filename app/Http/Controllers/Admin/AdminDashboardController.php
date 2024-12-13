@@ -58,7 +58,7 @@ class AdminDashboardController extends Controller
                     ->join('appointment as ap', 'services.id', '=', 'ap.services_id')
                     ->groupBy('services.id', 'services.services_name')
                     ->orderByDesc('services_count')
-                    ->limit(3)
+                    ->limit(5)
                     ->get();
     }
 
