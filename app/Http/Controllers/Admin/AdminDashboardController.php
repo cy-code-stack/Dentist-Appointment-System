@@ -31,6 +31,40 @@ class AdminDashboardController extends Controller
         return $data;
     }
 
+    public function getAppointmentPercentageEachMonth()
+    {
+        $percentages = DB::table('appointment as ap')
+            ->select(
+                DB::raw('MONTH(ap.sched_date) as month'),
+                DB::raw('COUNT(ap.id) as total_appointments'),
+                DB::raw('ROUND((COUNT(ap.id) / (SELECT COUNT(*) FROM appointment) * 100), 2) as percentage')
+            )
+            ->groupBy(DB::raw('MONTH(ap.sched_date)'))
+            ->get();
+
+        $data = array_fill(1, 12, 0);
+
+        foreach ($percentages as $percentage) {
+            $data[intval($percentage->month)] = $percentage->percentage;
+        }
+
+        return $data;
+    }
+
+
+    public function getTopServicesEachAppointment()
+    {
+        return \App\Models\Services::select('services.id', 'services.services_name', DB::raw('COUNT(ap.services_id) as services_count'))
+                    ->join('appointment as ap', 'services.id', '=', 'ap.services_id')
+                    ->groupBy('services.id', 'services.services_name')
+                    ->orderByDesc('services_count')
+                    ->limit(3)
+                    ->get();
+    }
+
+
+
+
     public function sales(){
         $records = DB::table('payment_appointments as pa')
             ->select(

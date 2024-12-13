@@ -116,6 +116,8 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             Route::get('/user/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin');
             Route::get('/user/admin/count', [AdminDashboardController::class, 'countPatient']);
             Route::get('/user/admin/sales/count', [AdminDashboardController::class, 'sales']);
+            Route::get('/user/admin/appointment/percentage', [AdminDashboardController::class, 'getAppointmentPercentageEachMonth']);
+            Route::get('/user/admin/appointment/top', [AdminDashboardController::class, 'getTopServicesEachAppointment']);
             Route::get('/user/admin/patient/demographics', [AdminDashboardController::class, 'demographics']);
 
             //Manage User
