@@ -35,7 +35,6 @@ class PatientController extends Controller
         ]);
 
 
-
         $appoint = $request->all();
         $appoint['patient_id'] = Auth::user()->id;
         $data = Appointment::create($appoint);
@@ -76,8 +75,40 @@ class PatientController extends Controller
         }
     }
 
+    public function getRemainingSlots(Request $request)
+    {
+        $request->validate([
+            'sched_date' => 'required|date',
+        ]);
+        $maxSlots = 7;
+        $appointmentCount = Appointment::where('sched_date', $request->sched_date)->count();
+        
+        $remainingSlots = $maxSlots - $appointmentCount;
+
+        return response()->json([
+            'status' => 'success',
+            'remaining_slots' => max(0, $remainingSlots),
+        ], 200);
+    }
+
+    public function filterTime(Request $request)
+    {
+        $request->validate([
+            'sched_date' => 'required|date',
+        ]);
+        $shedDate = $request->sched_date;
+        $bookedTimes = Appointment::where('sched_date', $shedDate)
+                                ->pluck('sched_time')
+                                ->toArray();
+
+        return response()->json([
+            'status' => 'success',
+            'available_times' => $bookedTimes,
+        ], 200);
+    }
+
     public function diplayServices(){
-        $services = Services::where("serv_status", "=", "Verified")->get();
+        $services = Services::where("serv_status", "Verified")->get();
         return $services;
     }
 }

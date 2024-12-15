@@ -14,7 +14,7 @@
                     </div>
                     <div class="modal-body">
                         <p>You selected: <b>{{ formattedSelectedDate }}</b></p>
-                        <p><strong>Slots: </strong>20</p>
+                        <p>Remaining Slots: <strong> {{ remainingSlots !== null ? remainingSlots : "N/A" }} </strong></p>
                         <form @submit.prevent="bookAppointment">
                             <div class="mb-3">
                                 <label for="service" class="form-label">Service</label>
@@ -78,7 +78,14 @@ export default {
                 { label: "3:00 PM", value: "3:00 PM" },
                 { label: "4:00 PM", value: "4:00 PM" },
             ],
+            remainingSlots: null,
+            bookedSlots: [],
         };
+    },
+    watch: {
+        "appointmentData.sched_date": function (newDate) {
+            if (newDate) this.fetchRemainingSlots();
+        },
     },
     computed: {
         filteredTimes() {
@@ -94,9 +101,7 @@ export default {
                     parseInt(minutes)
                 );
 
-                const isDisabled =
-                    selectedDate.toDateString() === currentDate.toDateString() &&
-                    timeDate < currentDate;
+                const isDisabled = selectedDate.toDateString() === currentDate.toDateString() && timeDate < currentDate || this.bookedSlots.includes(time.value);
 
                 return {
                     ...time,
@@ -105,33 +110,72 @@ export default {
             });
         },
         formattedSelectedDate() {
-            if (!this.appointmentData.sched_date) return '';
+            if (!this.appointmentData.sched_date) return "";
             const date = new Date(this.appointmentData.sched_date);
-            return new Intl.DateTimeFormat('en-PH', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
+            return new Intl.DateTimeFormat("en-PH", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
             }).format(date);
-        }
+        },
     },
     methods: {
+        async filterTimeAppointment() {
+            try {
+                const response = await axios.get('/user/patient/filterTime', {
+                    params: { sched_date: this.appointmentData.sched_date }
+                });
+                console.log(response);
+                
+                this.bookedSlots = Array.isArray(response.data.available_times) ? response.data.available_times : [];
+            } catch (error) {
+                console.error("Error filtering time appointments:", error);
+                this.bookedSlots = [];
+            }
+        },
+        async fetchRemainingSlots() {
+            try {
+                if (!this.appointmentData.sched_date) {
+                    this.remainingSlots = null;
+                    return;
+                }
+
+                const response = await axios.get("/user/patient/countAppointment", {
+                    params: { sched_date: this.appointmentData.sched_date },
+                });
+                this.remainingSlots = response.data.remaining_slots || {};
+            } catch (error) {
+                console.error("Error fetching remaining slots:", error);
+                this.remainingSlots = "Error";
+            }
+        },
         async handleDateClick(info) {
             const currentDate = new Date();
             const clickedDate = new Date(info.dateStr);
+            this.appointmentData.sched_date = info.dateStr;
+            this.filterTimeAppointment();
+
             if (clickedDate < currentDate) {
                 Swal.fire("Prohibited!", "Cannot select past dates.", "error");
                 return;
             }
+
             try {
-                const response = await axios.get('/user/patient/display/event');
-                const clickedEvent = response.data.find(event => event.start_date === info.dateStr);
+                const response = await axios.get("/user/patient/display/event");
+                const clickedEvent = response.data.find(
+                    (event) => event.start_date === info.dateStr
+                );
 
                 if (clickedEvent && clickedEvent.is_appointment === 1) {
-                    Swal.fire("Warning!", "This date already is already close.", "warning");
+                    Swal.fire(
+                        "Warning!",
+                        "This date is already closed.",
+                        "warning"
+                    );
                     return;
                 }
-                this.appointmentData.sched_date = info.dateStr;
+
                 const modalElement = document.getElementById("dateModal");
                 const modalInstance = new bootstrap.Modal(modalElement);
                 modalInstance.show();
@@ -139,12 +183,12 @@ export default {
                 console.error("Error fetching events:", error);
             }
         },
-
         async bookAppointment() {
             if (!this.selectedService) {
                 Swal.fire("Error", "Please select a service.", "error");
                 return;
             }
+
             try {
                 Swal.fire({
                     title: "Booking your appointment...",
@@ -155,22 +199,31 @@ export default {
                         Swal.showLoading();
                     },
                 });
-                let formData = new FormData();
+
+                const formData = new FormData();
                 formData.append("services_id", this.selectedService.id);
                 formData.append("sched_date", this.appointmentData.sched_date);
                 formData.append("sched_time", this.appointmentData.sched_time);
 
-                const response = await axios.post('/user/patient/setAppointment', formData);
+                const response = await axios.post(
+                    "/user/patient/setAppointment",
+                    formData
+                );
 
                 const modalElement = document.getElementById("dateModal");
                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
                 modalInstance.hide();
 
-                Swal.fire("Success", response.data.message || "Appointment booked successfully!", "success");
+                Swal.fire(
+                    "Success",
+                    response.data.message || "Appointment booked successfully!",
+                    "success"
+                );
 
                 this.selectedService = null;
                 this.appointmentData = { id: "", sched_date: null, sched_time: null };
 
+                this.fetchRemainingSlots();
                 this.loadAllEvents();
             } catch (error) {
                 Swal.fire("Error", "Failed to book appointment. Please try again.", "error");
@@ -179,27 +232,26 @@ export default {
         },
         async displayAppointment() {
             try {
-                const response = await axios.get('/user/patient/display/appointment');
-                const appointmentEvents = response.data.map((appointment) => ({
+                const response = await axios.get("/user/patient/display/appointment");
+                return response.data.map((appointment) => ({
                     title: `Appointment for ${appointment.appoint_services?.services_name}`,
                     start: appointment.sched_date,
                     end: appointment.sched_date,
                     color: "#14A44D",
                 }));
-                return appointmentEvents;
             } catch (error) {
                 console.error("Error fetching user appointments:", error);
                 return [];
             }
         },
-        async displayEvent(){
+        async displayEvent() {
             try {
-                const response = await axios.get('/user/patient/display/event');
-                return response.data.map(event => ({
+                const response = await axios.get("/user/patient/display/event");
+                return response.data.map((event) => ({
                     title: event.event_name,
                     start: event.start_date,
                     end: event.end_date,
-                    color: event.is_appointment === 1 ? '#FFC107' : '#14A44D',
+                    color: event.is_appointment === 1 ? "#FFC107" : "#14A44D",
                 }));
             } catch (error) {
                 console.error("Error fetching events:", error);
@@ -217,22 +269,22 @@ export default {
                 console.error("Error loading all events:", error);
             }
         },
-        displayServices() {
-            axios.get("/user/patient/displayAppointment") 
-                .then((response) => {
-                    this.services = response.data;
-                })
-                .catch((error) => {
-                    console.error("Error fetching services:", error);
-            });
+        async displayServices() {
+            try {
+                const response = await axios.get("/user/patient/displayAppointment");
+                this.services = response.data || [];
+            } catch (error) {
+                console.error("Error fetching services:", error);
+            }
         },
     },
     mounted() {
-        this.loadAllEvents();
         this.displayServices();
+        this.loadAllEvents();
     },
 };
 </script>
+
 
 
 

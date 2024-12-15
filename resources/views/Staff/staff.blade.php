@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="{{ asset('/css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
     @vite('resources/sass/app.scss')
-
 </head>
 
 
@@ -34,31 +33,36 @@
     <div class="wrapper" id="app">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light sticky-md-top">
         <ul class="navbar-nav">
-            <!-- Left navbar links -->
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="/user/staff/dashboard" class="nav-link ms-4">Assistant Dashboard</a>
             </li>
         </ul>
 
-        <!-- Right navbar links -->
         <ul class="navbar-nav ms-auto me-3">
             <li class="nav-item dropdown">
                 <a class="nav-link position-relative" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                     <i class="fa-solid fa-bell fs-4"></i>
                     @if($unreadCount > 0)
-                        <span class="position-absolute top-2 start-98 translate-middle badge rounded-pill bg-danger">{{ $unreadCount }}</span>
+                        <span class="position-absolute top-2 start-98 translate-middle badge rounded-pill bg-danger">
+                            {{ $unreadCount }}
+                        </span>
                     @endif
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
                     @foreach ($notifications as $notification)
                         <li>
-                            <a class="dropdown-item text-primary fs-6">
+                            <a class="dropdown-item text-primary fs-6 mark-as-read" 
+                            data-id="{{ $notification->id }}" href="#">
                                 <small><strong>{{ $notification->data['event'] }}</strong></small><br>
                                 <small>{{ $notification->data['name'] }}</small><br>
                                 <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                             </a>
                         </li>
                     @endforeach
+                    <li>
+                        <a href="{{ route('notifications.markAllRead') }}" 
+                        class="dropdown-item text-center text-secondary small">Mark all as read</a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -166,6 +170,43 @@
             <router-view></router-view>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.mark-as-read').forEach(function (element) {
+                element.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const notificationId = this.dataset.id;
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                    fetch('/notifications/mark-as-read', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: notificationId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const badge = document.querySelector('.badge');
+                            if (badge) {
+                                const unreadCount = parseInt(badge.innerText);
+                                if (unreadCount > 0) {
+                                    badge.innerText = unreadCount - 1;
+                                }
+                                if (unreadCount - 1 === 0) {
+                                    badge.style.display = 'none';
+                                }
+                            }
+                            window.location.href = '/user/staff/appointment';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
     @vite('resources/js/app.js')
     {{-- <script src="{{ asset('/js/app.js') }}"></script> --}}

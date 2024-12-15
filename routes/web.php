@@ -84,6 +84,8 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             //Book Appointment Section
                 Route::post('/user/patient/setAppointment', [PatientController::class, 'storeAppointment']);
                 Route::get('/user/patient/displayAppointment', [PatientController::class, 'diplayServices']);
+                Route::get('/user/patient/countAppointment', [PatientController::class, 'getRemainingSlots']);
+                Route::get('/user/patient/filterTime', [PatientController::class, 'filterTime']);
             //End of Book Appointment Section
 
             //Start of Calendar Event Routes
@@ -193,6 +195,9 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
     });  
     
     Route::middleware(['assistant'])->group(function(){
+
+            Route::post('/notifications/mark-as-read', [App\Http\Controllers\HomeController::class, 'markAsRead'])->name('notifications.markAsRead');
+            Route::get('/notifications/mark-all-read', [App\Http\Controllers\HomeController::class, 'markAllRead'])->name('notifications.markAllRead');
 
         //Start of Staff Routes
             Route::get('/user/staff/dashboard', [StaffController::class, 'index'])->name('staff');

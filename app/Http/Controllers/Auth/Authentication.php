@@ -53,6 +53,7 @@ class Authentication extends Controller
         'lastname' => 'required',
         'home_address' => 'required',
         'phone_number' => ['required', 'numeric', 'digits_between:1,11'],
+        'birthdate' => ['required', 'date'],
         'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
         'age' => ['required', 'numeric'],
         'sex' => 'required',
