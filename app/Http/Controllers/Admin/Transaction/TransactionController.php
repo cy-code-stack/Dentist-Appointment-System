@@ -27,12 +27,24 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
-        $transaction = Appointment::where('appnt_status', 'Completed')->with('patient', 'appointServices')->get();
+        $limit = $request->input('limit', 10);
+        $page = $request->input('page', 1);
+
+
+        $query = Appointment::where('appnt_status', 'Completed')->with('patient', 'appointServices');
+
+        $records = $query->paginate($limit, ['*'], 'page', $page);
+
         return response()->json([
             'status' => 'success',
-            'data' => $transaction,
+            'data' => $records->items(),
+            'meta' => [
+                'current_page' => $records->currentPage(),
+                'last_page' => $records->lastPage(),
+                'total' => $records->total(),
+            ],
         ], 200);
     }
 

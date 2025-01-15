@@ -27,7 +27,6 @@ use App\Http\Controllers\Admin\Record\PatientRecordController;
 use App\Http\Controllers\Admin\Refer\PatientInformationController;
 use App\Http\Controllers\Admin\Refer\DiagnosticController;
 use App\Http\Controllers\Admin\Transaction\TransactionController;
-use App\Http\Controllers\NotificationController;
 //End of Admin
 
 //Staff
@@ -36,6 +35,7 @@ use App\Http\Controllers\Staff\Appointment\AppointmentController;
 use App\Http\Controllers\Staff\Archieve\ArchieveController;
 use App\Http\Controllers\Staff\Inquiry\InquiryController;
 use App\Http\Controllers\Staff\CalendarEvent\CalendarEventController;
+use App\Http\Controllers\Staff\History\PatientHistoryController;
 use App\Http\Controllers\Staff\Profile\AssistantProfileController;
 
 /*
@@ -72,6 +72,8 @@ Route::get('/', function () { return view('landing_page');});
     
 //Print
     Route::get('/patient/invoice/print/{id}', [PrintController::class, 'downloadPrint'])->name('invoive.print');
+    Route::post('/notifications/mark-as-read', [App\Http\Controllers\HomeController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::get('/notifications/mark-all-read', [App\Http\Controllers\HomeController::class, 'markAllRead'])->name('notifications.markAllRead');
 //end
 
 // Routes for authenticated users
@@ -121,6 +123,10 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             Route::get('/user/admin/appointment/percentage', [AdminDashboardController::class, 'getAppointmentPercentageEachMonth']);
             Route::get('/user/admin/appointment/top', [AdminDashboardController::class, 'getTopServicesEachAppointment']);
             Route::get('/user/admin/patient/demographics', [AdminDashboardController::class, 'demographics']);
+            Route::get('/user/admin/patient/patientCount', [AdminDashboardController::class, 'patientCount']);
+            Route::get('/user/admin/services/adminCountServices', [AdminDashboardController::class, 'countServices']);
+            Route::get('/user/admin/transtraction/adminTransactionCount', [AdminDashboardController::class, 'countTransaction']);
+            Route::get('/user/admin/assistant/assistantCount', [AdminDashboardController::class, 'assistantCount']);
 
             //Manage User
                 Route::get('/user/admin/manage/user', [ManageStaffController::class, 'showUser']);
@@ -144,7 +150,9 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::get('/admin/patients/index/{id}', [PatientInformationController::class, 'index']);
                 Route::get('/admin/patients/show/{id}', [PatientInformationController::class, 'show']);
                 Route::put('/admin/patient/archive/{id}', [AdminReferPatientsController::class, 'archiveReferPatients']);
-                Route::post('/admin/patients/information', [PatientInformationController::class, 'store']);
+
+                Route::put('/admin/patients/information/{id}', [PatientInformationController::class, 'updateInformation']);
+                
                 Route::get('/admin/patients/diagnostic', [DiagnosticController::class, 'index']);
                 Route::get('/admin/patients/child', [DiagnosticController::class, 'childIndex']);
                 Route::post('/admin/patients/diagnostic/store', [DiagnosticController::class, 'store']);
@@ -186,21 +194,18 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::delete('/admin/profile/userDestroy', [AdminProfileController::class,'destroyUser']);
             //End Profile
 
-            //Patient Records Section 
-                // Route::get('/admin/record/display', [PatientRecordController::class, 'index']);
-                // Route::get('/admin/record/view/{id}', [PatientRecordController::class, 'show']);
-                // Route::get('/admin/record/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);
-            //End Patient Records Section 
         //End of Admin Routes
     });  
     
     Route::middleware(['assistant'])->group(function(){
 
-            Route::post('/notifications/mark-as-read', [App\Http\Controllers\HomeController::class, 'markAsRead'])->name('notifications.markAsRead');
-            Route::get('/notifications/mark-all-read', [App\Http\Controllers\HomeController::class, 'markAllRead'])->name('notifications.markAllRead');
-
         //Start of Staff Routes
             Route::get('/user/staff/dashboard', [StaffController::class, 'index'])->name('staff');
+            Route::get('/user/staff/patient/appointmentCount', [StaffController::class, 'countAppointmentCatered']);
+            Route::get('/user/staff/services/servicesCount', [StaffController::class, 'countServices']);
+            Route::get('/user/staff/appointment/ongoingCount', [StaffController::class, 'countOngoingAppointment']);
+            Route::get('/user/staff/appointment/declinedCount', [StaffController::class, 'countDeclinedAppointment']);
+            Route::get('/user/staff/appointment/dashboardDisplay', [StaffController::class, 'displayAppointment']);
 
             //Manage User
                 Route::get('/user/staff/manage/user', [ManageUserController::class, 'showUser']);
@@ -211,8 +216,14 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             //End of Manage User Routes
 
             //Start of Appointment Routes
+                Route::get('/user/staff/appointment/resched/view/{id}', [AppointmentController::class,'index']);
                 Route::get('/user/staff/appointment/display', [AppointmentController::class, 'showAppointment']);
-                Route::put('/user/staff/recomend/doctor/{id}', [AppointmentController::class, 'recoAppointment']);
+                
+                
+                Route::get('/user/staff/appointment/patient/view/{id}', [AppointmentController::class,'showPatient']);
+                Route::post('/user/staff/recomend/doctor/{id}', [AppointmentController::class, 'recoAppointment']);
+
+
                 Route::put('/user/staff/appointment/abort/{id}', [AppointmentController::class, 'abortAppointment']);
                 Route::put('/user/staff/appointment/resched/{id}', [AppointmentController::class,'reschedAppointment']);
                 Route::put('/user/staff/appointment/approved/{id}', [AppointmentController::class,'approvedAppointment']);
@@ -244,6 +255,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::get('/user/staff/display', [PatientRecordController::class, 'index']);
                 Route::get('/user/staff/view/{id}', [PatientRecordController::class, 'show']);
                 Route::get('/user/staff/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);
+                Route::get('/user/staff/patient/view/history/{id}', [PatientHistoryController::class, 'index']);
             //End Patient Records Section
 
             //Start of Profile Section

@@ -18,9 +18,13 @@
                                     <label class="form-label">Service name</label>
                                     <input type="text" class="form-control" placeholder="Enter new services name" v-model="services.services_name"/>
                                 </div>
+                                <div class="form-group mb-1 w-100">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" class="form-control" v-model="services.price"/>
+                                </div>
                             </div>
                             <div class="active-btn">
-                                <button type="button"  class="btn btn-success text-white btn-md-1 w-100" @click=" updateServices(services.id)"> Edit Services  </button>
+                                <button type="button" class="btn btn-success text-white btn-md-1 w-100" @click=" updateServices(services.id)">Edit Services</button>
                             </div>
                     </div>
                 </div>
@@ -39,6 +43,7 @@ export default {
             services: {
                 id: '',
                 services_name: '',
+                price: '',
             },
         }
     },
@@ -63,15 +68,12 @@ export default {
     watch:{
         services_selection: {
             handler(val) {
-                // console.log(val);
                 this.services.id = val.id;
                 this.services.services_name = val.services_name;
+                this.services.price = val.price;
             },
             deep: true,
         },
-    }, 
-    mounted(){
-
     },
 }
 </script>

@@ -92,13 +92,33 @@ class ManageUserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showUser()
-    {
-        $user = User::whereNotIn("role", ['Dentist', 'Assistant'])
-                        ->where('status', '<>', 'archive')
-                        ->get();
+    public function showUser(Request $request)
+    { 
+        $limit = $request->input('limit', 10);
+        $page = $request->input('page', 1);
+        $search = $request->input('search', '');
 
-        return $user;
+        $query = User::whereNotIn("role", ['Dentist', 'Assistant'])
+                        ->where('status', '<>', 'archive');
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('firstname', 'LIKE', "%{$search}%")
+                  ->orWhere('lastname', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $records = $query->paginate($limit, ['*'], 'page', $page);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $records->items(),
+            'meta' => [
+                'current_page' => $records->currentPage(),
+                'last_page' => $records->lastPage(),
+                'total' => $records->total(),
+            ],
+        ], 200);
     }
 
     /**

@@ -3,7 +3,7 @@
         <p class="text-center fs-1 text-primary fw-semibold mb-1">Graces Dental Clinic</p>
         <p class="text-center fs-4 text-success fw-semibold">Patient Information Record</p>
 
-        <form @submit.prevent="submitInformation">
+        <form @submit.prevent="updateData">
             <div class="card p-3 shadow-sm">
                 <div class="title-form mb-3">
                     <p class="fs-5 fw-semibold text-primary">Personal Information</p>
@@ -12,27 +12,26 @@
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label class="form-label">Firstname</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.firstname" readonly>
+                            <input type="text" class="form-control rounded" v-model="information.user.firstname" readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Middle Initial</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.middle_initial" readonly>
+                            <input type="text" class="form-control rounded" v-model="information.user.middle_initial" readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Lastname</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.lastname" readonly>
+                            <input type="text" class="form-control rounded" v-model="information.user.lastname" readonly>
                         </div>
                     </div>
 
                     <div class="row g-3 mt-3">
                         <div class="col-md-4">
                             <label class="form-label">Birthdate</label>
-                            <input type="date" class="form-control rounded" v-model="information.birthdate">
-                            <div v-if="errors.birthdate" class="text-danger mt-1"><small>{{ errors.birthdate[0] }}</small></div>
+                            <input type="date" class="form-control rounded" v-model="information.user.birthdate" readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Age</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.age" readonly>
+                            <input type="text" class="form-control rounded" v-model="information.user.age" readonly>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Religion</label>
@@ -57,18 +56,18 @@
                     <div class="row g-3 mt-3">
                         <div class="col-md-6">
                             <label class="form-label">Home Address</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.home_address" readonly>
+                            <input type="text" class="form-control rounded" v-model="information.user.home_address" readonly>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Contact Number</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.phone_number" readonly>
+                            <input type="text" class="form-control rounded" v-model="information.user.phone_number" readonly>
                         </div>
                     </div>
 
                     <div class="row g-3 mt-3">
                         <div class="col-md-6">
                             <label class="form-label">Occupation</label>
-                            <input type="text" class="form-control rounded" v-model="patientData.patient.occupation" readonly>
+                            <input type="text" class="form-control rounded" v-model="information.user.occupation" readonly>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Parents or Guardian</label>
@@ -353,6 +352,7 @@ export default {
                 patient: {} 
             },
             information: {
+                user: {},
                 user_id: '',
                 appointment_id: '',
                 birthdate: '',
@@ -392,8 +392,8 @@ export default {
             const urlSegments = url.split('/').filter(Boolean)
             return urlSegments[urlSegments.length - 1];
         },
-        submitInformation() {
-            if (!this.patientData.patient.id) {
+        updateData() {
+            if (!this.information.user.id) {
                 Swal.fire({
                     icon: "error",
                     title: "Missing Patient ID",
@@ -402,19 +402,20 @@ export default {
                 return;
             }
             
-            this.information.user_id = this.patientData.patient.id;
+            this.information.user_id = this.information.user.id;
             this.information.appointment_id = this.getUrlId();
 
-            axios.post('/admin/patients/information', this.information)
+            axios.put(`/admin/patients/information/${this.information.id}`, this.information)
                 .then((response) => {
                     Swal.fire({
                         position: "center",
                         icon: "success",
-                        title: "Information has been added!",
+                        title: "Proceed to diagnostics",
                         showConfirmButton: false,
-                        timer: 2000,
+                        timer: 5000,
+                        timerProgressBar: true,
                     }).then(() => {
-                        const patientAge = this.patientData.patient.age;
+                        const patientAge = this.information.user.age;
                         if (patientAge < 12) {
                             this.$router.push(`/user/admin/child/${response.data.data.id}`);
                         } else {
@@ -444,13 +445,17 @@ export default {
             }
             axios.get(`/admin/patients/index/${patientId}`)
                 .then(response => {
-                    this.patientData = response.data;
-                    console.log('Patient data loaded:', this.patientData);
+                    this.information = response.data.data[0];
                 })
                 .catch(error => {
-                    console.error('Error fetching patient data:', error);
+                    if (error.response && error.response.status === 404) {
+                        console.error('Patient not found:', error.response.data.message);
+                    } else {
+                        console.error('Fetching Patient Error:', error);
+                    }
                 });
         }
+        
     },
     mounted() {
         this.getPatientBasedOnId();

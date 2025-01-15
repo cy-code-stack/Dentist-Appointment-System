@@ -31,7 +31,7 @@ class AdminArchiveController extends Controller
     }
 
     public function showReferArchive(){
-        $refer = Appointment::whereNotIn('appnt_status', ['Declined', 'Pending Approval', 'Pending'])->with('patient', 'appointServices')->get();
+        $refer = Appointment::whereNotIn('appnt_status', ['Declined', 'Pending Approval', 'Completed', 'Pending'])->with('patient', 'appointServices')->get();
 
         return response()->json([
             'status' => 'success',

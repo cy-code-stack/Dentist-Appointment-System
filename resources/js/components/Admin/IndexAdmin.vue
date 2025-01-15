@@ -9,7 +9,7 @@
                     <i class="fa-solid fa-hospital-user fs-1"></i>
                 </div>
                 <div class="col col-md-8">
-                    <p class="fs-2 fw-semibold mb-0">100</p>
+                    <p class="fs-2 fw-semibold mb-0">{{ patientCount }}</p>
                     <p class="fs-6 fw-medium mb-0">Patient Total</p>
                 </div>
             </div>
@@ -23,21 +23,21 @@
                     <i class="fa-solid fa-list-check fs-1"></i>
                 </div>
                 <div class="col col-md-8">
-                    <p class="fs-2 fw-semibold mb-0">10</p>
+                    <p class="fs-2 fw-semibold mb-0">{{ serviceCount }}</p>
                     <p class="fs-6 fw-medium mb-0">Total Services</p>
                 </div>
             </div>
         </div>
         <div class="main-card card p-3 bg-primary bg-gradient" style="min-width: 300px; border: none">
             <div class="card-title">
-                <p class="fs-5 fw-semibold mb-1">Trasaction History</p>
+                <p class="fs-5 fw-semibold mb-1">Completed Trasaction</p>
             </div>
             <div class="card-icon d-flex justify-content-around align-items-center">
                 <div class="col col-lg-3">
                     <i class="fa-solid fa-calendar-check fs-1"></i>
                 </div>
                 <div class="col col-md-8">
-                    <p class="fs-2 fw-semibold mb-0">20</p>
+                    <p class="fs-2 fw-semibold mb-0">{{ transactionCount }}</p>
                     <p class="fs-6 fw-medium mb-0">Total Trasaction</p>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                     <i class="fs-1 fa-solid fa-user-nurse"></i>
                 </div>
                 <div class="col col-md-8">
-                    <p class="fs-2 fw-semibold mb-0">20</p>
+                    <p class="fs-2 fw-semibold mb-0">{{ assistantCount }}</p>
                     <p class="fs-6 fw-medium mb-0">Total Staff</p>
                 </div>
             </div>
@@ -62,105 +62,7 @@
         <div class="d-flex justify-content-center">
             <div class="col col-lg-12">
                 <div class="active-card card p-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <p class="fs-4 fw-semibold mb-0">Current Transactions</p>
-                        <div class="sort">
-                            <div class="select-input d-flex justify-content-center align-items-center">
-                                <select class="form-control form-control-sm">
-                                    <option selected disabled>Sort by</option>
-                                    <option value="">Pending</option>
-                                    <option value="">Completed</option>
-                                    <option value="">Decline</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="table-responsive-lg">
-                        <div class="header d-flex p-2 justify-content-between align-items-center bg-info bg-gradient rounded-1 mb-2">
-                            <div class="text-center col-lg-3">
-                                <p class="fs-6 fw-semibold mb-0">Name</p>
-                            </div>
-                            <div class="text-center col-lg-3">
-                                <p class="fs-6 fw-semibold mb-0">
-                                    Appointment Schedule
-                                </p>
-                            </div>
-                            <div class="text-center col-lg-3">
-                                <p class="fs-6 fw-semibold mb-0">Services</p>
-                            </div>
-                            <div class="text-center col-lg-3">
-                                <p class="fs-6 fw-semibold mb-0">Status</p>
-                            </div>
-                        </div>
-                        <div class="main-table-body">
-                            <div class="table-row card mb-2">
-                                <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                                    <div class="text-center col-lg-3">
-                                        <p class="fs-6 mb-0 fw-medium text-black-50">John Doe</p>
-                                    </div>
-                                    <div class="text-center col-lg-3">
-                                        <p class="fs-6 mb-0 fw-medium text-black-50">
-                                            May 3 2024 9:30 AM - 10:30 AM
-                                        </p>
-                                    </div>
-                                    <div class="text-center col-lg-3">
-                                        <p
-                                            class="fs-6 mb-0 fw-medium text-black-50"
-                                        >
-                                            Tooth Cleaning
-                                        </p>
-                                    </div>
-                                    <div
-                                        class="text-center justify-content-center col-lg-3 rounded-1"
-                                    >
-                                        <p
-                                            class="fs-6 fw-medium mb-0 text-warning"
-                                        >
-                                            Pending
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="container-fluid d-flex justify-content-end align-items-center"
-                        >
-                            <nav>
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a
-                                            class="page-link"
-                                            href="#"
-                                            aria-label="Previous"
-                                        >
-                                            <span aria-hidden="true"
-                                                >&laquo;</span
-                                            >
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a
-                                            class="page-link"
-                                            href="#"
-                                            aria-label="Next"
-                                        >
-                                            <span aria-hidden="true"
-                                                >&raquo;</span
-                                            >
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
                         <div class="container-fluid">
                             <p class="text-center fw-medium fs-4 mb-2">Date Filter</p>
                             <div class="d-flex justify-content-between align-items-center mb-4 gap-2">
@@ -214,9 +116,41 @@ export default {
             lineChart: null,
             startDate: null,
             endDate: null,
+            patientCount: 0,
+            serviceCount: 0,
+            transactionCount: 0,
+            assistantCount: 0,
         };
     },
     methods: {
+        displayPatientCount(){
+            axios.get('/user/admin/patient/patientCount').then((response)=>{
+                this.patientCount = response.data.data;
+            }).catch((error)=>{
+                console.log(error);
+            });
+        },
+        displayServicesCount(){
+            axios.get('/user/admin/services/adminCountServices').then((response)=>{
+                this.serviceCount = response.data.data;
+            }).catch((error)=>{
+                console.log(error);
+            });
+        },
+        displayTransactionCount(){
+            axios.get('/user/admin/transtraction/adminTransactionCount').then((response)=>{
+                this.transactionCount = response.data.data;
+            }).catch((error)=>{
+                console.log(error);
+            });
+        },
+        displayAssistantCount(){
+            axios.get('/user/admin/assistant/assistantCount').then((response)=>{
+                this.assistantCount = response.data.data;
+            }).catch((error)=>{
+                console.log(error);
+            });
+        },
         fetchAndRenderCharts() {
             const barCtx = document.getElementById("barChart");
             const barPieCtx = document.getElementById("barPieChart");
@@ -432,6 +366,10 @@ export default {
         this.endDate = endOfYear;
 
         this.fetchAndRenderCharts();
+        this.displayPatientCount();
+        this.displayServicesCount();
+        this.displayTransactionCount();
+        this.displayAssistantCount();
     },
 };
 

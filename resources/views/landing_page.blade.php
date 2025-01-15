@@ -33,7 +33,7 @@
                     <a href="{{ route('signin') }}" class="btn btn-light btn-lg">Get your appointment</a>
                 </div>
                 <div class="image-container col-lg-6 mt-3 text-center">
-                    <img class="img-fluid" src="{{ asset('images/dentist.png') }}" alt="dentist">
+                    <img class="img-fluid" src="{{ asset('images/welcome.jpg') }}" alt="dentist">
                 </div>
             </div>
         </div>

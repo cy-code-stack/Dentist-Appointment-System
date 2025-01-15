@@ -28,7 +28,6 @@
     @vite('resources/sass/app.scss')
 </head>
 
-
 <body class="hold-transition sidebar-mini overflow-auto">
     <div class="wrapper" id="app">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light sticky-md-top">
@@ -38,7 +37,7 @@
             </li>
         </ul>
 
-        <ul class="navbar-nav ms-auto me-3">
+        <ul class="navbar-nav ms-auto me-3 overflow-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link position-relative" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                     <i class="fa-solid fa-bell fs-4"></i>
@@ -120,7 +119,7 @@
                         <li class="nav-item">
                             <router-link to="/user/staff/record" class="nav-link">
                                 <i class="nav-icon fa-solid fa-book-medical"></i>
-                                <p>Patient History</p>
+                                <p>Appointment History</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
@@ -209,12 +208,16 @@
     </script>
 
     @vite('resources/js/app.js')
-    {{-- <script src="{{ asset('/js/app.js') }}"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-5nt9G0GDdOTIwjX0uizG9xXLEFcXDQhg7lsCxvK2ebCkqQ+FgH0ODICqYGD0CUGe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

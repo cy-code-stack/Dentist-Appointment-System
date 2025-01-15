@@ -36,25 +36,22 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="container-fluid d-flex justify-content-end align-items-center mb-0 p-0">
+            <div class="container-fluid d-flex justify-content-end align-items-center">
                 <nav>
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
+                        <li class="page-item" 
+                            v-for="page in totalPages" 
+                            :key="page" 
+                            :class="{ active: currentPage === page }">
+                            <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -80,19 +77,34 @@ export default {
         return{
             listofInquiry:[],
             selected_inq:{},
+            currentPage: 1,
+            totalPages: 1,
+            perPage: 10,
         };
     },
     methods:{
-       displayInquiry(){
-            axios.get('/user/staff/inquiry/display').then((response)=>{
-                this.listofInquiry = response.data;
+       displayInquiry(page = 1,){
+            axios.get('/user/staff/inquiry/display',{
+                params: {
+                    page: page,        
+                    limit: this.perPage
+                },
+            }).then((response)=>{
+                this.listofInquiry = response.data.data;
+                this.currentPage = response.data.meta.current_page;
+                this.totalPages = response.data.meta.last_page;
             }).catch((error) =>{
                 console.log(error);
             });
        },
+       changePage(page) {
+            if (page > 0 && page <= this.totalPages) {
+                this.displayInquiry(page);
+            }
+        },
        ViewInquiryModal(selected_inq){
-        this.selected_inq = selected_inq;
-        $("#view-inquiry-modal").modal("show");
+            this.selected_inq = selected_inq;
+            $("#view-inquiry-modal").modal("show");
        },
 
        alreadyCatered(id){

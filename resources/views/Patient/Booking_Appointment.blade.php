@@ -36,29 +36,52 @@
                         <router-link to="/user/patient/booking" exact-active-class="active" class="nav-link text-white me-2">Booking an Appointment</router-link>
                         <router-link to="/user/patient/appointment" exact-active-class="active" class="nav-link text-white me-2 ">List of Appointments</router-link>
                         <router-link to="/user/patient/decline" exact-active-class="active" class="nav-link text-white me-2">Decline Appointments</router-link>
-                        <router-link to="/user/patient/profile" exact-active-class="active" class="nav-link text-white me-2">Profile</outer-link>
+                        <router-link to="/user/patient/profile" exact-active-class="active" class="nav-link text-white me-2">Profile</router-link>
                     </li>
                 </ul>
             </div>
-            <div class="header-nav d-flex justify-content-end col-lg-7">
+            <div class="header-nav d-flex justify-content-end align-items-center col-lg-7">
                 <ul class="navbar-nav">
                     <li class="nav-item d-none d-sm-inline-block">
                         <div class="d-flex justify-content-center align-items-center me-2">
                             @if (Auth::check())
-                                <span class="nav-link fw-medium text-white">{{ Auth::user()->firstname }}
-                                    {{ Auth::user()->lastname }}</span>
-                                    <div class="dropstart">
-                                        <img src="{{ Auth::user()->profile_img ? asset(Auth::user()->profile_img) : asset('images/avatar.png') }}" alt="prof-img"
-                                        class="profile-img img-fluid img-circle rounded-5 dropdown-toggle" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="{{ route('logout') }}" class="dropdown-item"><span class="name">Logout</span></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                @endif
+                                <!-- User Info -->
+                                <span class="nav-link fw-medium text-white">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
+                                <div class="dropstart">
+                                    <img src="{{ Auth::user()->profile_img ? asset(Auth::user()->profile_img) : asset('images/avatar.png') }}" alt="Profile Image"
+                                        class="profile-img img-fluid img-circle rounded-5 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ route('logout') }}" class="dropdown-item"><span class="name">Logout</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link position-relative" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fa-solid fa-bell text-white fs-4"></i>
+                            @if($unreadCount > 0)
+                                <span class="position-absolute top-2 start-98 translate-middle badge rounded-pill bg-danger">{{ $unreadCount }}</span>
+                            @endif
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end overflow-auto me-3" aria-labelledby="notificationDropdown">
+                            @foreach ($notifications as $notification)
+                                <li>
+                                    <a class="dropdown-item text-primary fs-6 mark-as-read" 
+                                    data-id="{{ $notification->id }}" href="#">
+                                        <small><strong>{{ $notification->data['event'] }}</strong></small><br>
+                                        <small>{{ $notification->data['data'] }}</small><br>
+                                        <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                    </a>
+                                </li>
+                            @endforeach
+                            <li>
+                                <a href="{{ route('notifications.markAllRead') }}" 
+                                class="dropdown-item text-center text-secondary small">Mark all as read</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

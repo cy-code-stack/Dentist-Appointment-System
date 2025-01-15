@@ -21,7 +21,6 @@ import EventDetailsModal from "./EventDetailsModal.vue";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { color } from "chart.js/helpers";
 export default {
     components: {
         FullCalendar,
@@ -40,9 +39,10 @@ export default {
         };
     },
     methods: {
-        addEvent() {
+         addEvent() {
            $("#add-event-calendar-modal").modal("show");
         },
+
         handleEventClick({ event }) {
             this.selectedEvent = {
                 title: event.title,
@@ -76,7 +76,7 @@ export default {
             try {
                 const response = await axios.get('/user/staff/calendar/display/appointment');
                 return response.data
-                    .filter(appointment => appointment.appnt_status === 'Approved')
+                    .filter(appointment => appointment.appnt_status != 'Pending Approval')
                     .map(appointment => ({
                         title: `Appointment for ${appointment.patient?.firstname} ${appointment.patient?.lastname}`,
                         start: appointment.sched_date,
@@ -84,7 +84,7 @@ export default {
                         color: "#004d24",
                         extendedProps: {
                             patientDetails: appointment.patient,
-                            status: appointment.appnt_status || 'Not Yet Approved',
+                            status: appointment.appnt_status,
                             time: appointment.sched_time,
                             service: appointment.appoint_services
                         },

@@ -12,10 +12,11 @@ use Illuminate\Support\Str;
 class PrintController extends Controller
 {
     public function downloadPrint(Request $request) {
-        $appointment = Appointment::with('patient')->find($request->id);
+        $appointment = Appointment::with('patient', 'appointServices')->find($request->id);
     
         $data = [
             'invoiceId' => $appointment->id,
+            'services' => $appointment->appoint_services,
             'patient' => $appointment->patient,
             'paymentAppointments' => $appointment->payment()->with('items')->get(),
         ];

@@ -5,13 +5,8 @@
         </div>
         <div class="d-flex justify-content-end align-items-center mb-1">
             <div class="select-input d-flex justify-content-end align-items-center" style="width: 50% !important;">
-                <!-- <select class="form-control form-control-sm me-2" style="width: 40% !important;">
-                    <option selected disabled>Filter by role</option>
-                    <option value="">Staff</option>
-                    <option value="">Patient</option>
-                </select> -->
                 <form class=" me-2" role="search" style="width: 40% !important;">
-                    <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control form-control-sm" v-model="searchQuery" type="search" placeholder="Search" aria-label="Search">
                 </form>
                 <button class="btn btn-info btn-sm text-white" @click="addUser">
                     <i class="fa-solid fa-plus me-2"></i>
@@ -62,14 +57,14 @@
                                 {{ user.role }}
                             </p>
                         </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3">
-                            <button type="button" class="me-1 rounded-1 btn btn-info btn-sm text-white" v-if="user.verified" @click="editUser(user)"> 
+                        <div class="text-center d-flex justify-content-center col-lg-3 gap-2">
+                            <button type="button" class="rounded-1 btn btn-info btn-sm text-white" v-if="user.verified" @click="editUser(user)"> 
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-user-pen me-2"></i>
                                     <span>Edit</span>
                                 </div>
                             </button>
-                            <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white" v-if="!user.verified" @click="verifyUser(user)">
+                            <button type="button" class="rounded-1 btn btn-success btn-sm text-white" v-if="!user.verified" @click="verifyUser(user)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-eye me-2"></i>
                                     <span>View</span>
@@ -77,33 +72,30 @@
                             </button>
                             <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="deleteUser(user.id)">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-box-archive me-2"></i>
-                                    <span>Archive</span>
+                                    <i class="fa-solid fa-ban me-2"></i>
+                                    <span>Banned</span>
                                 </div>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container-fluid d-flex p-0 justify-content-end align-items-center">
+            <div class="container-fluid d-flex justify-content-end align-items-center">
                 <nav>
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
+                        <li class="page-item" 
+                            v-for="page in totalPages" 
+                            :key="page" 
+                            :class="{ active: currentPage === page }">
+                            <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -133,23 +125,37 @@ export default {
             selected_user: {},
             edited_select_user: {},
             listofUsers: [],
+            currentPage: 1,
+            totalPages: 1,
+            perPage: 10,
+            searchQuery: '',
         };
     },
     methods: {
-        displayUsers() {
-            axios
-                .get("/user/staff/manage/user")
-                .then((response) => {
-                    this.listofUsers = response.data.map((user) => ({
-                        ...user,
-                        verified: user.status === "verified",
-                        patient: user.role === "Patient",
-                        assistant: user.role === "Assistant",
-                    }));
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        displayUsers(page = 1, query = '') {
+            axios.get("/user/staff/manage/user", {
+                params: {
+                    page: page,        
+                    limit: this.perPage, 
+                    search: query,
+                },
+            }).then((response) => {
+                this.currentPage = response.data.meta.current_page;
+                this.totalPages = response.data.meta.last_page;
+                this.listofUsers = response.data.data.map((user) => ({
+                    ...user,
+                    verified: user.status === "verified",
+                    patient: user.role === "Patient",
+                    assistant: user.role === "Assistant",
+                }));
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
+        changePage(page) {
+            if (page > 0 && page <= this.totalPages) {
+                this.displayUsers(page);
+            }
         },
         addUser(){
             $("#add-user-modal").modal("show");
@@ -170,14 +176,14 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, archive it!",
+                confirmButtonText: "Yes, Banned it!",
             })
                 .then((data) => {
                     if (data.isConfirmed) {
                         axios
                             .put("/user/staff/user/archieve/" + id)
                             .then((response) => {
-                                Swal.fire("Archive!", "Patient has been archive.", "success");
+                                Swal.fire("Banned!", "Patient has been banned.", "success");
                                 this.displayUsers();
                             });
                     }

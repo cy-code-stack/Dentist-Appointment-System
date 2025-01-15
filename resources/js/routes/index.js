@@ -20,6 +20,9 @@ import IndexStaffInquiry from '../components/Staff/Inquiry/IndexInquiry.vue';
 import IndexStaffCallendarEvent from '../components/Staff/Callendar/IndexEventCallendar.vue';
 import IndexViewRecord from '../components/Staff/Records/Forms/IndexViewForm.vue';
 import TeethRecord from '../components/Staff/Records/Forms/TeethRecord.vue';
+import PatientHistory from '../components/Staff/Records/Forms/PatientHistory.vue';
+import RescheduleAppointmentPage from '../components/Staff/Appointments/ReschedAppointment.vue';
+import RecomendAppointment from '../components/Staff/Appointments/VerifyUser.vue';
 
 // Admin View
 import IndexAdminPage from "../components/Admin/IndexAdmin.vue"
@@ -80,6 +83,16 @@ const routes = [
         component: IndexStaffAppointment,
     },
     {
+        path: '/user/staff/appointment/recomend/:id',
+        name: 'recomend-appointment',
+        component: RecomendAppointment,
+    },
+    {
+        path: '/user/staff/appointment/resched/:id',
+        name: 'resched-appointment',
+        component: RescheduleAppointmentPage,
+    },
+    {
         path: '/user/staff/inquiry',
         name: 'inquiry',
         component: IndexStaffInquiry,
@@ -136,6 +149,11 @@ const routes = [
         path: '/user/staff/record/view/:id',
         name: 'assistant-view',
         component: IndexViewRecord,
+    },
+    {
+        path: '/user/staff/patient/history/:id',
+        name: 'assistant-history',
+        component: PatientHistory,
     },
     {
         path: '/user/staff/record/teeth/:id',

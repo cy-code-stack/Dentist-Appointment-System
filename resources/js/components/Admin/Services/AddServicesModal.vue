@@ -20,9 +20,13 @@
                                     <label class="form-label">Service name</label>
                                     <input type="text" class="form-control" placeholder="Enter new services name" v-model="services.services_name"/>
                                 </div>
+                                <div class="form-group mb-1 w-100">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" class="form-control" placeholder="Price" v-model="services.price"/>
+                                </div>
                             </div>
                             <div class="active-btn">
-                                <button type="submit"  class="btn btn-success text-white btn-md-1 w-100" > Add Services</button>
+                                <button type="submit" class="btn btn-success text-white btn-md-1 w-100" > Add Services</button>
                             </div>
                         </form>
                     </div>
@@ -41,6 +45,7 @@ export default {
             services: {
                 id: '',
                 services_name: '',
+                price: '',
             },
             errors: {},
         };
@@ -69,9 +74,9 @@ export default {
             this.services = {
                 id: '',
                 services_name: '',
+                price: '',
             };
         },
     },
-    mounted() {},
 };
 </script>

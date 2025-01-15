@@ -13,12 +13,23 @@ class PatientRecordController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $record = Appointment::where('appnt_status', 'Completed')->with('appointServices', 'patient')->get();
+        $limit = $request->input('limit', 10);
+        $page = $request->input('page', 1);
+
+        $query = Appointment::where('appnt_status', 'Completed')->with('appointServices', 'patient');
+
+        $records = $query->paginate($limit, ['*'], 'page', $page);
+
         return response()->json([
             'status' => 'success',
-            'data' => $record,
+            'data' => $records->items(),
+            'meta' => [
+                'current_page' => $records->currentPage(),
+                'last_page' => $records->lastPage(),
+                'total' => $records->total(),
+            ],
         ], 200);
     }
 

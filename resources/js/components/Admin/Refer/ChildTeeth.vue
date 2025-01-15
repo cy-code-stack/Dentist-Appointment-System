@@ -12,7 +12,7 @@
                         <img :src="tooth.selectedDiseaseImage || getImageUrl(tooth.teeth_url)" height="50" alt="Teeth Image">
                         <div class="dropdown d-flex justify-content-end align-items-center">
                             <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <small>Pick</small>
+                                <small>Condition</small>
                             </div>
                             <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
                                 <li v-for="disease in tooth.diseases" :key="disease.id" class="d-flex align-items-center">
@@ -32,7 +32,7 @@
                             </div>
                             <img :src="tooth.selectedDiseaseImage || getImageUrl(tooth.teeth_url)" height="50" alt="Teeth Image">
                             <div class="dropdown d-flex justify-content-end align-items-center">
-                                <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Pick</small></div>
+                                <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Condition</small></div>
                                 <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
                                     <li v-for="disease in tooth.diseases" :key="disease.id" class="d-flex align-items-center">
                                         <img :src="getDiseaseUrl(disease.disease_img_url)" alt="Disease Image" width="30" height="30">
@@ -53,7 +53,7 @@
                             </div>
                             <img :src="tooth.selectedDiseaseImage || getImageUrl(tooth.teeth_url)" height="50" alt="Teeth Image">
                             <div class="dropdown d-flex justify-content-end align-items-center">
-                                <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Pick</small></div>
+                                <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Condition</small></div>
                                 <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
                                     <li v-for="disease in tooth.diseases" :key="disease.id" class="d-flex align-items-center">
                                         <img :src="getDiseaseUrl(disease.disease_img_url)" alt="Disease Image" width="30" height="30">
@@ -72,7 +72,7 @@
                             </div>
                             <img :src="tooth.selectedDiseaseImage || getImageUrl(tooth.teeth_url)" height="50" alt="Teeth Image">
                             <div class="dropdown d-flex justify-content-end align-items-center">
-                                <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Pick</small></div>
+                                <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Condition</small></div>
                                 <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
                                     <li v-for="disease in tooth.diseases" :key="disease.id" class="d-flex align-items-center">
                                         <img :src="getDiseaseUrl(disease.disease_img_url)" alt="Disease Image" width="30" height="30">

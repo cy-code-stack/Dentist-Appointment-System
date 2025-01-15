@@ -30,6 +30,20 @@ class HomeController extends Controller
         return view("Staff.staff", compact('notifications', 'unreadCount'));
     }
 
+    public function adminIndex(){
+        $user = Auth::user();
+        $notifications = $user->notifications()->latest()->get();
+        $unreadCount = $user->unreadNotifications->count();
+        return view('Admin.AdminDashboard', compact('notifications', 'unreadCount'));
+    }
+
+    public function indexuserPatient(){
+        $user = Auth::user();
+        $notifications = $user->notifications()->latest()->get();
+        $unreadCount = $user->unreadNotifications->count();
+        return view('Patient.Booking_Appointment', compact('notifications', 'unreadCount'));
+    }
+
     public function markAsRead(Request $request)
     {
         $user = Auth::user();
@@ -50,11 +64,4 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'All notifications marked as read.');
     }
 
-    public function adminIndex(){
-        return view('Admin.AdminDashboard');
-    }
-
-    public function indexuserPatient(){
-        return view('Patient.Booking_Appointment');
-    }
 }

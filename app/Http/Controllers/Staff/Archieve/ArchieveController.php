@@ -27,20 +27,44 @@ class ArchieveController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showArchieve()
+    public function showArchieve(Request $request)
     {
-        $user = User::whereNotIn("role", ['Dentist', 'Assistant'])
-                        ->where('status', '<>', 'verified')
-                        ->get();
-        return $user;
+        $limit = $request->input('limit', 5);
+        $page = $request->input('page', 1);
+
+        $query = User::whereNotIn("role", ['Dentist', 'Assistant'])
+                        ->where('status', '<>', 'verified');
+
+        $records = $query->paginate($limit, ['*'], 'page', $page);
+        return response()->json([
+            'status' => 'success',
+            'data' => $records->items(),
+            'meta' => [
+                'current_page' => $records->currentPage(),
+                'last_page' => $records->lastPage(),
+                'total' => $records->total(),
+            ],
+        ], 200);
     }
 
-    public function showAppointmentDeclined(){
-        $decline = Appointment::where('appnt_status', '=', 'Declined')
-                                ->with('patient', 'appointServices')
-                                ->get();
+    public function showAppointmentDeclined(Request $request){
+        $limit = $request->input('limit', 5);
+        $page = $request->input('page', 1);
 
-        return $decline;
+        $query = Appointment::where('appnt_status', '=', 'Declined')
+                                ->with('patient', 'appointServices');
+
+        $records = $query->paginate($limit, ['*'], 'page', $page);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $records->items(),
+            'meta' => [
+                'current_page' => $records->currentPage(),
+                'last_page' => $records->lastPage(),
+                'total' => $records->total(),
+            ],
+        ], 200);
     }
 
     /**

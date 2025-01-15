@@ -29,7 +29,7 @@
                    <tbody>
                     <tr v-for="(item, index) in payments" :key="index">
                         <td>{{ item.id }}</td>
-                        <td>{{ item.appointment.appoint_services?.services_name }}</td>
+                        <td>{{ item.service }}</td>
                         <td>{{ item.tooth }}</td>
                         <td>{{ item.surface }}</td>
                         <td>{{ item.fee }}</td>
@@ -43,7 +43,7 @@
                                             query: { fee: item.fee} 
                                         }"
                                 >
-                                    <button type="button" class="rounded-1 btn btn-primary btn-sm">
+                                    <button type="button" v-if="item.balance != 0.00" class="rounded-1 btn btn-primary btn-sm">
                                         <div class="d-flex justify-content-center align-items-center">
                                             <i class="fa-solid fa-peso-sign me-2"></i>
                                             <span>Add Payment</span>
@@ -59,55 +59,33 @@
         </div>
 
         <!-- Modal -->
-        <div 
-            class="modal fade show" 
-            tabindex="-1" 
-            style="display: block;" 
-            v-if="showModal" 
-            aria-labelledby="newToothModalLabel" 
-            aria-hidden="true"
-        >
-            <div class="modal-dialog">
+        <div class="modal fade show" tabindex="-1" style="display: block;" v-if="showModal" aria-labelledby="newToothModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="newToothModalLabel">Add New Tooth</h5>
-                        <button 
-                            type="button" 
-                            class="btn-close" 
-                            @click="showModal = false"
-                        ></button>
+                        <h5 class="modal-title" id="newToothModalLabel">Payables</h5>
+                        <button type="button" class="btn-close" @click="showModal = false"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body overflow-auto">
                         <!-- Modal Form -->
                         <form @submit.prevent="handleSubmit">
                             <div class="mb-3">
+                                <label class="form-label">Service</label>
+                                <input type="text" v-model="newTooth.service" class="form-control">
+                            </div>
+                            <div class="mb-3">
                                 <label for="tooth" class="form-label">Tooth</label>
-                                <input 
-                                    type="text" 
-                                    id="tooth" 
-                                    v-model="newTooth.tooth" 
-                                    class="form-control"
-                                >
+                                <input type="text" id="tooth" v-model="newTooth.tooth" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="surface" class="form-label">Surface</label>
-                                <input 
-                                    type="text" 
-                                    id="surface" 
-                                    v-model="newTooth.surface" 
-                                    class="form-control"
-                                >
+                                <input type="text" id="surface" v-model="newTooth.surface" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="fee" class="form-label">Fee</label>
-                                <input 
-                                    type="number" 
-                                    id="fee" 
-                                    v-model="newTooth.fee" 
-                                    class="form-control"
-                                >
+                                <input type="number" id="fee" v-model="newTooth.fee" class="form-control">
                             </div>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary float-right">Save</button>
                         </form>
                     </div>
                 </div>
@@ -125,6 +103,7 @@ export default {
             showModal: false, 
             newTooth: { 
                 appointment_id: '',
+                service: '',
                 tooth: '',
                 surface: '',
                 fee: null,
@@ -159,7 +138,7 @@ export default {
                         timer: 2000,
                     }).then(() => {
                         this.clearForm();
-                        this.displayPayment();
+                        this.displayPayment(this.getUrlId());
                     });
                 })
                 .catch((error) => {

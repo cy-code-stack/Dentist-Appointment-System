@@ -12,13 +12,32 @@ class AdminReferPatientsController extends Controller
         $this->middleware('auth');
     }
     
-    public function getVerifiedPatients(){
-        $verifiedPatients = Appointment::whereNotIn('appnt_status', ['Archive', 'Pending Approval', 'Declined', 'Completed'])
-                                ->with('appointServices', 'patient')
-                                ->get();
+    public function getVerifiedPatients(Request $request){
+        $limit = $request->input('limit', 10);
+        $page = $request->input('page', 1);
+        $search = $request->input('search', '');
+        $query = Appointment::whereNotIn('appnt_status', ['Archive', 'Approved', 'Pending Approval', 'Declined', 'Completed'])
+                                ->with('appointServices', 'patient');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('patient', function ($subQuery) use ($search) {
+                    $subQuery->where('firstname', 'LIKE', "%{$search}%")
+                                ->orWhere('lastname', 'LIKE', "%{$search}%");
+                })
+                ->orWhere('appnt_status', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $records = $query->paginate($limit, ['*'], 'page', $page);
+
         return response()->json([
             'status' => 'success',
-            'data' => $verifiedPatients,
+            'data' => $records->items(),
+            'meta' => [
+                'current_page' => $records->currentPage(),
+                'last_page' => $records->lastPage(),
+                'total' => $records->total(),
+            ],
         ], 200);
     }
 

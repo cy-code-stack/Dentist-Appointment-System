@@ -29,12 +29,35 @@
     <div class="wrapper" id="app">
         <nav class="main-header navbar navbar-expand navbar-white navbar-light sticky-md-top">
             <ul class="navbar-nav">
-                {{-- <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" role="button"><i
-                            class="fas fa-bars"></i></a>
-                </li> --}}
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="/user/admin/dashboard" class="nav-link ms-4">Admin Dashboard</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto me-3">
+                <li class="nav-item dropdown">
+                    <a class="nav-link position-relative" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa-solid fa-bell fs-4"></i>
+                        @if($unreadCount > 0)
+                            <span class="position-absolute top-2 start-98 translate-middle badge rounded-pill bg-danger">{{ $unreadCount }}</span>
+                        @endif
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                        @foreach ($notifications as $notification)
+                            <li>
+                                <a class="dropdown-item text-primary fs-6 mark-as-read" 
+                                data-id="{{ $notification->id }}" href="#">
+                                    <small><strong>{{ $notification->data['event'] }}</strong></small><br>
+                                    <small>{{ $notification->data['name'] }}</small><br>
+                                    <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                </a>
+                            </li>
+                        @endforeach
+                        <li>
+                            <a href="{{ route('notifications.markAllRead') }}" 
+                            class="dropdown-item text-center text-secondary small">Mark all as read</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>

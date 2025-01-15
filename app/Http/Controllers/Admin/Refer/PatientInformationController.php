@@ -18,11 +18,14 @@ class PatientInformationController extends Controller
      */
     public function index($id)
     {
-        $info = Appointment::with('patient')->find($id);
-        if (!$info) {
-            return response()->json(['message' => 'Patient not found'], 404);
+        $patientData = PatientInformationRecord::with('appointment', 'user')->where('appointment_id', $id)->get();
+        if ($patientData) {
+            return response()->json([
+                'message' => 'Patient data retrieved successfully',
+                'data' => $patientData
+            ], 200);
         }
-        return response()->json($info);
+        return response()->json(['message' => 'Record not found'], 404);
     }
 
     /**
@@ -36,13 +39,12 @@ class PatientInformationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function updateInformation(Request $request, $id)
     {
-        $validatedData = $request->validate([
+        $data = $request->validate([
             'user_id' => 'required|integer',
             'appointment_id' => 'required|integer',
-            'birthdate' => 'required|date',
-            'religion' => 'required',   
+            'religion' => 'required',
             'place_of_birth' => 'required',   
             'nationality' => 'required',   
             'guardian' => 'required',   
@@ -67,15 +69,16 @@ class PatientInformationController extends Controller
             'birth_control_pills' => 'required',   
             'blood_type' => 'required',   
             'blood_pressure' => 'required',   
-            'health_problem' => 'required',   
+            'health_problem' => 'required' 
         ]);
 
-        $data = PatientInformationRecord::create($validatedData);
+        $record = PatientInformationRecord::with('appointment')->find($id);
+        $record->update($data);
 
         return response()->json([
             'message' => 'Information saved successfully',
-            'data' => $data
-        ], 200);
+            'data' => $record
+        ], 201);
     }
 
     /**
@@ -83,11 +86,7 @@ class PatientInformationController extends Controller
      */
     public function show($id)
     {
-        // $record = PatientInformationRecord::where('user_id', $id)->first();
-        // if (!$record) {
-        //     return response()->json(['message' => 'Patient not found'], 404);
-        // }
-        // return response()->json($record);
+        //
     }
 
     /**

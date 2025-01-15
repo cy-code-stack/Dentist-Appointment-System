@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Staff\CalendarEvent;
 
+use App\Events\AppointmentBlockEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\CalendarEvent;
+use App\Models\User;
+use App\Notifications\BlockAppointment;
 use Illuminate\Http\Request;
 
 class CalendarEventController extends Controller
@@ -33,14 +36,24 @@ class CalendarEventController extends Controller
         ]);
 
         $data = $request->all();
-        $data['is_appointment'] = $request->has('is_appointment') ? (bool)$request->is_appointment : false;
+        $data['is_appointment'] = $request->boolean('is_appointment', false);
         $event = CalendarEvent::create($data);
 
+        $user = User::where('role', 'Patient')->get();
+
+        if ($event->is_appointment) {
+            $patients = User::where('role', 'Patient')->get();
+            foreach ($patients as $patient) {
+                $patient->notify(new BlockAppointment($event));
+            }
+            // broadcast(new AppointmentBlockEvent($event));
+        }
+        
         return response()->json($event, 201);
     }
 
     public function displayAppointment(){
-        $data = Appointment::with('patient', 'appointServices')->whereNotIn('appnt_status', ['Declined', 'Completed'])->get();
+        $data = Appointment::with('patient', 'appointServices')->whereNotIn('appnt_status', ['Declined'])->get();
         return $data;
     }
 }

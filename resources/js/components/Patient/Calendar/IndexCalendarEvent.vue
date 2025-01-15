@@ -48,6 +48,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
 import Swal from "sweetalert2";
+// import Echo from 'laravel-echo';
 
 export default {
     components: {
@@ -155,7 +156,6 @@ export default {
             const clickedDate = new Date(info.dateStr);
             this.appointmentData.sched_date = info.dateStr;
             this.filterTimeAppointment();
-
             if (clickedDate < currentDate) {
                 Swal.fire("Prohibited!", "Cannot select past dates.", "error");
                 return;
@@ -163,9 +163,12 @@ export default {
 
             try {
                 const response = await axios.get("/user/patient/display/event");
-                const clickedEvent = response.data.find(
-                    (event) => event.start_date === info.dateStr
-                );
+
+                const clickedEvent = response.data.find((event) => {
+                    const eventStartDate = new Date(event.start_date);
+                    const eventEndDate = new Date(event.end_date);
+                    return clickedDate >= eventStartDate && clickedDate <= eventEndDate;
+                });
 
                 if (clickedEvent && clickedEvent.is_appointment === 1) {
                     Swal.fire(
@@ -175,7 +178,6 @@ export default {
                     );
                     return;
                 }
-
                 const modalElement = document.getElementById("dateModal");
                 const modalInstance = new bootstrap.Modal(modalElement);
                 modalInstance.show();
@@ -183,6 +185,7 @@ export default {
                 console.error("Error fetching events:", error);
             }
         },
+
         async bookAppointment() {
             if (!this.selectedService) {
                 Swal.fire("Error", "Please select a service.", "error");
@@ -281,9 +284,28 @@ export default {
     mounted() {
         this.displayServices();
         this.loadAllEvents();
+
+        // window.Echo.channel('appointments')
+        //     .listen('AppointmentBlocked', (data) => {
+        //         console.log('Event received:', data);
+        //         Swal.fire({
+        //             toast: true,
+        //             position: 'top-end',
+        //             icon: 'info',
+        //             title: `New Appointment Blocked: ${data.event_name}`,
+        //             text: `Start: ${data.start_date}, End: ${data.end_date}`,
+        //             showConfirmButton: false,
+        //             timer: 5000,
+        //             timerProgressBar: true,
+        //         });
+        //     });
     },
+    // beforeUnmount() {
+    //     window.Echo.leave('appointments');
+    // },
 };
 </script>
+
 
 
 

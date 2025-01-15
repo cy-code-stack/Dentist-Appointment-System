@@ -9,7 +9,7 @@ class PatientInformationRecord extends Model
 {
     use HasFactory;
     protected $table = 'patient_information_records';
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id'); 

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReschedAppointmentMail;
 use App\Mail\AbortAppointmentMail;
+use App\Models\PatientInformationRecord;
 
 class AppointmentController extends Controller
 {
@@ -20,18 +21,56 @@ class AppointmentController extends Controller
         $this->middleware('auth');
     }
 
+    public function index($id){
+        $appointment = Appointment::with('patient')->find($id);
+        return response()->json([
+            'id' => $appointment->id,
+            'firstname' => $appointment->patient->firstname ?? '',
+            'lastname' => $appointment->patient->lastname ?? '',
+            'email' => $appointment->patient->email ?? '',
+            'sched_date' => $appointment->sched_date,
+            'sched_time' => $appointment->sched_time,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
-    public function showAppointment()
+    public function showAppointment(Request $request)
     {
-        $appointment = Appointment::with('patient', 'appointServices')
-                        ->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Payment', 'Completed'])
-                        ->get();
+
+        $limit = $request->input('limit', 10);
+        $page = $request->input('page', 1);
+        $status = $request->input('status');
+        $search = $request->input('search', '');
+
+        $query = Appointment::with('patient', 'appointServices')
+                        ->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Payment', 'Completed']);
+
+        if ($status) {
+            $query->where('appnt_status', $status);
+        }
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('patient', function ($subQuery) use ($search) {
+                    $subQuery->where('firstname', 'LIKE', "%{$search}%")
+                             ->orWhere('lastname', 'LIKE', "%{$search}%");
+                })
+                ->orWhere('appnt_status', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $records = $query->paginate($limit, ['*'], 'page', $page);
                         
         return response()->json([
             'status' => 'success',
-            'data' => $appointment
+            'data' => $records->items(),
+            'meta' => [
+                'current_page' => $records->currentPage(),
+                'last_page' => $records->lastPage(),
+                'total' => $records->total(),
+            ],
         ], 200);
     }
 
@@ -51,16 +90,77 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    public function showPatient($id)
+    {
+        $patientInfo = PatientInformationRecord::with(['appointment.patient'])->where('appointment_id', $id)->first();
+        if ($patientInfo) {
+            return response()->json([
+                'message' => 'Patient information retrieved successfully',
+                'data' => $patientInfo
+            ], 200);
+        }
+        $appointment = Appointment::with('patient')->find($id);
+        if ($appointment) {
+            return response()->json([
+                'message' => 'Appointment data retrieved successfully',
+                'data' => $appointment
+            ], 200);
+        }
+        return response()->json(['message' => 'Record not found'], 404);
+    }
+
     public function recoAppointment(Request $request, $id)
     {
-        $appoint = Appointment::findOrFail($id);
-        $request['appnt_status'] = 'Pending';
-        $appoint->update($request->all());
+        $validatedData = $request->validate([
+            'user_id' => 'required|integer',
+            'appointment_id' => 'required|integer',
+            'religion' => 'required',
+            'place_of_birth' => 'required',   
+            'nationality' => 'required',   
+            'guardian' => 'required',   
+            'referred_by' => 'required', 
+            'chief_complaint' => 'required',   
+            'previous_dentist' => 'required',   
+            'last_dental_visit' => 'required',   
+            'physician_name' => 'required',   
+            'specialty' => 'required',   
+            'office_address' => 'required',   
+            'office_number' => 'required',   
+            'good_health' => 'required',   
+            'medical_treatment' => 'required',   
+            'surgical_operation' => 'required',   
+            'hospitalized' => 'required',   
+            'prescribtion_non_rescribtion_medication' => 'required',   
+            'tabacco_products' => 'required',   
+            'dangerous_drugs' => 'required',   
+            'allergy' => 'required',   
+            'pregnant' => 'required',   
+            'nursing_mother' => 'required',   
+            'birth_control_pills' => 'required',   
+            'blood_type' => 'required',   
+            'blood_pressure' => 'required',   
+            'health_problem' => 'required',   
+        ]);
+
+        $existingRecord = PatientInformationRecord::find($id);
+        if ($existingRecord) {
+            $existingRecord->update($validatedData);
+        } else {
+            $existingRecord = PatientInformationRecord::create($validatedData);
+        }
+
+        // Update the appointment status
+        $appointmentRecord = Appointment::find($validatedData['appointment_id']);
+        if ($appointmentRecord) {
+            $appointmentRecord->appnt_status = 'Pending';
+            $appointmentRecord->save();
+        }
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Appointment updated successfully',  $appoint,
-        ], 200);
+            'message' => $existingRecord->wasRecentlyCreated ? 'Information saved successfully' : 'Information updated successfully',
+            'data' => $existingRecord,
+        ], $existingRecord->wasRecentlyCreated ? 201 : 200);
     }
 
     public function abortAppointment(Request $request, $id)

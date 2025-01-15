@@ -32,9 +32,24 @@ class ManageServicesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showServices()
+    public function showServices(Request $request)
     {
-        return Services::where('serv_status', '=', 'Verified')->get();
+        $limit = $request->input('limit', 10);
+        $page = $request->input('page', 1);
+
+        $query = Services::where('serv_status', 'Verified');
+
+        $records = $query->paginate($limit, ['*'], 'page', $page);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $records->items(),
+            'meta' => [
+                'current_page' => $records->currentPage(),
+                'last_page' => $records->lastPage(),
+                'total' => $records->total(),
+            ],
+        ], 200);
     }
 
     /**

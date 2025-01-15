@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
+use App\Models\Services;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AdminDashboardController extends Controller
 {
@@ -12,7 +16,10 @@ class AdminDashboardController extends Controller
     }
     
     public function index(){
-        return view("Admin.AdminDashboard");
+        $user = Auth::user();
+        $notifications = $user->notifications()->latest()->get();
+        $unreadCount = $user->unreadNotifications->count();
+        return view("Admin.AdminDashboard", compact('notifications', 'unreadCount'));
     }
 
     
@@ -82,5 +89,37 @@ class AdminDashboardController extends Controller
         }
 
         return $monthlyFees;
+    }
+
+    public function patientCount(){
+        $record = User::where('role', 'Patient')->count();
+        return response()->json([
+            'status' => 'success',
+            'data' => $record,
+        ], 200);
+    }
+
+    public function countServices(){
+        $record = Services::where('serv_status', 'Verified')->count();
+        return response()->json([
+            'status' => 'success',
+            'data' => $record,
+        ], 200);
+    }
+
+    public function countTransaction(){
+        $record = Appointment::where('appnt_status', 'Completed')->count();
+        return response()->json([
+            'status' => 'success',
+            'data' => $record,
+        ], 200);
+    }
+
+    public function assistantCount(){
+        $record = User::where('role', 'Assistant')->count();
+        return response()->json([
+            'status' => 'success',
+            'data' => $record,
+        ], 200);
     }
 }

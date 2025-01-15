@@ -139,6 +139,10 @@
                     <span>{{$patient->firstname}} {{$patient->middle_initial}} {{$patient->lastname}}</span>
                 </div>
                 <div class="info-group">
+                    <label>Availed Services:</label>
+                    <span>{{$services}}</span>
+                </div>
+                <div class="info-group">
                     <label>Street Address:</label>
                     <span>{{$patient->home_address}}</span>
                 </div>

@@ -302,9 +302,12 @@
                         <input type="text" class="text-input ms-3" v-model="transData.health_problem" readonly>
                     </div>
                 </div>
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-end gap-2">
                     <router-link :to='`/user/staff/record/teeth/${transData.id}`'>
-                        <button type="button" class="btn btn-primary">View Diagnostics</button>
+                        <button type="button" class="btn btn-primary">Diagnostics</button>
+                    </router-link>
+                    <router-link :to='`/user/staff/patient/history/${transData.appointment_id}`'>
+                        <button type="button" class="btn btn-success">Patient History</button>
                     </router-link>
                 </div>
             </div>
@@ -316,7 +319,6 @@ export default {
     data() {
         return {
             transData: {
-                appointment: {},
                 user: {},
             }
         };

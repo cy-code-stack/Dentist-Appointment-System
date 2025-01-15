@@ -117,10 +117,12 @@ export default {
             return this.adultTeeth.filter(tooth => tooth.teeth.teeth_number >= 31 && tooth.teeth.teeth_number <= 38);
         },
         firstColumn() {
-            return this.adultTeeth.slice(0, Math.ceil(this.adultTeeth.length / 2));
+            const half = Math.floor(this.adultTeeth.length / 2);
+            return this.adultTeeth.slice(0, half);
         },
         secondColumn() {
-            return this.adultTeeth.slice(Math.ceil(this.adultTeeth.length / 2));
+            const half = Math.floor(this.adultTeeth.length / 2);
+            return this.adultTeeth.slice(half);
         }
     },
     methods: {
@@ -139,47 +141,12 @@ export default {
                     console.error('Error fetching diagnostics:', error);
                 });
         },
-        // fetchDiagnostics() {
-        //     const id = this.$route.params.id;
-        //     axios.get("/user/staff/diagnostic/" + id)
-        //         .then(response => {
-        //             this.adultTeeth = response.data.data.map(tooth => ({
-        //                 ...tooth,
-        //                 selectedDiseaseImage: null,
-        //                 comments: tooth.comments || '', 
-        //             }));
-
-        //             console.log(this.adultTeeth);
-                    
-                    
-        //         })
-        //         .catch(error => {
-        //             console.error('Error fetching diagnostics:', error);
-        //         });
-        // },
-
-        // getImageUrl(imageName) {
-        //     return `/storage/adult/${imageName}`;
-        // },
-        // getDiseaseUrl(diseaseName){
-        //     return `/storage/adult_disease/${diseaseName}`;
-        // },
-        // changeImage(tooth, diseaseName) {
-        //     tooth.selectedDiseaseImage = this.getDiseaseUrl(diseaseName);
-        //     tooth.disease_id = tooth.diseases.find(disease => disease.disease_img_url === diseaseName).id;
-        // },
 
         getImageUrl(imageName) {
             return `/storage/adult/${imageName}`;
         },
         getDiseaseUrl(diseaseName) {
             return `/storage/adult_disease/${diseaseName}`;
-        },
-        changeImage(tooth, diseaseName) {
-            tooth.teeth_disease = {
-                ...tooth.teeth_disease,
-                disease_img_url: diseaseName,
-            };
         },
     },
     mounted() {

@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BookAppointmentVerification;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PatientController extends Controller
 {
@@ -18,7 +20,10 @@ class PatientController extends Controller
         $this->middleware('auth');
     }
     public function indexPatient(){
-        return view("Patient.Booking_Appointment");
+        $user = Auth::user();
+        $notifications = $user->notifications()->latest()->get();
+        $unreadCount = $user->unreadNotifications->count();
+        return view("Patient.Booking_Appointment", compact('notifications', 'unreadCount'));
     }
 
     public function storeAppointment(Request $request){
@@ -42,15 +47,12 @@ class PatientController extends Controller
         $user_data = Appointment::with('patient', 'appointServices')->where('id', $data->id)->first();
 
         $bookmailData = [
-            'main-title' => 'Booking Appointment Successfuly Done',
-            'title' => 'Your Appointment is set Successfuly you may go to the clinic and present it to the Assistant for confirmation.
-                        Note: This is First Come, First Serve Basis. Thank you',
             'name' => $user_data->patient->firstname. ' ' .$user_data->patient->lastname,
             'email' => $user_data->patient->email,
             'acc_create' => $user_data->patient->created_at,
             'services_name' => $user_data->appointServices->services_name,
-            'time' => $user_data->sched_date. ' ' .$user_data->sched_time,
-            'status' => $user_data->patient->status
+            'time' => Carbon::parse($user_data->sched_date . ' ' . $user_data->sched_time)->format('l, F j, Y g:i A'),
+            'status' => Str::headline($user_data->patient->status)
         ];
 
         $result = Mail::to($user_data->patient->email)->send(new BookAppointmentVerification($bookmailData));
@@ -80,7 +82,7 @@ class PatientController extends Controller
         $request->validate([
             'sched_date' => 'required|date',
         ]);
-        $maxSlots = 7;
+        $maxSlots = 20;
         $appointmentCount = Appointment::where('sched_date', $request->sched_date)->count();
         
         $remainingSlots = $maxSlots - $appointmentCount;

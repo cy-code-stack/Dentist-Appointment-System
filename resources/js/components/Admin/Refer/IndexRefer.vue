@@ -2,13 +2,13 @@
     <div>
     <div class="container-fluid">
         <div class="txt-title mt-2">
-            <p class="fs-5 fw-semibold text-black mb-0">Refer Patients</p>
+            <p class="fs-5 fw-semibold text-black mb-0">Transaction</p>
         </div>
         <div class="d-flex justify-content-end align-items-center mb-2">
             <div class="sort">
                 <div class="select-input d-flex justify-content-center align-items-center">
                     <form class="d-flex" role="search">
-                        <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control form-control-sm me-2" v-model="searchQuery" type="search" placeholder="Search" aria-label="Search">
                     </form>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                               {{ item.sched_date }} {{ item.sched_time }}
+                               {{ formatDate(item.sched_date) }} {{ item.sched_time }}
                             </p>
                         </div>
                         <div class="text-center col-lg-2">
@@ -87,22 +87,19 @@
             <div class="container-fluid d-flex justify-content-end align-items-center">
                 <nav>
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
+                        <li class="page-item" 
+                            v-for="page in totalPages" 
+                            :key="page" 
+                            :class="{ active: currentPage === page }">
+                            <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -126,16 +123,48 @@ export default {
         return {
             listofVerfiedPatients:[],
             payment_user : {},
+            currentPage: 1,
+            totalPages: 1,
+            perPage: 10,
+            searchQuery: '',
         };
     },
 
     methods:{
-        diplayVerfiedPatients(){
-            axios.get('/admin/patients/refer').then((response)=>{
-                this.listofVerfiedPatients = response.data.data;
-            }).catch((error)=>{
-                console.log(error);
-            });
+        formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return new Intl.DateTimeFormat('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            }).format(date);
+        },
+        diplayVerfiedPatients(page = 1) {
+            axios
+                .get('/admin/patients/refer', {
+                    params: {
+                        page: page,
+                        limit: this.perPage,
+                        search: this.searchQuery,
+                    },
+                })
+                .then((response) => {
+                    this.currentPage = response.data.meta.current_page;
+                    this.totalPages = response.data.meta.last_page;
+                    this.listofVerfiedPatients = response.data.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        changePage(page) {
+            if (page > 0 && page <= this.totalPages) {
+                this.diplayVerfiedPatients(page);
+            }
+        },
+        handleSearch() {
+            this.diplayVerfiedPatients(1);
         },
         archiveReferPatients(id){
             Swal.fire({
@@ -151,7 +180,7 @@ export default {
                     if (data.isConfirmed) {
                         axios
                             .put("/admin/patient/archive/" + id)
-                            .then((response) => {
+                            .then(() => {
                                 Swal.fire("Archive!", "Patient has been archive.", "success");
                                 this.diplayVerfiedPatients();
                             });

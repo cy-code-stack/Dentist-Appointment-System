@@ -58,7 +58,7 @@
                         <th>Payment No.</th>
                         <th>Payment Date</th>
                         <th>Paid</th>
-                        <th>New Balance</th>
+                        <th>Remaining Balance</th>
                         <th>Payment Method</th>
                         <th>Reference Number</th>
                    </thead>
@@ -126,7 +126,7 @@ export default {
         },
         submitPayment() {
             axios.post('/admin/patients/pay/item', this.data)
-                .then((response) => {
+                .then(() => {
                     const id = this.getUrlId();
                     Swal.fire({
                         position: "center",
