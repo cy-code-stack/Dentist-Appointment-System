@@ -39,7 +39,6 @@ class AppointmentController extends Controller
      */
     public function showAppointment(Request $request)
     {
-
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $status = $request->input('status');
@@ -103,7 +102,6 @@ class AppointmentController extends Controller
         }
         if ($appointment) {
             $user = User::find($appointment->patient_id)->toArray();
-            $user['user_identication'] = true;
             return response()->json([
                 'message' => 'Appointment data retrieved successfully',
                 'data' => [$user],

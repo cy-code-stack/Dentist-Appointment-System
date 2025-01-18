@@ -416,7 +416,7 @@ export default {
                             if (data.user) {
                                 this.patientData.patient = data.user;
                             }
-                        } else if (data.hasOwnProperty('user_identication')) {
+                        } else if (data.hasOwnProperty('id')) {
                             // Display Data ni User
                             this.patientData.patient = data;
                         }
