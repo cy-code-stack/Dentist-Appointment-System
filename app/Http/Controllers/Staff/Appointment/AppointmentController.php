@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ReschedAppointmentMail;
 use App\Mail\AbortAppointmentMail;
 use App\Models\PatientInformationRecord;
+use App\Models\User;
 
 class AppointmentController extends Controller
 {
@@ -44,8 +45,7 @@ class AppointmentController extends Controller
         $status = $request->input('status');
         $search = $request->input('search', '');
 
-        $query = Appointment::with('patient', 'appointServices')
-                        ->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Payment', 'Completed']);
+        $query = Appointment::with('patient', 'appointServices')->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Payment', 'Completed'])->orderBy('sched_date', 'desc');
 
         if ($status) {
             $query->where('appnt_status', $status);
@@ -93,18 +93,20 @@ class AppointmentController extends Controller
 
     public function showPatient($id)
     {
-        $patientInfo = PatientInformationRecord::with(['appointment.patient'])->where('appointment_id', $id)->first();
-        if ($patientInfo) {
+        $appointment = Appointment::with('patient')->find($id);
+        $patientInfo = PatientInformationRecord::with('user')->where('user_id', $appointment->patient_id)->get();
+        if ($patientInfo->count() > 0) {
             return response()->json([
                 'message' => 'Patient information retrieved successfully',
                 'data' => $patientInfo
             ], 200);
         }
-        $appointment = Appointment::with('patient')->find($id);
         if ($appointment) {
+            $user = User::find($appointment->patient_id)->toArray();
+            $user['user_identication'] = true;
             return response()->json([
                 'message' => 'Appointment data retrieved successfully',
-                'data' => $appointment
+                'data' => [$user],
             ], 200);
         }
         return response()->json(['message' => 'Record not found'], 404);
@@ -114,7 +116,6 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'user_id' => 'required|integer',
-            'appointment_id' => 'required|integer',
             'religion' => 'required',
             'place_of_birth' => 'required',   
             'nationality' => 'required',   
@@ -143,7 +144,7 @@ class AppointmentController extends Controller
             'health_problem' => 'required',   
         ]);
 
-        $existingRecord = PatientInformationRecord::find($id);
+        $existingRecord = PatientInformationRecord::where('user_id', $validatedData['user_id'])->first();
         if ($existingRecord) {
             $existingRecord->update($validatedData);
         } else {
@@ -151,7 +152,7 @@ class AppointmentController extends Controller
         }
 
         // Update the appointment status
-        $appointmentRecord = Appointment::find($validatedData['appointment_id']);
+        $appointmentRecord = Appointment::find($id);
         if ($appointmentRecord) {
             $appointmentRecord->appnt_status = 'Pending';
             $appointmentRecord->save();

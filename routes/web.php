@@ -221,7 +221,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 
                 
                 Route::get('/user/staff/appointment/patient/view/{id}', [AppointmentController::class,'showPatient']);
-                Route::post('/user/staff/recomend/doctor/{id}', [AppointmentController::class, 'recoAppointment']);
+                Route::put('/user/staff/recomend/doctor/{id}', [AppointmentController::class, 'recoAppointment']);
 
 
                 Route::put('/user/staff/appointment/abort/{id}', [AppointmentController::class, 'abortAppointment']);

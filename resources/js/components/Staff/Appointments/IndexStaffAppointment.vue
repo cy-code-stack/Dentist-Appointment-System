@@ -39,7 +39,7 @@
                     <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
                         <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ appoint?.patient?.firstname }} {{ appoint?.patient?.lastname }}
+                                {{ appoint?.patient?.firstname }} {{ appoint?.patient?.lastname }} {{ appoint?.id }}
                             </p>
                         </div>
                         <div class="text-center col-lg-3">

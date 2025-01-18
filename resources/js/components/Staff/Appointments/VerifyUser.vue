@@ -352,8 +352,8 @@ export default {
                 patient: {} 
             },
             information: {
+                user: {},
                 user_id: '',
-                appointment_id: '',
                 birthdate: '',
                 religion: '',
                 place_of_birth: '',
@@ -380,7 +380,7 @@ export default {
                 birth_control_pills: '',
                 blood_type: '',
                 blood_pressure: '',
-                health_problem: ''
+                health_problem: '',
             },
             errors: {},
         };
@@ -399,26 +399,33 @@ export default {
             }
             axios.get(`/user/staff/appointment/patient/view/${patientId}`)
                 .then((response) => {
+                 
+                    
                     if (response.data && response.data.data) {
-                        const data = response.data.data;
-                        if (data.hasOwnProperty('appointment_id')) {
+                      
+                        const data = response.data.data[0];
+                        console.log(data);
+                        
+                        if (data.hasOwnProperty('user_id')) {
+                            console.log('test3');
                             // Data is PatientInformationRecord
                             this.information = {
                                 ...this.information,
                                 ...data
                             };
-                            if (data.appointment && data.appointment.patient) {
-                                this.patientData.patient = data.appointment.patient;
+                            if (data.user) {
+                                this.patientData.patient = data.user;
                             }
-                        } else if (data.hasOwnProperty('patient')) {
-                            // Data is Appointment
-                            this.patientData.patient = data.patient;
+                        } else if (data.hasOwnProperty('user_identication')) {
+                            // Display Data ni User
+                            this.patientData.patient = data;
                         }
                     } else {
                         console.error('Unexpected response format:', response);
                     }
-                })
-                .catch((error) => {
+
+        
+                }).catch((error) => {
                     if (error.response && error.response.status === 404) {
                         console.error('Record not found:', error.response.data.message);
                         Swal.fire({
@@ -447,8 +454,8 @@ export default {
                 return;
             }
              // Ensure patient and appointment IDs are set
-            const appointmentId = this.getUrlId();
-            if (!appointmentId) {
+            const id = this.getUrlId();
+            if (!id) {
                 Swal.fire({
                     icon: "error",
                     title: "Missing Appointment ID",
@@ -457,13 +464,12 @@ export default {
                 return;
             }
             this.information.user_id = this.patientData.patient.id;
-            this.information.appointment_id = this.getUrlId();
-            axios.post(`/user/staff/recomend/doctor/${appointmentId}`, this.information)
+            axios.put(`/user/staff/recomend/doctor/${id}`, this.information)
                 .then(() => {
                     Swal.fire({
                         position: "center",
                         icon: "success",
-                        title: "Information has been added!",
+                        title: "Record has been added!",
                         showConfirmButton: false,
                         timer: 2000,
                     }).then(() => {
