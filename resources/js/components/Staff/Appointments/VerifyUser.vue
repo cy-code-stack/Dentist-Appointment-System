@@ -354,6 +354,7 @@ export default {
             information: {
                 user: {},
                 user_id: '',
+                appointment_id: null,
                 birthdate: '',
                 religion: '',
                 place_of_birth: '',
@@ -464,6 +465,7 @@ export default {
                 return;
             }
             this.information.user_id = this.patientData.patient.id;
+            this.information.appointment_id = this.getUrlId();
             axios.put(`/user/staff/recomend/doctor/${id}`, this.information)
                 .then(() => {
                     Swal.fire({

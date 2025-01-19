@@ -114,6 +114,7 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'user_id' => 'required|integer',
+            'appointment_id' => 'required|integer',
             'religion' => 'required',
             'place_of_birth' => 'required',   
             'nationality' => 'required',   
