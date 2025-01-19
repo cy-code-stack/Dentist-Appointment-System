@@ -170,9 +170,7 @@ export default {
     methods: {
         fetchDiagnostics() {
             axios.get('/admin/patients/child')
-            
                 .then(response => {
-                    console.log(response);
                     this.childTeeth = response.data.map(tooth => ({
                         ...tooth,
                         selectedDiseaseImage: null,

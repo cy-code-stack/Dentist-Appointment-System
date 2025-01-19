@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('patient_information_records', function (Blueprint $table) {
-            $table->foreignId('appointment_id')->after('user_id')->constrained('appointments')->onDelete('cascade');
+            $table->foreignId('appointment_id')->after('user_id')->constrained('appointment')->onDelete('cascade');
         });
     }
 };

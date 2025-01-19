@@ -43,7 +43,7 @@
                         </div>
                         <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                               {{ formatDate(item.sched_date) }} {{ item.sched_time }}
+                               {{ formatDate(item.sched_date) }} <br> {{ item.sched_time }}
                             </p>
                         </div>
                         <div class="text-center col-lg-2">

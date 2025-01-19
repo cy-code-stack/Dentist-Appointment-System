@@ -18,7 +18,8 @@ class PatientInformationController extends Controller
      */
     public function index($id)
     {
-        $patientData = PatientInformationRecord::with('appointment', 'user')->where('appointment_id', $id)->get();
+        $appointment = Appointment::with('patient')->find($id);
+        $patientData = PatientInformationRecord::with('appointment', 'user')->where('user_id', $appointment->patient_id)->get();
         if ($patientData) {
             return response()->json([
                 'message' => 'Patient data retrieved successfully',
@@ -43,7 +44,7 @@ class PatientInformationController extends Controller
     {
         $data = $request->validate([
             'user_id' => 'required|integer',
-            'appointment_id' => 'required|integer',
+            'apppointment_id' => 'nullable|integer',
             'religion' => 'required',
             'place_of_birth' => 'required',   
             'nationality' => 'required',   
@@ -72,7 +73,7 @@ class PatientInformationController extends Controller
             'health_problem' => 'required' 
         ]);
 
-        $record = PatientInformationRecord::with('appointment')->find($id);
+        $record = PatientInformationRecord::with('user', 'appointment')->find($id);
         $record->update($data);
 
         return response()->json([

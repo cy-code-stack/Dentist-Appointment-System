@@ -392,6 +392,7 @@ export default {
             const urlSegments = url.split('/').filter(Boolean)
             return urlSegments[urlSegments.length - 1];
         },
+
         updateData() {
             if (!this.information.user.id) {
                 Swal.fire({
@@ -403,8 +404,7 @@ export default {
             }
             
             this.information.user_id = this.information.user.id;
-            this.information.appointment_id = this.getUrlId();
-
+            this.information.appointment_id = this.information.appointment_id.id;
             axios.put(`/admin/patients/information/${this.information.id}`, this.information)
                 .then((response) => {
                     Swal.fire({
@@ -412,7 +412,7 @@ export default {
                         icon: "success",
                         title: "Proceed to diagnostics",
                         showConfirmButton: false,
-                        timer: 5000,
+                        timer: 2000,
                         timerProgressBar: true,
                     }).then(() => {
                         const patientAge = this.information.user.age;
@@ -422,8 +422,7 @@ export default {
                             this.$router.push(`/user/admin/diagnose/${response.data.data.id}`);
                         }
                     });
-                })
-                .catch((error) => {
+                }).catch((error) => {
                     if (error.response && error.response.data && error.response.data.errors) {
                         this.errors = error.response.data.errors;
                     } else {

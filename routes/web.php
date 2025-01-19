@@ -153,9 +153,9 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
 
                 Route::put('/admin/patients/information/{id}', [PatientInformationController::class, 'updateInformation']);
                 
-                Route::get('/admin/patients/diagnostic', [DiagnosticController::class, 'index']);
+                Route::get('/admin/patients/diagnostic/{id}', [DiagnosticController::class, 'index']);
                 Route::get('/admin/patients/child', [DiagnosticController::class, 'childIndex']);
-                Route::post('/admin/patients/diagnostic/store', [DiagnosticController::class, 'store']);
+                Route::put('/admin/patients/diagnostic/store/{id}', [DiagnosticController::class, 'store']);
                 Route::post('/admin/patients/child/store', [DiagnosticController::class, 'storeChild']);
             //End of Refer Patients
 
