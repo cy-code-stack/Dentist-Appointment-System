@@ -76,6 +76,14 @@
                                     <span>Banned</span>
                                 </div>
                             </button>
+                            <router-link :to="`/user/patient/history/${user.id}`">
+                                <button type="button" class="rounded-1 btn btn-success btn-sm text-white">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <i class="fa-regular fa-file me-2"></i>
+                                        <span>History</span>
+                                    </div>
+                                </button>
+                            </router-link>
                         </div>
                     </div>
                 </div>
