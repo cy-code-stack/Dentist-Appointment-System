@@ -1,23 +1,27 @@
 <template>
-    <div class="container-fluid py-3">
+    <div class="container-fluid py-4">
         <div class="container">
             <div class="d-flex align-items-center justify-content-between mb-3">
-                <h5>Patient History</h5>
+                <h5>Patient & Payment History</h5>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
                    <thead>
                         <th>Date</th>
                         <th>Services</th>
-                        <th>Price</th>
                         <th>Tooth</th>
+                        <th>Surface</th>
+                        <th>Price</th>
+                        <th>Status</th>
                    </thead>
                    <tbody>
                     <tr v-for="(item, index) in patientHistory" :key="index">
                         <td>{{ formatWordyDate(item.created_at) }}</td>
                         <td>{{ item.services?.services_name }}</td>
-                        <td>{{ item.fee }}</td>
                         <td>{{ item.tooth }}</td>
+                        <td>{{ item.surface }}</td>
+                        <td>{{ item.fee }}</td>
+                        <td>{{ item.status }}</td>
                     </tr>
                    </tbody>
                 </table>
