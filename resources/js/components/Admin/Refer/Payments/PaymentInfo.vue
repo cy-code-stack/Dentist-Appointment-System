@@ -4,13 +4,9 @@
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <h5>Tooths Payments</h5>
                 <!-- Trigger Modal -->
-                <button 
-                    type="button" 
-                    class="rounded-1 btn btn-primary"
-                    @click="showModal = true"
-                >
+                <button type="button" class="rounded-1 btn btn-primary" @click="showModal=true">
                     <div class="d-flex justify-content-center align-items-center">
-                        <span>New Tooth</span>
+                        <span>Add Services</span>
                     </div>
                 </button>
             </div>
@@ -29,7 +25,7 @@
                    <tbody>
                     <tr v-for="(item, index) in payments" :key="index">
                         <td>{{ item.id }}</td>
-                        <td>{{ item.service }}</td>
+                        <td>{{ item.services?.services_name }}</td>
                         <td>{{ item.tooth }}</td>
                         <td>{{ item.surface }}</td>
                         <td>{{ item.fee }}</td>
@@ -37,12 +33,7 @@
                         <td>{{ item.status }}</td>
                         <td>
                             <div class="text-center d-flex align-items-center">
-                                <router-link
-                                    :to="{ 
-                                            path: `/user/admin/payment/add/${item.id}`, 
-                                            query: { fee: item.fee} 
-                                        }"
-                                >
+                                <router-link :to="{  path: `/user/admin/payment/add/${item.id}`,  query: { fee: item.fee}  }">
                                     <button type="button" v-if="item.balance != 0.00" class="rounded-1 btn btn-primary btn-sm">
                                         <div class="d-flex justify-content-center align-items-center">
                                             <i class="fa-solid fa-peso-sign me-2"></i>
@@ -71,7 +62,12 @@
                         <form @submit.prevent="handleSubmit">
                             <div class="mb-3">
                                 <label class="form-label">Service</label>
-                                <input type="text" v-model="newTooth.service" class="form-control">
+                                <select class="form-select" id="service" v-model="selectedService">
+                                    <option v-for="(item, index) in service" :key="index" :value="item">
+                                        {{ item.services_name }}
+                                    </option>
+                                </select>
+                                <!-- <input type="text" v-model="newTooth.service" class="form-control"> -->
                             </div>
                             <div class="mb-3">
                                 <label for="tooth" class="form-label">Tooth</label>
@@ -102,12 +98,14 @@ export default {
             payments: [],            
             showModal: false, 
             newTooth: { 
-                appointment_id: '',
-                service: '',
+                user_id: '',
+                service_id: '',
                 tooth: '',
                 surface: '',
                 fee: null,
             },
+            selectedService: null,
+            service: [],
         };
         
     },
@@ -126,8 +124,18 @@ export default {
                     console.log(error);
             });
         },
+        displayServices(){
+            axios.get('/admin/patients/display/services')
+                .then(response => {
+                    this.service = response.data.data;
+                })
+                .catch(error => {
+                    console.log(error);
+            });
+        },
         handleSubmit() {
-            this.newTooth.appointment_id = this.getUrlId();
+            this.newTooth.user_id = this.getUrlId();
+            this.newTooth.service_id = this.selectedService.id;
             axios.post('/admin/patients/pay/store', this.newTooth)
                 .then(() => {
                     Swal.fire({
@@ -148,12 +156,14 @@ export default {
         },
         clearForm(){
             this.newTooth.tooth = '';
+            this.newTooth.service_id = null;
             this.newTooth.surface = '';
             this.newTooth.fee = null;
         },
     },
     mounted() {
         this.displayPayment(this.getUrlId());
+        this.displayServices();
     },
 };
 </script>

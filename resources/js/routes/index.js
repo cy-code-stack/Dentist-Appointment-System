@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 //Patient View
-// import PatientIndexPage from "../components/Patient/PatientIndex.vue";
 import IndexCalendarEventPage from "../components/Patient/Calendar/IndexCalendarEvent.vue"
 import PatientIndexAppointment from '../components/Patient/Patient_Appointment/IndexAppointment.vue';
 import IndexPatientProfile from '../components/Patient/Profile/IndexPatientProfile.vue';
@@ -26,6 +25,7 @@ import RecomendAppointment from '../components/Staff/Appointments/VerifyUser.vue
 
 // Admin View
 import IndexAdminPage from "../components/Admin/IndexAdmin.vue"
+import IndexManageAdminPatient from "../components/Admin/Patient/IndexManagePatient.vue"
 import IndexManageStaff from "../components/Admin/Staff/IndexManageStaff.vue"
 import IndexReferPatients from "../components/Admin/Refer/IndexRefer.vue"
 import IndexManageServices from "../components/Admin/Services/IndexManageServices.vue";
@@ -136,6 +136,11 @@ const routes = [
         component: IndexAdminPage,
     },
     {
+        path: '/user/admin/patient',
+        name: 'admin-patient',
+        component: IndexManageAdminPatient,
+    },
+    {
         path: '/user/admin/staff',
         name: 'admin-staff',
         component: IndexManageStaff,
@@ -151,7 +156,7 @@ const routes = [
         component: IndexViewRecord,
     },
     {
-        path: '/user/staff/patient/history/:id',
+        path: '/user/patient/history/:id',
         name: 'assistant-history',
         component: PatientHistory,
     },

@@ -66,7 +66,7 @@
                                     </div>
                                 </button>
                             </router-link>
-                            <router-link :to="`/user/admin/payment/${item.id}`">
+                            <router-link :to="`/user/admin/payment/${item.patient?.id}`">
                                 <button v-if="item.appnt_status === 'Payment' || item.appnt_status === 'Not yet Paid'" type="button" class="me-1 rounded-1 btn btn-primary text-white btn-sm">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <span class="me-2">Payment</span>

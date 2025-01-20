@@ -22,7 +22,15 @@ class PaymentAppointment extends Model
         return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function items(){
         return $this->hasMany(PaymentItem::class,'payment_appoitment_id');
+    }
+
+    public function services(){
+        return $this->belongsTo(Services::class, 'service_id');
     }
 }

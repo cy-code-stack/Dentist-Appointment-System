@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\PaymentAppointment;
 use App\Models\PaymentItem;
+use App\Models\Services;
 use Illuminate\Http\Request;
 
 class PaymentsController extends Controller
@@ -36,10 +37,18 @@ class PaymentsController extends Controller
      */
     public function show($id)
     {
-        $record = PaymentAppointment::where('appointment_id', $id)->with('appointment.appointServices')->get();
+        $record = PaymentAppointment::where('user_id', $id)->with('appointment.appointServices', 'services')->get();
         return response()->json([
             'status' => 'success',
             'data' => $record,
+        ], 200);
+    }
+
+    public function diplayServices(){
+        $services = Services::where("serv_status", "Verified")->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $services,
         ], 200);
     }
 

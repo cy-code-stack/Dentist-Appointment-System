@@ -13,7 +13,7 @@ class PatientHistoryController extends Controller
      */
     public function index($id)
     {
-        $data = PaymentAppointment::where('appointment_id', $id)->get();
+        $data = PaymentAppointment::where('user_id', $id)->with('services')->get()->toArray();
         return response()->json([
             'message' => 'Data display successfully.',
             'data' => $data,

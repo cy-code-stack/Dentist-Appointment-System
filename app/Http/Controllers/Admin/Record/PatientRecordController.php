@@ -46,7 +46,7 @@ class PatientRecordController extends Controller
      */
     public function show($id)
     {
-        $data = PatientInformationRecord::with('appointment', 'user')->find($id);
+        $data = PatientInformationRecord::where('user_id', $id)->with('appointment', 'user')->first();
         if (!$data) {
             return response()->json(['message' => 'Patient not found'], 404);
         }

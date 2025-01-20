@@ -284,25 +284,7 @@ export default {
     mounted() {
         this.displayServices();
         this.loadAllEvents();
-
-        // window.Echo.channel('appointments')
-        //     .listen('AppointmentBlocked', (data) => {
-        //         console.log('Event received:', data);
-        //         Swal.fire({
-        //             toast: true,
-        //             position: 'top-end',
-        //             icon: 'info',
-        //             title: `New Appointment Blocked: ${data.event_name}`,
-        //             text: `Start: ${data.start_date}, End: ${data.end_date}`,
-        //             showConfirmButton: false,
-        //             timer: 5000,
-        //             timerProgressBar: true,
-        //         });
-        //     });
     },
-    // beforeUnmount() {
-    //     window.Echo.leave('appointments');
-    // },
 };
 </script>
 

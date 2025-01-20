@@ -15,7 +15,7 @@
                    <tbody>
                     <tr v-for="(item, index) in patientHistory" :key="index">
                         <td>{{ formatWordyDate(item.created_at) }}</td>
-                        <td>{{ item.service }}</td>
+                        <td>{{ item.services?.services_name }}</td>
                         <td>{{ item.fee }}</td>
                         <td>{{ item.tooth }}</td>
                     </tr>
@@ -41,7 +41,8 @@ export default {
                 console.error('user ID not found in route params.');
                 return;
             }
-            axios.get(`/user/staff/patient/view/history/${id}`).then((response)=>{
+            axios.get(`/user/view/history/${id}`).then((response)=>{
+                console.log(response.data.data);
                 this.patientHistory = response.data.data;
             }).catch((error)=>{
                 console.log(error);

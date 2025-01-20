@@ -27,6 +27,8 @@ use App\Http\Controllers\Admin\Record\PatientRecordController;
 use App\Http\Controllers\Admin\Refer\PatientInformationController;
 use App\Http\Controllers\Admin\Refer\DiagnosticController;
 use App\Http\Controllers\Admin\Transaction\TransactionController;
+use App\Http\Controllers\Admin\Patient\ManagePatientController;
+
 //End of Admin
 
 //Staff
@@ -68,6 +70,9 @@ Route::get('/', function () { return view('landing_page');});
     Route::post('/user/change/pass', [Authentication::class, 'changePass'])->name('changePass');
 
     Route::get('/user/logout', [Authentication::class, 'logout'])->name('logout');
+
+
+    Route::get('/user/view/history/{id}', [PatientHistoryController::class, 'index']);
 
     
 //Print
@@ -128,7 +133,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
             Route::get('/user/admin/transtraction/adminTransactionCount', [AdminDashboardController::class, 'countTransaction']);
             Route::get('/user/admin/assistant/assistantCount', [AdminDashboardController::class, 'assistantCount']);
 
-            //Manage User
+            //Manage Staff
                 Route::get('/user/admin/manage/user', [ManageStaffController::class, 'showUser']);
                 Route::post('/user/admin/user/add', [ManageStaffController::class,'storeUser']);
                 Route::put('/user/admin/user/verify/{id}', [ManageStaffController::class,'verifyUser']);
@@ -136,6 +141,14 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 // Route::delete('/user/admin/user/delete/{id}' , [ManageStaffController::class,'destroy']);
                 Route::put('/user/admin/staff/archive/{id}', [ManageStaffController::class, 'archiveStaff']);
             //End of Manage User Routes
+
+            //Manage Patient
+                Route::get('/user/admin/patient/display', [ManagePatientController::class, 'showUser']);
+                Route::post('user/admin/patient/add', [ManagePatientController::class,'storeUser']);
+                Route::put('/user/admin/patient/verify/{id}', [ManagePatientController::class,'verifyUser']);
+                Route::put('/user/admin/patient/update/{id}', [ManagePatientController::class,'updateUser']);
+                Route::put('/user/admin/patient/archieve/{id}' , [ManagePatientController::class,'archieveUser']);
+            //End of managing user
 
             //Manage Services
                 Route::post('/admin/services/add', [ManageServicesController::class, 'storeService']);
@@ -164,6 +177,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::post('/admin/patients/pay/store', [PaymentsController::class, 'store']);
                 Route::post('/admin/patients/pay/item', [PaymentsController::class, 'addPayment']);
                 Route::get('/admin/patients/payment/history/show/{id}', [PaymentsController::class, 'getPaymentHistory']);
+                Route::get('/admin/patients/display/services', [PaymentsController::class, 'diplayServices']);
             //End of payments
 
             //Callendar Event Page Section
@@ -255,7 +269,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::get('/user/staff/display', [PatientRecordController::class, 'index']);
                 Route::get('/user/staff/view/{id}', [PatientRecordController::class, 'show']);
                 Route::get('/user/staff/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);
-                Route::get('/user/staff/patient/view/history/{id}', [PatientHistoryController::class, 'index']);
+                // Route::get('/user/staff/patient/view/history/{id}', [PatientHistoryController::class, 'index']);
             //End Patient Records Section
 
             //Start of Profile Section
