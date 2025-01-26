@@ -26,12 +26,9 @@
                     <p class="fs-6 fw-semibold mb-0">Email</p>
                 </div>
                 <div class="text-center col-lg-1">
-                    <p class="fs-6 fw-semibold mb-0">Status</p>
-                </div>
-                <div class="text-center col-lg-1">
                     <p class="fs-6 fw-semibold mb-0">Role</p>
                 </div>
-                <div class="text-center col-lg-3">
+                <div class="text-center col-lg-4">
                     <p class="fs-6 fw-semibold mb-0">Actions</p>
                 </div>
             </div>
@@ -48,16 +45,11 @@
                             <p class="fs-6 mb-0 fw-medium text-black-50 text-center">{{ user.email }}</p>
                         </div>
                         <div class="text-center col-lg-1">
-                            <p :class="{'fs-6 mb-0 fw-medium text-danger': !user.verified, 'fs-6 mb-0 fw-medium text-success': user.verified}">
-                                {{ user.status}}
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-1">
                             <p :class="{'fs-6 fw-semibold mb-0 text-primary': user.assistant, 'fs-6 fw-semibold mb-0 text-success': user.patient}">
                                 {{ user.role }}
                             </p>
                         </div>
-                        <div class="text-center d-flex justify-content-center col-lg-3 gap-2">
+                        <div class="text-center d-flex justify-content-center col-lg-4 gap-1">
                             <button type="button" class="rounded-1 btn btn-info btn-sm text-white" v-if="user.verified" @click="editUser(user)"> 
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-user-pen me-2"></i>
@@ -76,11 +68,19 @@
                                     <span>Banned</span>
                                 </div>
                             </button>
-                            <router-link :to="`/user/patient/history/${user.id}`">
+                            <router-link :to="`/user/staff/history/${user.id}`">
                                 <button type="button" class="rounded-1 btn btn-success btn-sm text-white">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <i class="fa-regular fa-file me-2"></i>
                                         <span>History</span>
+                                    </div>
+                                </button>
+                            </router-link>
+                            <router-link :to="`/user/staff/payment/history/${user.id}`">
+                                <button type="button" class="rounded-1 btn btn-primary btn-sm text-white">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <i class="fa-solid fa-peso-sign me-2"></i>
+                                        <span>Payment History</span>
                                     </div>
                                 </button>
                             </router-link>

@@ -89,7 +89,7 @@ export default {
             currentBalance: 0,
             data: {
                 payment_appoitment_id: '',
-                payment_date: '',
+                payment_date: new Date().toISOString().split('T')[0],
                 paid: '',
                 new_balance: '',
                 payment_method: '',

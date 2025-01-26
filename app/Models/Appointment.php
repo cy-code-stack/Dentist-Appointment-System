@@ -32,7 +32,7 @@ class Appointment extends Model
     }
 
     public function payment(){
-        return $this->belongsTo(PaymentAppointment::class, 'id','appointment_id');
+        return $this->hasMany(PaymentAppointment::class, 'appointment_id');
     }
 
     public function information(){

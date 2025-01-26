@@ -77,6 +77,7 @@ Route::get('/', function () { return view('landing_page');});
     
 //Print
     Route::get('/patient/invoice/print/{id}', [PrintController::class, 'downloadPrint'])->name('invoive.print');
+    Route::get('/patient/patient-history/print/{id}', [PrintController::class, 'downloadPatientHistory'])->name('patient-history.print');
     Route::post('/notifications/mark-as-read', [App\Http\Controllers\HomeController::class, 'markAsRead'])->name('notifications.markAsRead');
     Route::get('/notifications/mark-all-read', [App\Http\Controllers\HomeController::class, 'markAllRead'])->name('notifications.markAllRead');
 //end

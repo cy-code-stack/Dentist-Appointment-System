@@ -22,6 +22,7 @@ import TeethRecord from '../components/Staff/Records/Forms/TeethRecord.vue';
 import PatientHistory from '../components/Staff/Records/Forms/PatientHistory.vue';
 import RescheduleAppointmentPage from '../components/Staff/Appointments/ReschedAppointment.vue';
 import RecomendAppointment from '../components/Staff/Appointments/VerifyUser.vue';
+import PaymentHistory from '../components/Staff/Records/Forms/PaymentHistory.vue';
 
 // Admin View
 import IndexAdminPage from "../components/Admin/IndexAdmin.vue"
@@ -37,6 +38,8 @@ import Teeth from '../components/Admin/Refer/Teeth.vue';
 import ChildTeeth from '../components/Admin/Refer/ChildTeeth.vue';
 import PaymentInfo from '../components/Admin/Refer/Payments/PaymentInfo.vue';
 import AddToothPayment from '../components/Admin/Refer/Payments/AddToothPayment.vue';
+import PatientHistoryAdmin from '../components/Admin/Patient/PatientHistory.vue';
+import AdminPaymentHistory from '../components/Admin/Patient/AdminPaymentHistory.vue';
 
 
 
@@ -119,13 +122,18 @@ const routes = [
     },
     {
         path: '/user/staff/trasanction',
-        name: 'admin-transaction',
+        name: 'staff-transaction',
         component: IndexTransaction,
     },
     {
         path: '/user/staff/record',
-        name: 'admin-record',
+        name: 'staff-record',
         component: IndexRecords,
+    },
+    {
+        path: '/user/staff/payment/history/:id',
+        name: 'staff-payment',
+        component: PaymentHistory,
     },
     // End  of Staff Page
 
@@ -146,6 +154,11 @@ const routes = [
         component: IndexManageStaff,
     },
     {
+        path: '/user/admin/patient/history/:id',
+        name: 'admin-history',
+        component: PatientHistoryAdmin,
+    },
+    {
         path: '/user/admin/refer',
         name: 'admin-refer',
         component: IndexReferPatients,
@@ -156,7 +169,7 @@ const routes = [
         component: IndexViewRecord,
     },
     {
-        path: '/user/patient/history/:id',
+        path: '/user/staff/history/:id',
         name: 'assistant-history',
         component: PatientHistory,
     },
@@ -169,6 +182,11 @@ const routes = [
         path: '/user/admin/view/:id',
         name: 'patient-view',
         component: ViewPatientInfo,
+    },
+    {
+        path: '/user/admin/payment/history/:id',
+        name: 'admin-payment-history',
+        component: AdminPaymentHistory,
     },
     {
         path: '/user/admin/payment/:id',

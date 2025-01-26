@@ -122,96 +122,42 @@
         <div class="header">
             <div class="header-left">
                 <img src="../public/images/logo.png" alt="company-logo">
-                <p class="fs-5 fw-semibold mb-0">Grace's Dental Clinic</p>
+                <p class="fs-5 fw-semibold mb-0">Graces Dental Clinic</p>
             </div>
             <div class="header-right">
-                <p class="text-center fs-3 fw-bold mb-0">Dental Invoice</p>
+                <p class="text-center fs-3 fw-bold mb-0">Dental Patient History</p>
             </div>
         </div>
          <!-- Invoice Details Section -->
         <div class="invoice-details">
             <div class="bill-to">
                 <div class="info-group">
-                    <label>Bill to</label>
-                </div>
-                <div class="info-group">
                     <label>Name:</label>
                     <span>{{$patient->firstname}} {{$patient->middle_initial}} {{$patient->lastname}}</span>
-                </div>
-                <div class="info-group">
-                    <label>Service Rendered:</label>
-                    <span>{{$services->services_name}}</span>
-                </div>
-                <div class="info-group">
-                    <label>Street Address:</label>
-                    <span>{{$patient->home_address}}</span>
-                </div>
-                <div class="info-group">
-                    <label>Phone:</label>
-                    <span>{{'0' . $patient->phone_number}}</span>
-                </div>
-            </div>
-            <div class="invoice-info">
-                <div class="info-group">
-                    <label>Invoice No:</label>
-                    <span>{{$invoiceId}}</span>
-                </div>
-                <div class="info-group">
-                    <label>Date:</label>
-                    <span>{{ now()->format('F j, Y') }}</span>
                 </div>
             </div>
         </div>
 
-        <!-- Table Section -->
+            <h3>Payment History</h3>
             <div class="container-lg">
                 <table class="table">
                     <thead>
                         <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Service Rendered</th>
                             <th scope="col">Tooth</th>
                             <th scope="col">Surface</th>
-                            <th scope="col">Fee</th>
-                            <th scope="col">Balance</th>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach ( $paymentAppointments as $paymentAppointment )
-                        <tr>
-                            <td>{{$paymentAppointment->tooth}}</td>
-                            <td>{{$paymentAppointment->surface}}</td>
-                            <td>{{$paymentAppointment->fee}}</td>
-                            <td>{{$paymentAppointment->balance}}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>Payment History</h3>
-               <!-- Table Section -->
-            <div class="container-lg">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Tooth</th>
-                            <th scope="col">Payment Date</th>
-                            <th scope="col">Paid</th>
-                            <th scope="col">Payment Method</th>
-                            <th scope="col">Reference Number</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ( $paymentAppointments as $paymentAppointment )
-                        @foreach ( $paymentAppointment->items as $item )
+                        @foreach ($history as $item )
                             <tr>
-                                <td>{{$paymentAppointment->tooth}}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->payment_date)->format('F j, Y') }}</td>
-                                <td>{{ $item->paid }}</td>
-                                <td>{{ $item->payment_method }}</td>
-                                <td>{{ $item->ref_number ?? 'Not G-cash MOP' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->created_at)->format('F j, Y') }}</td>
+                                <td>{{ $item->services->services_name }}</td>
+                                <td>{{ $item->tooth }}</td>
+                                <td>{{ $item->surface }}</td>
                             </tr>
                         @endforeach
-                    @endforeach
                     </tbody>
                 </table>
             </div>
