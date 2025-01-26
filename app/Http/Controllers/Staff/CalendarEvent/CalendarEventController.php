@@ -27,6 +27,7 @@ class CalendarEventController extends Controller
             'start_date' => 'required|date|before_or_equal:end_date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'is_appointment' => 'nullable|boolean',
+            'slot' => 'nullable',
         ], [
             'event_name.required' => 'Event name is required.',
             'start_date.required' => 'Start date is required.',
@@ -46,9 +47,7 @@ class CalendarEventController extends Controller
             foreach ($patients as $patient) {
                 $patient->notify(new BlockAppointment($event));
             }
-            // broadcast(new AppointmentBlockEvent($event));
         }
-        
         return response()->json($event, 201);
     }
 

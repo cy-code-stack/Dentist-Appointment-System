@@ -6,7 +6,7 @@
                     <h5 class="modal-title" id="addEventLabel">Add Event</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body overflow-auto">
                     <form @submit.prevent="submitEvent">
                         <div class="form-check form-switch d-flex align-items-center mb-3">
                             <input class="form-check-input me-2" v-model="event.is_appointment" type="checkbox" role="switch">
@@ -25,7 +25,7 @@
                                 {{ errors.event_name[0] }}
                             </div>
                         </div>
-                        <div class="row g-3">
+                        <div class="row g-3 mb-2">
                             <div class="col-md-6">
                                 <label for="startDate" class="form-label">Start Date</label>
                                 <input
@@ -55,7 +55,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-grid mt-4">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="editSlotCheckbox" v-model="isEditingSlot">
+                            <label class="form-check-label" for="editSlotCheckbox">Edit Appointment Slot</label>
+                        </div>
+                        <div v-if="isEditingSlot" class="form"> 
+                            <label for="slot" class="form-label">Appointment Slot</label>
+                            <input type="number" id="slot" class="form-control" v-model="event.slot"/>
+                        </div>
+                        <div class="d-grid mt-3">
                             <button type="submit" class="btn btn-success">Add Event</button>
                         </div>
                     </form>
@@ -74,10 +82,12 @@ export default {
         return {
             event: {
                 event_name: '',
-                start_date: '',
+                start_date: new Date().toISOString().split('T')[0],
                 end_date: '',
                 is_appointment: '',
+                slot: '',
             },
+            isEditingSlot: false,
             minDate: "",
             errors: {},
         };

@@ -127,25 +127,35 @@ export default {
                 const response = await axios.get('/user/patient/filterTime', {
                     params: { sched_date: this.appointmentData.sched_date }
                 });
-                console.log(response);
-                
                 this.bookedSlots = Array.isArray(response.data.available_times) ? response.data.available_times : [];
             } catch (error) {
                 console.error("Error filtering time appointments:", error);
                 this.bookedSlots = [];
             }
         },
+
         async fetchRemainingSlots() {
             try {
                 if (!this.appointmentData.sched_date) {
                     this.remainingSlots = null;
                     return;
                 }
-
                 const response = await axios.get("/user/patient/countAppointment", {
                     params: { sched_date: this.appointmentData.sched_date },
                 });
-                this.remainingSlots = response.data.remaining_slots || {};
+                const clickedDate = new Date(this.appointmentData.sched_date);
+                const eventResponse = await axios.get("/user/patient/display/event");
+                const clickedEvent = eventResponse.data.find((event) => {
+                    const eventStartDate = new Date(event.start_date);
+                    const eventEndDate = new Date(event.end_date);
+                    return clickedDate >= eventStartDate && clickedDate <= eventEndDate;
+                });
+
+                if (clickedEvent) {
+                    this.remainingSlots = clickedEvent.slot === 0 ? response.data.remaining_slots || {} : clickedEvent.slot;
+                } else {
+                    this.remainingSlots = response.data.remaining_slots || {};
+                }
             } catch (error) {
                 console.error("Error fetching remaining slots:", error);
                 this.remainingSlots = "Error";
@@ -163,7 +173,6 @@ export default {
 
             try {
                 const response = await axios.get("/user/patient/display/event");
-
                 const clickedEvent = response.data.find((event) => {
                     const eventStartDate = new Date(event.start_date);
                     const eventEndDate = new Date(event.end_date);
@@ -251,6 +260,7 @@ export default {
             try {
                 const response = await axios.get("/user/patient/display/event");
                 return response.data.map((event) => ({
+                    id: event.id,
                     title: event.event_name,
                     start: event.start_date,
                     end: event.end_date,
