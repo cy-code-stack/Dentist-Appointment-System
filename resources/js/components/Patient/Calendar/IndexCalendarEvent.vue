@@ -152,7 +152,7 @@ export default {
                 });
 
                 if (clickedEvent) {
-                    this.remainingSlots = clickedEvent.slot === 0 ? response.data.remaining_slots || {} : clickedEvent.slot;
+                    this.remainingSlots = clickedEvent.slot > 0 ? response.data.remaining_slots || {} : clickedEvent.slot;
                 } else {
                     this.remainingSlots = response.data.remaining_slots || {};
                 }
