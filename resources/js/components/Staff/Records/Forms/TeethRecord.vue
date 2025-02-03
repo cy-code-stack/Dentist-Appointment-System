@@ -5,7 +5,7 @@
             <div class="d-flex flex-column align-items-center mb-1">
                 <div class="d-flex justify-content-center w-100">
                     <!-- Teeth 18 to 11 -->
-                    <div v-for="(tooth, index) in firstHalf" :key="index" class="teeth-card card p-1 position-relative me-4">
+                    <div v-for="(tooth, index) in firstHalf" :key="index" class="teeth-card p-1 position-relative me-3">
                         <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                             {{ tooth.teeth.teeth_number }}
                         </div>
@@ -14,7 +14,7 @@
                     </div>
 
                     <!-- Teeth 21 to 28 -->
-                    <div v-for="(tooth, index) in secondHalf" :key="index" class="teeth-card card p-1 position-relative me-4">
+                    <div v-for="(tooth, index) in secondHalf" :key="index" class="teeth-card p-1 position-relative me-3">
                         <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                             {{ tooth.teeth.teeth_number }}
                         </div>
@@ -27,7 +27,7 @@
                 <!-- Second row -->
                 <div class="d-flex justify-content-center w-100">
                     <!-- Teeth 48 to 41 -->
-                    <div v-for="(tooth, index) in thirdHalf" :key="index" class="teeth-card card p-1 position-relative me-4">
+                    <div v-for="(tooth, index) in thirdHalf" :key="index" class="teeth-card p-1 position-relative me-3">
                         <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                             {{ tooth.teeth.teeth_number }}
                         </div>
@@ -36,7 +36,7 @@
                     </div>
 
                         <!-- Teeth 31 to 38 -->
-                    <div v-for="(tooth, index) in fourthHalf" :key="index" class="teeth-card card p-1 position-relative me-4">
+                    <div v-for="(tooth, index) in fourthHalf" :key="index" class="teeth-card p-1 position-relative me-3">
                         <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                             {{ tooth.teeth.teeth_number }}
                         </div>

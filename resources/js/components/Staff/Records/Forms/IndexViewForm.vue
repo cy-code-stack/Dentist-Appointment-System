@@ -306,9 +306,9 @@
                     <router-link :to='`/user/staff/record/teeth/${transData.id}`'>
                         <button type="button" class="btn btn-primary">Diagnostics</button>
                     </router-link>
-                    <router-link :to='`/user/patient/history/${transData.user?.id}`'>
+                    <!-- <router-link :to='`/user/patient/history/${transData.user?.id}`'>
                         <button type="button" class="btn btn-success">Patient History</button>
-                    </router-link>
+                    </router-link> -->
                 </div>
             </div>
     </div>

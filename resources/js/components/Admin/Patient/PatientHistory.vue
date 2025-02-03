@@ -14,6 +14,10 @@
                 <table class="table table-striped table-hover table-bordered">
                    <thead>
                         <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                        <th>Gender</th>
                         <th>Services</th>
                         <th>Tooth</th>
                         <th>Surface</th>
@@ -21,6 +25,10 @@
                    <tbody>
                     <tr v-for="(item, index) in patientHistory" :key="index">
                         <td>{{ formatWordyDate(item.created_at) }}</td>
+                        <td>{{ item.user.firstname }} {{ item.user.middle_initial }}. {{ item.user.lastname }}</td>
+                        <td>{{ item.user.email }}</td>
+                        <td>{{ item.user.age }}</td>
+                        <td>{{ item.user.sex }}</td>
                         <td>{{ item.services?.services_name }}</td>
                         <td>{{ item.tooth }}</td>
                         <td>{{ item.surface }}</td>
