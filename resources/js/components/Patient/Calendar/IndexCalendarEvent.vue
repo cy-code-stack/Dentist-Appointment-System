@@ -152,7 +152,7 @@ export default {
                 });
 
                 if (clickedEvent) {
-                    this.remainingSlots = clickedEvent.slot > 0 ? response.data.remaining_slots || {} : clickedEvent.slot;
+                    this.remainingSlots = clickedEvent.slot <= 0 ? response.data.remaining_slots || {} : clickedEvent.slot;
                 } else {
                     this.remainingSlots = response.data.remaining_slots || {};
                 }
@@ -258,8 +258,8 @@ export default {
         },
         async displayEvent() {
             try {
-                const response = await axios.get("/user/patient/display/event");
-                return response.data.map((event) => ({
+            const response = await axios.get("/user/patient/display/event");
+            return response.data.filter(event => event.slot <= 0).map((event) => ({
                     id: event.id,
                     title: event.event_name,
                     start: event.start_date,
@@ -267,8 +267,8 @@ export default {
                     color: event.is_appointment === 1 ? "#FFC107" : "#14A44D",
                 }));
             } catch (error) {
-                console.error("Error fetching events:", error);
-                return [];
+            console.error("Error fetching events:", error);
+            return [];
             }
         },
         async loadAllEvents() {

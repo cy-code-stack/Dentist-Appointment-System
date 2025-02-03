@@ -15,7 +15,7 @@ class InquiryController extends Controller
         $page = $request->input('page', 1);
 
         $query = Inquiries::where('status', 'uncatered')
-                    ->orderBy('lname', 'asc');
+                    ->orderBy('lname', 'desc');
 
         $records = $query->paginate($limit, ['*'], 'page', $page);
 

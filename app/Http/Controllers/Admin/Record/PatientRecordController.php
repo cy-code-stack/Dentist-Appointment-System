@@ -18,7 +18,7 @@ class PatientRecordController extends Controller
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
 
-        $query = Appointment::where('appnt_status', 'Completed')->with('appointServices', 'patient');
+        $query = Appointment::where('appnt_status', 'Completed')->with('appointServices', 'patient')->orderBy('created_at', 'desc');
 
         $records = $query->paginate($limit, ['*'], 'page', $page);
 

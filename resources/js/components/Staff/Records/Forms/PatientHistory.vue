@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid py-4">
         <div class="container">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <h5>Patient History</h5>
+            <h5 class="text-center"><b>Grace's Dental Clinnic</b><br><br>Patient History</h5>
+            <div class="d-flex align-items-center justify-content-end mb-3">
                 <button type="button" class="rounded-1 btn btn-success btn-sm text-white" @click="printHistory($route.params.id)">
                     <div class="d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-print me-2"></i>
@@ -14,6 +14,10 @@
                 <table class="table table-striped table-hover table-bordered">
                    <thead>
                         <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                        <th>Gender</th>
                         <th>Services</th>
                         <th>Tooth</th>
                         <th>Surface</th>
@@ -21,6 +25,10 @@
                    <tbody>
                     <tr v-for="(item, index) in patientHistory" :key="index">
                         <td>{{ formatWordyDate(item.created_at) }}</td>
+                        <td>{{ item.user?.firstname }} {{ item.user.middle_initial }}. {{ item.user.lastname }}</td>
+                        <td>{{ item.user?.email }}</td>
+                        <td>{{ item.user?.age }}</td>
+                        <td>{{ item.user?.sex }}</td>
                         <td>{{ item.services?.services_name }}</td>
                         <td>{{ item.tooth }}</td>
                         <td>{{ item.surface }}</td>

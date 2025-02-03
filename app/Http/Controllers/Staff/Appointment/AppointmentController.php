@@ -44,7 +44,7 @@ class AppointmentController extends Controller
         $status = $request->input('status');
         $search = $request->input('search', '');
 
-        $query = Appointment::with('patient', 'appointServices')->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Payment', 'Completed'])->orderBy('sched_date', 'desc');
+        $query = Appointment::with('patient', 'appointServices')->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Payment', 'Completed'])->orderBy('created_at', 'desc');
 
         if ($status) {
             $query->where('appnt_status', $status);

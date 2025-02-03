@@ -17,7 +17,8 @@ class AdminReferPatientsController extends Controller
         $page = $request->input('page', 1);
         $search = $request->input('search', '');
         $query = Appointment::whereNotIn('appnt_status', ['Archive', 'Approved', 'Pending Approval', 'Declined', 'Completed'])
-                                ->with('appointServices', 'patient');
+                                ->with('appointServices', 'patient')
+                                ->orderBy('created_at', 'desc');
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->whereHas('patient', function ($subQuery) use ($search) {

@@ -33,7 +33,7 @@ class TransactionController extends Controller
         $page = $request->input('page', 1);
 
 
-        $query = Appointment::where('appnt_status', 'Completed')->with('patient', 'appointServices');
+        $query = Appointment::where('appnt_status', 'Completed')->with('patient', 'appointServices')->orderBy('created_at', 'desc');
 
         $records = $query->paginate($limit, ['*'], 'page', $page);
 
