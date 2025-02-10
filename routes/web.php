@@ -38,6 +38,7 @@ use App\Http\Controllers\Staff\Archieve\ArchieveController;
 use App\Http\Controllers\Staff\Inquiry\InquiryController;
 use App\Http\Controllers\Staff\CalendarEvent\CalendarEventController;
 use App\Http\Controllers\Staff\History\PatientHistoryController;
+use App\Http\Controllers\Staff\Payment\StaffPaymentController;
 use App\Http\Controllers\Staff\Profile\AssistantProfileController;
 
 /*
@@ -249,6 +250,14 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::post('/user/staff/event/store', [CalendarEventController::class, 'storeEvent']);
                 Route::get('/user/staff/calendar/display/appointment', [CalendarEventController::class, 'displayAppointment']);
             //End of Calendar Event Routes
+
+            //Payment Section
+                Route::get('/user/staff/payment/display/{id}', [StaffPaymentController::class, 'show']);
+                Route::get('/user/staff/services/servDisplay', [StaffPaymentController::class, 'services']);
+                Route::post('/user/staff/payment/store', [StaffPaymentController::class, 'store']);
+                Route::get('/user/staff/history/payment/{id}', [StaffPaymentController::class, 'getPaymentHistory']);
+                Route::post('/user/staff/add/payment/item', [StaffPaymentController::class, 'addPayment']);
+            //End of payment section
 
             //Start of Inquiry Section
                 Route::get('/user/staff/inquiry/display', [InquiryController::class, 'displayInquiry']);

@@ -39,7 +39,7 @@
                     <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
                         <div class="text-center col-lg-2">
                             <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ appoint?.patient?.firstname }} {{ appoint?.patient?.lastname }} {{ appoint?.id }}
+                                {{ appoint?.patient?.firstname }} {{ appoint?.patient?.lastname }}
                             </p>
                         </div>
                         <div class="text-center col-lg-3">
@@ -58,13 +58,14 @@
                                 'fs-6 fw-medium mb-0 text-info': appoint.Approved, 
                                 'fs-6 fw-medium mb-0 text-primary': appoint.Pending, 
                                 'fs-6 fw-medium mb-0 text-success': appoint.Completed, 
-                                'fs-6 fw-medium mb-0 text-danger': appoint.Declined
+                                'fs-6 fw-medium mb-0 text-danger': appoint.Declined,
+                                'fs-6 fw-medium mb-0 text-info': appoint.Payment,
                             }">
                                 {{ appoint.appnt_status }}
                             </p>
                         </div>
                         <div class="text-center d-flex justify-content-center align-items-center col-lg-3">
-                            <router-link :to="`/user/staff/appointment/recomend/${appoint.id}`"  v-if="appoint.appnt_status !== 'Pending Approval'">
+                            <router-link :to="`/user/staff/appointment/recomend/${appoint.id}`" v-if="appoint.appnt_status !== 'Pending Approval' && appoint.appnt_status !== 'Payment'">
                                 <button type="button" class="me-2 rounded-1 btn btn-info text-white btn-sm">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <i class="fa-solid fa-eye me-1"></i>
@@ -72,7 +73,7 @@
                                     </div>
                                 </button>
                             </router-link>
-                            <router-link :to="`/user/staff/appointment/resched/${appoint.id}`" v-if="appoint.appnt_status !== 'Pending Approval'">
+                            <router-link :to="`/user/staff/appointment/resched/${appoint.id}`" v-if="appoint.appnt_status !== 'Pending Approval' && appoint.appnt_status !== 'Payment'">
                                 <button type="button" class="rounded-1 btn btn-success btn-sm me-2">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <i class="fa-solid fa-calendar-check me-1"></i>
@@ -80,17 +81,25 @@
                                     </div>
                                 </button>
                             </router-link>
-                            <button type="button" class="rounded-1 btn btn-success btn-sm me-2" v-if="appoint.appnt_status === 'Pending Approval'" @click="approvedAppointment(appoint.id)">
+                            <button type="button" class="rounded-1 btn btn-success btn-sm me-2" v-if="appoint.appnt_status !== 'Pending Approval' && appoint.appnt_status !== 'Payment'" @click="approvedAppointment(appoint.id)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <span>Approved Appointment</span>
                                 </div>
                             </button>
-                            <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.appnt_status !== 'Pending Approval'" @click="abortPatient(appoint)">
+                            <button type="button" class="rounded-1 btn btn-danger btn-sm" v-if="appoint.appnt_status !== 'Pending Approval' && appoint.appnt_status !== 'Payment'" @click="abortPatient(appoint)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <i class="fa-solid fa-ban me-1"></i>
                                     <span>Abort</span>
                                 </div>
                             </button>
+                            <router-link :to="`/user/staff/payment/${appoint.patient?.id}`">
+                                <button v-if="appoint.appnt_status === 'Payment' || appoint.appnt_status === 'Not yet Paid'" type="button" class="me-1 rounded-1 btn btn-primary text-white btn-sm">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <span class="me-2">Payment</span>
+                                        <i class="fa-solid fa-circle-arrow-right"></i>
+                                    </div>
+                                </button>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -170,6 +179,7 @@ export default {
                     Pending: appoint.appnt_status === "Pending",
                     Completed: appoint.appnt_status === "Completed",
                     Declined: appoint.appnt_status === "Declined",
+                    Payment: appoint.appnt_status === "Payment",
                 }));
             }).catch((error)=>{
                 console.log(error);

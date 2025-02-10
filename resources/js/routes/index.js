@@ -23,6 +23,8 @@ import PatientHistory from '../components/Staff/Records/Forms/PatientHistory.vue
 import RescheduleAppointmentPage from '../components/Staff/Appointments/ReschedAppointment.vue';
 import RecomendAppointment from '../components/Staff/Appointments/VerifyUser.vue';
 import PaymentHistory from '../components/Staff/Records/Forms/PaymentHistory.vue';
+import StaffAddToothPayment from '../components/Staff/Appointments/Payments/AddToothPayment.vue';
+import StaffPaymentInfo from '../components/Staff/Appointments/Payments/PaymentInfo.vue';
 
 // Admin View
 import IndexAdminPage from "../components/Admin/IndexAdmin.vue"
@@ -104,6 +106,16 @@ const routes = [
         path: '/user/staff/callendar/event',
         name: 'event',
         component: IndexStaffCallendarEvent,
+    },
+    {
+        path: '/user/staff/add/payment/:id',
+        name: 'add-payment-staff',
+        component: StaffAddToothPayment
+    },
+    {
+        path: '/user/staff/payment/:id',
+        name: 'view-payment-staff',
+        component: StaffPaymentInfo
     },
     {
         path: '/user/staff/service',

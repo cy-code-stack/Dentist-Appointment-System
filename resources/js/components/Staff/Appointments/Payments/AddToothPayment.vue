@@ -114,7 +114,7 @@ export default {
             return urlSegments[urlSegments.length - 1].split('?')[0];
         },
         getpaymentHistory(id){
-            axios.get('/admin/patients/payment/history/show/' + id)
+            axios.get('/user/staff/history/payment/' + id)
                 .then((response) => {
                     this.historyPayment = response.data.data.items;
                     const lastPayment = this.historyPayment[this.historyPayment.length - 1];
@@ -125,8 +125,8 @@ export default {
                 });
         },
         submitPayment() {
-            axios.post('/admin/patients/pay/item', this.data)
-                .then(() => {
+            axios.post('/user/staff/add/payment/item', this.data)
+                .then((response) => {
                     const id = this.getUrlId();
                     Swal.fire({
                         position: "center",
