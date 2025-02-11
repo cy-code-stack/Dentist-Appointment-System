@@ -228,16 +228,18 @@ class Authentication extends Controller
     }
     
 
-    public function otpVerify(Request $request){
-
+    public function otpVerify(Request $request)
+    {
         $request->validate([
-            'token' => 'required|string|digits:6'  
-        ],[
-            'token.digits' => 'It must minimum of 6 digits',
+            'token' => 'required|string|digits:6'
+        ], [
+            'token.digits' => 'It must be a minimum of 6 digits',
         ]);
 
         $get_token = $request->token;
-        $token_record = VerifyToken::where('token', $get_token)->first();
+        $token_record = VerifyToken::where('token', $get_token)
+                                ->where('created_at', '>=', now()->subMinutes(5)) ## Ensure OTP is fresh
+                                ->first();
 
         if ($token_record) {
             $token_record->is_activated = 1;
@@ -248,13 +250,40 @@ class Authentication extends Controller
             $user->status = 'verified';
             $user->save();
 
-            $token_record->delete();
+            $token_record->delete(); ## Delete OTP after successful verification
 
-            Alert::success('Account Verified', 'You may now login your account')->persistent(true);
-            return redirect(route('signin'))->with('success', 'Your Account is Activated');
-        }else{
-            return redirect()->back()->with('incorrect', 'Your OTP is Invalid. Please check your email once.');
+            Alert::success('Account Verified', 'You may now log in to your account')->persistent(true);
+            return redirect(route('signin'))->with('success', 'Your account is activated');
+        } else {
+            return redirect()->back()->with('incorrect', 'Your OTP is invalid. Please check your email.');
         }
+    }
+
+
+    public function resend(Request $request)
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User not found'], 400);
+        }
+
+        ## Generate new OTP
+        $otp = rand(100000, 999999);
+
+        ## Update OTP in VerifyToken Table
+        VerifyToken::updateOrCreate(
+            ['email' => $user->email],
+            ['token' => $otp, 'created_at' => now()]
+        );
+
+        ## Send OTP via email
+        Mail::raw("Your new OTP is: $otp", function ($message) use ($user) {
+            $message->to($user->email)
+                    ->subject("Your OTP Code");
+        });
+
+        return response()->json(['success' => true, 'message' => 'OTP resent successfully']);
     }
 
     public function logout(Request $request)

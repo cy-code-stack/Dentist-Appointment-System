@@ -64,6 +64,7 @@ Route::get('/', function () { return view('landing_page');});
 
     Route::get('/verify/otp', [Authentication::class, 'indexVerify'])->name('verify');
     Route::post('/verify/user/acc', [Authentication::class, 'otpVerify'])->name('acc-verify');
+    Route::post('/resend-otp', [Authentication::class, 'resend'])->name('resend-otp');
 
     Route::get('/user/forgot', [Authentication::class, 'indexForgot'])->name('forgot');
     Route::post('/user/forgot/acc', [Authentication::class, 'indexForgotAcc'])->name('user-forgot');
