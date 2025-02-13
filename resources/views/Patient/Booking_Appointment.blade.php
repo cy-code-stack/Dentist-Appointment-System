@@ -30,17 +30,18 @@
 <body>
     <div class="wrapper" id="app">
         <nav class="main-header navbar navbar-expand bg-info sticky-md-top">
-            <div class="header-nav col-lg-5">
+            <div class="header-nav col-lg-7">
                 <ul class="navbar-nav">
                     <li class="nav-item d-flex justify-content-start">
                         <router-link to="/user/patient/booking" exact-active-class="active" class="nav-link text-white me-2">Booking an Appointment</router-link>
                         <router-link to="/user/patient/appointment" exact-active-class="active" class="nav-link text-white me-2 ">List of Appointments</router-link>
                         <router-link to="/user/patient/decline" exact-active-class="active" class="nav-link text-white me-2">Decline Appointments</router-link>
+                        <router-link to="/user/patient/history" exact-active-class="active" class="nav-link text-white me-2">Patient History</router-link>
                         <router-link to="/user/patient/profile" exact-active-class="active" class="nav-link text-white me-2">Profile</router-link>
                     </li>
                 </ul>
             </div>
-            <div class="header-nav d-flex justify-content-end align-items-center col-lg-7">
+            <div class="header-nav d-flex justify-content-end align-items-center col-lg-5">
                 <ul class="navbar-nav">
                     <li class="nav-item d-none d-sm-inline-block">
                         <div class="d-flex justify-content-center align-items-center me-2">

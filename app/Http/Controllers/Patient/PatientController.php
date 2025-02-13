@@ -9,6 +9,7 @@ use App\Notifications\AppointmentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BookAppointmentVerification;
+use App\Models\PaymentAppointment;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -112,5 +113,15 @@ class PatientController extends Controller
     public function diplayServices(){
         $services = Services::where("serv_status", "Verified")->get();
         return $services;
+    }
+
+    public function getHistory()
+    {
+        $current_id = Auth::id();
+        $record = PaymentAppointment::where('user_id', $current_id)->with('services')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $record,
+        ], 201);
     }
 }

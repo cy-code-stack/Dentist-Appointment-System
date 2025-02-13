@@ -96,6 +96,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::get('/user/patient/displayAppointment', [PatientController::class, 'diplayServices']);
                 Route::get('/user/patient/countAppointment', [PatientController::class, 'getRemainingSlots']);
                 Route::get('/user/patient/filterTime', [PatientController::class, 'filterTime']);
+                Route::get('/user/patient/history/get', [PatientController::class, 'getHistory']);
             //End of Book Appointment Section
 
             //Start of Calendar Event Routes

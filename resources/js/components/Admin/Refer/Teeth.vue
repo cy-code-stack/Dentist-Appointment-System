@@ -103,7 +103,8 @@
                                 <tr v-for="(tooth, index) in firstColumn" :key="index">
                                     <td class="text-center fs-6 fw-semibold">{{ tooth.teeth_number }}</td>
                                     <td>
-                                        <textarea class="comment-input form-control" v-model="tooth.comments"></textarea>
+                                        <input class="form-control form-control-sm mb-2" type="date" v-model="currentDate">
+                                        <textarea class="form-control" rows="3" placeholder="Add your comments here" v-model="tooth.comments"></textarea>
                                     </td>
                                 </tr>
                             </tbody>
@@ -123,7 +124,8 @@
                                 <tr v-for="(tooth, index) in secondColumn" :key="index">
                                     <td class="text-center fs-6 fw-semibold">{{ tooth.teeth_number }}</td>
                                     <td>
-                                        <textarea class="comment-input form-control" v-model="tooth.comments"></textarea>
+                                        <input class="form-control form-control-sm mb-2" type="date" v-model="currentDate">
+                                        <textarea class="form-control" rows="3" placeholder="Add your comments here" v-model="tooth.comments"></textarea>
                                     </td>
                                 </tr>
                             </tbody>
@@ -146,6 +148,7 @@ export default {
             adultTeeth: [],
             selectedDiseaseImage: null,
             teethData: {},
+            currentDate: new Date().toISOString().split("T")[0],
             patientInformationId: null,
         };
     },
@@ -183,6 +186,7 @@ export default {
                         selectedDiseaseImage: tooth.teeth_disease ? this.getDiseaseUrl(tooth.teeth_disease.disease_img_url) : null,
                         teeth_number: tooth.teeth.teeth_number,
                         comments: tooth.comments || '', 
+                        created_at: this.currentDate,
                     }));
                 })
                 .catch(error => {
@@ -217,6 +221,7 @@ export default {
                 disease_id: tooth.teeth_disease ? tooth.teeth_disease.id : null,
                 comments: tooth.comments || null,
                 patient_information_id: this.getUrlId(),
+                created_at: this.currentDate,
             }));
             const id = this.getUrlId();
             console.log(this.teethData);
@@ -248,10 +253,6 @@ export default {
 .teeth-card {
     cursor: pointer;
     width: 60px;
-}
-.comment-input {
-    resize: none;
-    height: 20px !important;
 }
 .text-small{
     font-size: 8px;

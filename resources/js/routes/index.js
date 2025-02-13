@@ -5,6 +5,7 @@ import IndexCalendarEventPage from "../components/Patient/Calendar/IndexCalendar
 import PatientIndexAppointment from '../components/Patient/Patient_Appointment/IndexAppointment.vue';
 import IndexPatientProfile from '../components/Patient/Profile/IndexPatientProfile.vue';
 import DeclineAppointment from '../components/Patient/Decline/DeclineAppointment.vue';
+import CustomerPatientHistory from '../components/Patient/History/PatientHistory.vue';
 
 //Staff View
 import StaffIndexPage from "../components/Staff/StaffIndex.vue";
@@ -60,6 +61,11 @@ const routes = [
         path: '/user/patient/decline',
         name: 'appointment-decline',
         component: DeclineAppointment
+    },
+    {
+        path: '/user/patient/history',
+        name: 'own-history',
+        component: CustomerPatientHistory
     },
     {
         path: '/user/patient/appointment',
