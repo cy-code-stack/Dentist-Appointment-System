@@ -54,4 +54,10 @@ class PrintController extends Controller
         file_put_contents($path, $pdf->output());
         return response()->json(['path' => url('patient-history/' . $filename)]);
     }
+
+    public function printAppointmentHistory(Request $request)
+    {
+        $pdf = Pdf::loadView('print_appointment')->setPaper('a4', 'portrait');
+        return $pdf->stream('appointment-print.pdf');
+    }
 }
