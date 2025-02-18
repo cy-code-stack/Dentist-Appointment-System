@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\PatientInformationRecord;
 use App\Models\PaymentAppointment;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -55,9 +56,28 @@ class PrintController extends Controller
         return response()->json(['path' => url('patient-history/' . $filename)]);
     }
 
-    public function printAppointmentHistory(Request $request)
+    public function printAppointmentHistory($id)
     {
-        $pdf = Pdf::loadView('print_appointment')->setPaper('a4', 'portrait');
-        return $pdf->stream('appointment-print.pdf');
+        $record = PatientInformationRecord::where('id', $id)->with('diagnostics', 'user')->first();
+        $diagnostics = $record->diagnostics->first();
+        $data = [
+            'information'   => $record,
+            'user'          =>  $record->user,
+            'teeths'         =>  $diagnostics->teeth,
+            'diseases'       =>  $diagnostics->teethDisease,
+        ];
+
+        $pdf = Pdf::loadView('print_appointment', [...$data])->setPaper('a4', 'portrait');
+
+        $filename = 'print_appointment' . Str::random(10) . '.pdf';
+        
+        $path = public_path('print_appointment/' . $filename);
+    
+        if (!file_exists(public_path('print_appointment'))) {
+            mkdir(public_path('print_appointment'), 0777, true);
+        }
+    
+        file_put_contents($path, $pdf->stream());
+        return response()->json(['path' => url('print_appointment/' . $filename)]);
     }
 }

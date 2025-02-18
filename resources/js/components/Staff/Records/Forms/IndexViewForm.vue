@@ -303,13 +303,17 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="rounded-1 btn btn-success text-white" @click="printAppointment(transData.id)">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <i class="fa-solid fa-print me-2"></i>
+                            <span>Print</span>
+                        </div>
+                    </button>
                     <router-link :to='`/user/staff/record/teeth/${transData.id}`'>
                         <button type="button" class="btn btn-primary">Diagnostics</button>
                     </router-link>
-                    <!-- <router-link :to='`/user/patient/history/${transData.user?.id}`'>
-                        <button type="button" class="btn btn-success">Patient History</button>
-                    </router-link> -->
                 </div>
+
             </div>
     </div>
 </template>
@@ -333,10 +337,19 @@ export default {
             axios.get(`/user/staff/view/${id}`)
                 .then(response => {
                     this.transData = response.data.data;
-                    console.log('user data loaded:', this.transData);
                 })
                 .catch(error => {
                     console.error('Error fetching user data:', error.response?.data?.message || error.message);
+                });
+        },
+        printAppointment(id) {
+            axios.get(`/patient/appointment/print/${id}`)
+                .then(response => {
+                    const printPath = response.data.path;
+                    window.open(printPath, '_blank');
+                })
+                .catch(error => {
+                    console.error("Error printing appointment:", error.response?.data?.message || error.message);
                 });
         }
     },
