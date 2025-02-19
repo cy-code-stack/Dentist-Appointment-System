@@ -15,14 +15,12 @@ class PrintController extends Controller
 {
     public function downloadPrint(Request $request) {
         $appointment = Appointment::with('patient', 'appointServices')->find($request->id);
-    
         $data = [
             'invoiceId' => $appointment->id,
             'services' => $appointment->appointServices,
             'patient' => $appointment->patient,
-            'paymentAppointments' => $appointment->payment->each(fn($item)=>$item->items),
+            'paymentAppointments' => $appointment->payment->where('user_id', $appointment->patient->id)->each(fn($item)=>$item->items),
         ];
-
         $pdf = Pdf::loadView('invoice', [...$data]);
         $filename = 'invoice_' . Str::random(10) . '.pdf';
         
@@ -63,8 +61,8 @@ class PrintController extends Controller
         $data = [
             'information'   => $record,
             'user'          =>  $record->user,
-            'teeths'         =>  $diagnostics->teeth,
-            'diseases'       =>  $diagnostics->teethDisease,
+            'teeths'        =>  $diagnostics->teeth,
+            'diseases'      =>  $diagnostics->teethDisease,
         ];
 
         $pdf = Pdf::loadView('print_appointment', [...$data])->setPaper('a4', 'portrait');
@@ -77,7 +75,7 @@ class PrintController extends Controller
             mkdir(public_path('print_appointment'), 0777, true);
         }
     
-        file_put_contents($path, $pdf->stream());
+        file_put_contents($path, $pdf->output());
         return response()->json(['path' => url('print_appointment/' . $filename)]);
     }
 }

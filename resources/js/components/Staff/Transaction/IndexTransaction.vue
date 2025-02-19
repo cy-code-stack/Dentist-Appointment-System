@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid p-3">
         <div class="txt-title mt-2">
             <p class="fs-5 fw-semibold mb-0">Transaction History</p>
         </div>

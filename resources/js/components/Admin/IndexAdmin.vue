@@ -163,29 +163,28 @@ export default {
 
             this.createBarChart(barCtx);
             this.createPieRateChart(barPieCtx);
-            this.createAreaChart(barAreaCtx);
+            this.createBarChart2(barAreaCtx);
             this.createLineChart(lineCtx);
         },
 
-        createAreaChart(ctx) {
+        createBarChart2(ctx) {
             axios.get('/user/admin/appointment/top', {
                 params: { start_date: this.startDate, end_date: this.endDate },
             }).then((response) => {
-                const labels = response.data.map(service => service.services_name); 
+                const labels = response.data.map(service => service.services_name);
                 const data = response.data.map(service => service.services_count);
 
-                this.areaChart = new Chart(ctx, {
-                    type: "line",
+                this.barChart = new Chart(ctx, {
+                    type: "bar", // Changed from "line" to "bar"
                     data: {
-                        labels: labels, 
+                        labels: labels,
                         datasets: [
                             {
                                 label: "Services Rendered",
-                                data: data, 
-                                backgroundColor: "rgba(13, 110, 253, 0.3)", 
-                                borderColor: "rgba(13, 110, 253, 1)", 
-                                fill: true,
-                                tension: 0.4,
+                                data: data,
+                                backgroundColor: "rgba(13, 110, 253, 0.7)", // Adjusted for better visibility
+                                borderColor: "rgba(13, 110, 253, 1)",
+                                borderWidth: 1,
                             },
                         ],
                     },
@@ -217,6 +216,7 @@ export default {
                 console.log(error);
             });
         },
+
 
 
 

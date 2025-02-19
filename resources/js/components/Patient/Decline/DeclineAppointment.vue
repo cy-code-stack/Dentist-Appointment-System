@@ -11,6 +11,7 @@
                         <th>Name</th>
                         <th>Services</th>
                         <th>Schedule Date</th>
+                        <th>Reason</th>
                         <th>Status</th>
                    </thead>
                    <tbody class="text-center">
@@ -19,6 +20,7 @@
                             <td>{{ item.patient?.firstname }} {{ item.patient?.middle_initial }} {{ item.patient?.lastname }}</td>
                             <td>{{ item.appoint_services.services_name }}</td>
                             <td>{{ item.sched_date }}</td>
+                            <td>{{ item.abort_reason }}</td>
                             <td class="text-danger fw-medium">{{ item.appnt_status }}</td>
                         </tr>
                    </tbody>
