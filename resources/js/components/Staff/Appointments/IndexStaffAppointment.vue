@@ -81,7 +81,7 @@
                                     </div>
                                 </button>
                             </router-link>
-                            <button type="button" class="rounded-1 btn btn-success btn-sm me-2" v-if="appoint.appnt_status != 'Pending Approval' && appoint.appnt_status != 'Payment' && appoint.appnt_status != 'Approved'" @click="approvedAppointment(appoint.id)">
+                            <button type="button" class="rounded-1 btn btn-success btn-sm me-2" v-if="appoint.appnt_status === 'Pending Approval'" @click="approvedAppointment(appoint.id)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <span>Approved Appointment</span>
                                 </div>
