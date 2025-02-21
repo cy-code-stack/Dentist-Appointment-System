@@ -3,12 +3,19 @@
         <div class="container">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <h5>Tooths Payments</h5>
-                <!-- Trigger Modal -->
-                <button type="button" class="rounded-1 btn btn-primary" @click="showModal=true">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <span>Add Services</span>
-                    </div>
-                </button>
+                <div class="d-flex gap-1">
+                    <!-- Trigger Modal -->
+                    <button type="button" class="rounded-1 btn btn-sm btn-success" @click="completeAppointment()">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <span>Complete</span>
+                        </div>
+                    </button>
+                    <button type="button" class="rounded-1 btn btn-sm btn-primary" @click="showModal=true">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <span>Add Services</span>
+                        </div>
+                    </button>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
@@ -134,20 +141,47 @@ export default {
                     console.log(error);
             });
         },
+        completeAppointment(){
+            Swal.fire({
+                title: "Completed?",
+                text: "You won't be able to revert this!",
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#14A44D",
+                cancelButtonColor: "#6c757d",
+                cancelButtonText: "Cancel",
+                confirmButtonText: "Yes, Complete it!",
+            }).then((data) => {
+                    if (data.isConfirmed) {
+                        axios.put("/user/staff/appointment/complete/" + this.getUrlId())
+                            .then(() => {
+                                Swal.fire("Completed!", "Appointment has been complete.", "success");
+                                this.$router.back();
+                            });
+                    }
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        text: "Something went wrong!",
+                    });
+                    console.log(error);
+            });
+        },
         handleSubmit() {
             this.newTooth.user_id = this.getUrlId();
             this.newTooth.service_id = this.selectedService.id;
             axios.post('/user/staff/payment/store', this.newTooth)
             .then(() => {
                 Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Record has been saved!",
-                showConfirmButton: false,
-                timer: 2000,
+                    position: "center",
+                    icon: "success",
+                    title: "Record has been saved!",
+                    showConfirmButton: false,
+                    timer: 2000,
                 }).then(() => {
-                this.clearForm();
-                this.displayPayment(this.getUrlId());
+                    this.clearForm();
+                    this.displayPayment(this.getUrlId());
                 });
             })
             .catch((error) => {

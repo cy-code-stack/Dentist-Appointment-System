@@ -63,9 +63,17 @@ class PaymentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function completeTransaction($id)
     {
-        //
+        $record = Appointment::where('patient_id', $id)->latest();
+        $record->update([
+            'appnt_status' => 'Completed',
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $record,
+        ], 200);
     }
 
     public function addPayment(Request $request){

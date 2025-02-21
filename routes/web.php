@@ -185,6 +185,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::post('/admin/patients/pay/item', [PaymentsController::class, 'addPayment']);
                 Route::get('/admin/patients/payment/history/show/{id}', [PaymentsController::class, 'getPaymentHistory']);
                 Route::get('/admin/patients/display/services', [PaymentsController::class, 'diplayServices']);
+                Route::put('/admin/patients/transaction/complete/{id}', [PaymentsController::class, 'completeTransaction']);
             //End of payments
 
             //Callendar Event Page Section
@@ -262,6 +263,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
                 Route::post('/user/staff/payment/store', [StaffPaymentController::class, 'store']);
                 Route::get('/user/staff/history/payment/{id}', [StaffPaymentController::class, 'getPaymentHistory']);
                 Route::post('/user/staff/add/payment/item', [StaffPaymentController::class, 'addPayment']);
+                Route::put('/user/staff/appointment/complete/{id}',[StaffPaymentController::class, 'completeTransaction']);
             //End of payment section
 
             //Start of Inquiry Section

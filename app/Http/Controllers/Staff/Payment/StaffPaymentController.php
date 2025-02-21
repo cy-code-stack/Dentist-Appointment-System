@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class StaffPaymentController extends Controller
 {
-    
     public function show($id)
     {
         $record = PaymentAppointment::where('user_id', $id)->with('appointment.appointServices', 'services')->get();
@@ -62,6 +61,18 @@ class StaffPaymentController extends Controller
                 'status' => 'Already Paid',
             ]);
         }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $record,
+        ], 200);
+    }
+
+    public function completeTransaction($id){
+        $record = Appointment::where('patient_id', $id)->first();
+        $record->update([
+            'appnt_status' => 'Completed',
+        ]);
 
         return response()->json([
             'status' => 'success',
