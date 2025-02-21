@@ -1,94 +1,53 @@
 <template>
-    <div class="modal fade" id="edit-user-modal">
-        <div class="modal-dialog modal-md">
+    <div class="modal fade" id="edit-user-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="modal-body overflow-auto">
                     <div class="container">
-                        <div class="d-flex justify-content-between w-100">
-                            <p class="fs-5 fw-medium">Edit Details</p>
-                            <button
-                                type="button"
-                                class="btn-close btn-black"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-semibold">Edit User Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div
-                            class="company-serv card w-100 mb-3 d-flex align-items-between justify-content-between p-3"
-                        >
-                            <p class="fw-medium mb-2">
-                                Edit the necessarily details
-                            </p>
-                            <div
-                                class="form-group mb-1 d-flex justify-content-between w-100"
-                            >
-                                <div class="me-1">
-                                    <label class="form-label">Firstname</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="user.firstname"
-                                    />
+                        <p class="text-muted">Update the necessary details below.</p>
+
+                        <div class="mb-3">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" v-model="user.firstname" placeholder="Enter first name" />
                                 </div>
-                                <div>
-                                    <label class="form-label">Lastname</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        v-model="user.lastname"
-                                    />
+                                <div class="col-md-6">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" v-model="user.lastname" placeholder="Enter last name" />
                                 </div>
-                            </div>
-                            <div class="form-group mb-1">
-                                <label class="form-label mb-1"
-                                    >Home Address
-                                </label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="user.home_address"
-                                />
-                            </div>
-                            <div class="form-group mb-1">
-                                <label class="form-label mb-1">Email</label>
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    v-model="user.email"
-                                />
-                            </div>
-                            <div class="form-group mb-1">
-                                <label class="form-label mb-1"
-                                    >Cellphone Number</label
-                                >
-                                <input
-                                    type="tel"
-                                    class="form-control"
-                                    v-model="user.phone_number"
-                                    aaa
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label mb-1">Role</label>
-                                <select
-                                    type="text"
-                                    class="form-control"
-                                    id="role"
-                                    v-model="user.role"
-                                >
-                                    <option value="Patient" selected>Patient</option>
-                                </select>
-                                <!-- <p class="mt-2 fs-6 fw-medium">Current Role: <span class="text-success">{{ user.role }}</span></p> -->
                             </div>
                         </div>
 
-                        <div class="active-btn">
-                            <button
-                                type="submit"
-                                class="btn btn-success text-white btn-md-1 w-100"
-                                @click="updateUser(user.id)"
-                            >
-                                Edit
+                        <div class="mb-3">
+                            <label class="form-label">Home Address</label>
+                            <input type="text" class="form-control" v-model="user.home_address" placeholder="Enter home address" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" v-model="user.email" placeholder="Enter email" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cellphone Number</label>
+                            <input type="tel" class="form-control" v-model="user.phone_number" placeholder="Enter phone number" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select class="form-select" v-model="user.role">
+                                <option value="Patient" selected>Patient</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-success text-white" @click="updateUser(user.id)">
+                                Save Changes
                             </button>
                         </div>
                     </div>
@@ -98,12 +57,14 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 @import "/resources/css/Patient/indexpatient.css";
 </style>
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
+
 export default {
     props: ["edited_select_user"],
     data() {
@@ -122,40 +83,35 @@ export default {
     methods: {
         updateUser(id) {
             axios
-                .put("/user/admin/patient/update/" + id, this.user)
-                .then((response) => {
-                    console.log(response);
+                .put(`/user/admin/patient/update/${id}`, this.user)
+                .then(() => {
                     $("#edit-user-modal").modal("hide");
                     Swal.fire({
                         position: "center",
                         icon: "success",
-                        title: "Patient has been updated!",
+                        title: "Patient details updated successfully!",
                         showConfirmButton: false,
                         timer: 2000,
                     });
                     this.$emit("updatedUsers");
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Update Failed",
+                        text: "Something went wrong. Please try again.",
+                    });
                 });
         },
     },
     watch: {
         edited_select_user: {
             handler(val) {
-                this.user.id = val.id;
-                this.user.firstname = val.firstname;
-                this.user.lastname = val.lastname;
-                this.user.home_address = val.home_address;
-                this.user.email = val.email;
-                this.user.phone_number = val.phone_number;
-                this.user.role = val.role;
+                this.user = { ...val };
             },
             deep: true,
         },
-    },
-    mounted() {
-        // console.log("Component loaded");
     },
 };
 </script>
