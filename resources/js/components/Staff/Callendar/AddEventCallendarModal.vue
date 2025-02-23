@@ -10,7 +10,7 @@
                     <form @submit.prevent="submitEvent">
                         <div class="form-check form-switch d-flex align-items-center mb-3">
                             <input class="form-check-input me-2" v-model="event.is_appointment" type="checkbox" role="switch">
-                            <label class="form-check-label">Allow Appointment</label>
+                            <label class="form-check-label">Block Appointment</label>
                         </div>
                         <div class="mb-3">
                             <label for="eventName" class="form-label">Event Name</label>

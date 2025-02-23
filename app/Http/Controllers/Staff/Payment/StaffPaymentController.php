@@ -69,7 +69,7 @@ class StaffPaymentController extends Controller
     }
 
     public function completeTransaction($id){
-        $record = Appointment::where('patient_id', $id)->first();
+        $record = Appointment::where('patient_id', $id)->latest();
         $record->update([
             'appnt_status' => 'Completed',
         ]);
