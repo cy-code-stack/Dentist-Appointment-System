@@ -2,7 +2,7 @@
     <div class="container-fluid py-3">
         <div class="container">
             <div class="d-flex align-items-center justify-content-between mb-3">
-                <h5>Patient History</h5>
+                <h5>Appointment History</h5>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
