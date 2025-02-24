@@ -167,7 +167,7 @@ export default {
             this.appointmentData.sched_date = info.dateStr;
             this.filterTimeAppointment();
             if (clickedDate < currentDate) {
-                Swal.fire("Prohibited!", "Cannot select past dates.", "error");
+                Swal.fire("Prohibited!", "Date is not Available", "error");
                 return;
             }
 
