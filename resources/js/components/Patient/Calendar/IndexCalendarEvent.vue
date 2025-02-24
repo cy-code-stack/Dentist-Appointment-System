@@ -167,7 +167,7 @@ export default {
             this.appointmentData.sched_date = info.dateStr;
             this.filterTimeAppointment();
             if (clickedDate < currentDate) {
-                Swal.fire("Dentist Prior Appointment", "Cannot select past dates.", "error");
+                Swal.fire("Prohibited!", "Cannot select past dates.", "error");
                 return;
             }
 
@@ -182,7 +182,7 @@ export default {
                 if (clickedEvent && clickedEvent.is_appointment === 1) {
                     Swal.fire(
                         "Warning!",
-                        "This date is already closed.",
+                        "Dentist Prior Appointment.",
                         "warning"
                     );
                     return;
