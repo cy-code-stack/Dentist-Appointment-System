@@ -55,14 +55,13 @@ class PrintController extends Controller
     }
 
     public function printAppointmentHistory($id)
-    {
-        $record = PatientInformationRecord::where('id', $id)->with('diagnostics', 'user')->first();
-        $diagnostics = $record->diagnostics->first();
+    {   
+        $record = PatientInformationRecord::with('diagnostics', 'user')->find($id);
+        $diagnostics = $record->diagnostics;
         $data = [
-            'information'   => $record,
+            'information'   =>  $record,
             'user'          =>  $record->user,
-            'teeths'        =>  $diagnostics->teeth,
-            'diseases'      =>  $diagnostics->teethDisease,
+            'diagnostics'   =>  $diagnostics,
         ];
 
         $pdf = Pdf::loadView('print_appointment', [...$data])->setPaper('a4', 'portrait');

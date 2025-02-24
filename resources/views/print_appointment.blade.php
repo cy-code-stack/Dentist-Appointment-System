@@ -188,135 +188,66 @@
         </tbody>
     </table>
 </div>
-<!-- <div class="page-break"></div> -->
+<div class="page-break"></div>
 <!-- Page 3 -->
-<!-- <div>
+<div>
     <p class="text-primary fw-bold mb-3" style="font-size: 20px; font-weight: bold;">Diagnostic</p>
 </div>
 <table class="table table-borderless">
     <tbody>
-        <tr>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/11.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/12.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/13.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/14.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/15.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/16.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/17.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/18.jpg') }}" alt="teeth" width="40">
-            </td>
-        </tr>
-        <tr>
-        <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/21.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/22-01.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/23.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/24.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/25-01.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/26.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/27.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/28.jpg') }}" alt="teeth" width="40">
-            </td>
-        </tr>
-        <tr>
-        <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/31-02.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/32.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/33.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/34-01.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/35.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/36-01.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/37.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/38.jpg') }}" alt="teeth" width="40">
-            </td>
-        </tr>
-        <tr>
-        <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/41-02.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/42.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/43-01.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/44.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/45-04.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/46.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult_disease/47-01.jpg') }}" alt="teeth" width="40">
-            </td>
-            <td style="padding: 1px; text-align: center;">
-                <img src="{{ asset('storage/adult/48.jpg') }}" alt="teeth" width="40">
-            </td>
-        </tr>
+        @foreach ($diagnostics->chunk(8) as $chunk) 
+            <tr>
+                @foreach ($chunk as $diagnostic)
+                    <td style="padding: 1px; text-align: center;">
+                        <div>{{ $diagnostic->teeth->teeth_number ?? '-' }}</div>
+                        @if ($diagnostic->disease_id !== null)
+                            <img src="{{ asset('storage/adult_disease/' . $diagnostic->teethDisease->disease_img_url) }}" alt="" width="40">
+                        @else
+                            <img src="{{ asset('storage/adult/' . $diagnostic->teeth->teeth_url) }}" alt="" width="40">
+                        @endif
+                    </td>
+                @endforeach
+            </tr>
+        @endforeach
     </tbody>
-</table> -->
-<!-- <table class="table table-bordered">
+</table>
+
+<table class="table table-bordered">
     <tbody>
         <tr>
-            <td style="padding: 3px;" width="30%">Teeth Number</td>
-            <td style="padding: 3px;" width="70%">Comments</td>
-
-            <td style="padding: 3px;" width="30%">Teeth Number</td>
-            <td style="padding: 3px;" width="70%">Comments</td>
+            <th style="padding: 3px;" width="30%">Teeth Number</th>
+            <th style="padding: 3px;" width="70%">Comments</th>
+            <th style="padding: 3px;" width="30%">Teeth Number</th>
+            <th style="padding: 3px;" width="70%">Comments</th>
         </tr>
-        <tr>
-            <td style="padding: 3px;" width="30%">Teeth Number</td>
-            <td style="padding: 3px;" width="70%">Comments</td>
 
-            <td style="padding: 3px;" width="30%">Teeth Number</td>
-            <td style="padding: 3px;" width="70%">Comments</td>
-        </tr>
+        @php
+            $upperTeeth = $diagnostics->filter(fn($d) => $d->teeth->teeth_number >= 11 && $d->teeth->teeth_number <= 28);
+            $lowerTeeth = $diagnostics->filter(fn($d) => $d->teeth->teeth_number >= 31 && $d->teeth->teeth_number <= 48);
+
+            $upperTeeth = array_values($upperTeeth->toArray());
+            $lowerTeeth = array_values($lowerTeeth->toArray());
+
+            $maxRows = max(count($upperTeeth), count($lowerTeeth));
+        @endphp
+
+        @for ($i = 0; $i < $maxRows; $i++)
+            <tr>
+                <td style="padding: 3px;">
+                    {{ $upperTeeth[$i]['teeth']['teeth_number'] ?? 'N/A' }}
+                </td>
+                <td style="padding: 3px;">
+                    {{ $upperTeeth[$i]['comments'] ?? '' }}
+                </td>
+
+                <td style="padding: 3px;">
+                    {{ $lowerTeeth[$i]['teeth']['teeth_number'] ?? 'N/A' }}
+                </td>
+                <td style="padding: 3px;">
+                    {{ $lowerTeeth[$i]['comments'] ?? '' }}
+                </td>
+            </tr>
+        @endfor
     </tbody>
-</table> -->
+</table>
 @endsection

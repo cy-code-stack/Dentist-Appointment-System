@@ -17,6 +17,6 @@ class PatientDiagnostic extends Model
         return $this->belongsTo(AdultTeeth::class, 'teeth_id');
     }
     public function teethDisease(){
-        return $this->belongsTo(AdultTeethDisease::class, 'disease_id');
+        return $this->belongsTo(AdultTeethDisease::class, 'disease_id', 'id');
     }
 }

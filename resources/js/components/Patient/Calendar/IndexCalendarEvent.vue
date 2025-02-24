@@ -167,7 +167,7 @@ export default {
             this.appointmentData.sched_date = info.dateStr;
             this.filterTimeAppointment();
             if (clickedDate < currentDate) {
-                Swal.fire("Prohibited!", "Cannot select past dates.", "error");
+                Swal.fire("Dentist Prior Appointment", "Cannot select past dates.", "error");
                 return;
             }
 
@@ -245,12 +245,18 @@ export default {
         async displayAppointment() {
             try {
                 const response = await axios.get("/user/patient/display/appointment");
-                return response.data.map((appointment) => ({
-                    title: `Appointment for ${appointment.appoint_services?.services_name}`,
-                    start: appointment.sched_date,
-                    end: appointment.sched_date,
-                    color: "#14A44D",
-                }));
+                const currentDate = new Date().setHours(0, 0, 0, 0);
+
+                return response.data.map((appointment) => {
+                    const appointmentDate = new Date(appointment.sched_date).setHours(0, 0, 0, 0); 
+
+                    return {
+                        title: `Appointment for ${appointment.appoint_services?.services_name}`,
+                        start: appointment.sched_date,
+                        end: appointment.sched_date,
+                        color: appointmentDate < currentDate ? "#6c757d" : "#14A44D", 
+                    };
+                });
             } catch (error) {
                 console.error("Error fetching user appointments:", error);
                 return [];
