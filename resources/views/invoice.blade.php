@@ -89,12 +89,16 @@
         <div class="invoice-details">
             <div class="left">
                 <p><label>Bill to</label></p>
-                <p><label>Name:</label> {{$patient->firstname}} {{$patient->middle_initial}}. {{$patient->lastname}}</p>
+                <p><label>Name:</label> {{ $patient->firstname }} {{$patient->middle_initial}}. {{$patient->lastname}}</p>
+                <p><label>Email:</label> {{ $patient->email }}</p>
                 <p><label>Service Rendered:</label> {{$services->services_name}}</p>
                 <p><label>Address:</label> {{$patient->home_address}}</p>
                 <p><label>Phone:</label> {{'0' . $patient->phone_number}}</p>
             </div>
             <div class="right">
+                <p><label>Marital Status:</label> {{ $patient->occupation }}</p>
+                <p><label>Occupation:</label> {{ $patient->marital_status }}</p>
+                <p><label>Gender:</label> {{ $patient->sex }}</p>
                 <p><label>Invoice No:</label> {{$invoiceId}}</p>
                 <p><label>Date:</label> {{ now()->format('F j, Y') }}</p>
             </div>

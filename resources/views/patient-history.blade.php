@@ -46,12 +46,23 @@
             letter-spacing: 1px;  /* Adjusted letter spacing */
             margin: 0;
         }
-
         .invoice-details {
-            display: flex;
-            justify-content: space-between;
-            margin: 16px 0;  /* Smaller margin */
-            flex-wrap: wrap;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .invoice-details .left, .invoice-details .right {
+            width: 48%;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .invoice-details label {
+            font-weight: bold;
+        }
+
+        .invoice-details p {
+            margin: 3px 0;
         }
 
         .bill-to, .invoice-info {
@@ -122,17 +133,23 @@
                 <p class="text-center fs-3 fw-bold mb-0">Dental Patient History</p>
             </div>
         </div>
+
          <!-- Invoice Details Section -->
-        <div class="invoice-details">
-            <div class="bill-to">
-                <div class="info-group">
-                    <label>Name:</label>
-                    <span>{{$patient->firstname}} {{$patient->middle_initial}} {{$patient->lastname}}</span>
-                </div>
+         <div class="invoice-details">
+            <div class="left">
+                <p><label>Bill to</label></p>
+                <p><label>Name:</label> {{ $patient->firstname }} {{$patient->middle_initial}}. {{$patient->lastname}}</p>
+                <p><label>Email:</label> {{ $patient->email }}</p>
+                <p><label>Address:</label> {{$patient->home_address}}</p>
+                <p><label>Phone:</label> {{'0' . $patient->phone_number}}</p>
+            </div>
+            <div class="right">
+                <p><label>Marital Status:</label> {{ $patient->occupation }}</p>
+                <p><label>Occupation:</label> {{ $patient->marital_status }}</p>
+                <p><label>Gender:</label> {{ $patient->sex }}</p>
+                <p><label>Date:</label> {{ now()->format('F j, Y') }}</p>
             </div>
         </div>
-
-            <h3>Payment History</h3>
             <div class="container-lg">
                 <table class="table">
                     <thead>

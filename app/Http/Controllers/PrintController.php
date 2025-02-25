@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\PatientInformationRecord;
 use App\Models\PaymentAppointment;
+use App\Models\Services;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -77,4 +79,92 @@ class PrintController extends Controller
         file_put_contents($path, $pdf->output());
         return response()->json(['path' => url('print_appointment/' . $filename)]);
     }
+
+
+
+    ## Dashboard Admin
+
+    public function printPatientCount()
+    {
+        $records = DB::table('appointment as ap')
+            ->select(DB::raw('MONTH(ap.created_at) as month'), DB::raw('COUNT(*) as count'))
+            ->groupBy('month')
+            ->get();
+
+        $data = array_fill(1, 12, 0);
+        foreach ($records as $record) {
+            $data[intval($record->month)] = $record->count;
+        }
+
+        return $data;
+    }
+
+    public function printAppointmentPercentageEachMonth()
+    {
+        $percentages = DB::table('appointment as ap')
+            ->select(
+                DB::raw('MONTH(ap.sched_date) as month'),
+                DB::raw('COUNT(ap.id) as total_appointments'),
+                DB::raw('ROUND((COUNT(ap.id) / (SELECT COUNT(*) FROM appointment) * 100), 2) as percentage')
+            )
+            ->groupBy(DB::raw('MONTH(ap.sched_date)'))
+            ->get();
+
+        $data = array_fill(1, 12, 0);
+        foreach ($percentages as $percentage) {
+            $data[intval($percentage->month)] = $percentage->percentage;
+        }
+        
+        return $data;
+    }
+
+    public function printTopServicesEachAppointment()
+    {
+        return Services::select('services.id', 'services.services_name', DB::raw('COUNT(ap.services_id) as services_count'))
+            ->join('appointment as ap', 'services.id', '=', 'ap.services_id')
+            ->groupBy('services.id', 'services.services_name')
+            ->orderByDesc('services_count')
+            ->limit(5)
+            ->get();
+    }
+
+    public function printSales()
+    {
+        $records = DB::table('payment_appointments as pa')
+            ->select(
+                DB::raw('MONTH(pa.created_at) as month'),
+                DB::raw('SUM(pa.fee) as total_fee')
+            )
+            ->groupBy('month')
+            ->get();
+        
+        $monthlyFees = array_fill(1, 12, 0);
+        foreach ($records as $record) {
+            $monthlyFees[(int)$record->month] = $record->total_fee;
+        }
+        
+        return $monthlyFees;
+    }
+
+    public function printConsolidatedReport()
+    {
+        $data = [
+            'patientCount' => $this->printPatientCount(),
+            'appointmentPercentage' => $this->printAppointmentPercentageEachMonth(),
+            'topServices' => $this->printTopServicesEachAppointment(),
+            'salesData' => $this->printSales(),
+        ];
+
+        $pdf = Pdf::loadView('print_report', $data)->setPaper('a4', 'portrait');
+        $filename = 'consolidated_report_' . Str::random(10) . '.pdf';
+        $path = public_path('print_reports/' . $filename);
+
+        if (!file_exists(public_path('print_reports'))) {
+            mkdir(public_path('print_reports'), 0777, true);
+        }
+
+        file_put_contents($path, $pdf->output());
+        return response()->json(['path' => url('print_reports/' . $filename)]);
+    }
+
 }

@@ -61,7 +61,7 @@ class AdminDashboardController extends Controller
 
     public function getTopServicesEachAppointment()
     {
-        return \App\Models\Services::select('services.id', 'services.services_name', DB::raw('COUNT(ap.services_id) as services_count'))
+        return Services::select('services.id', 'services.services_name', DB::raw('COUNT(ap.services_id) as services_count'))
                     ->join('appointment as ap', 'services.id', '=', 'ap.services_id')
                     ->groupBy('services.id', 'services.services_name')
                     ->orderByDesc('services_count')

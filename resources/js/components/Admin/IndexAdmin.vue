@@ -62,7 +62,7 @@
         <div class="d-flex justify-content-center">
             <div class="col col-lg-12">
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="rounded-1 btn btn-success text-white">
+                    <button type="button" class="rounded-1 btn btn-success text-white" @click="printReport()">
                         <div class="d-flex justify-content-center align-items-center">
                             <i class="fa-solid fa-print me-2"></i>
                             <span>Print</span>
@@ -262,7 +262,7 @@ export default {
                     type: "bar",
                     data: {
                         labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                        datasets: [{ label: "Patient Catered", data: Object.values(response.data), backgroundColor: "rgba(13, 110, 253)" }],
+                        datasets: [{ label: "Patient Catered", data: Object.values(response.data) + 5, backgroundColor: "rgba(13, 110, 253)" }],
                     },
                     options: { responsive: true, maintainAspectRatio: true },
                 });
@@ -273,16 +273,44 @@ export default {
             axios.get('/user/admin/sales/count', {
                 params: { start_date: this.startDate, end_date: this.endDate },
             }).then((response) => {
+                const salesData = Object.values(response.data);
+                const maxValue = Math.max(...salesData) * 1.5; // Increase max value by 50%
+
                 this.lineChart = new Chart(ctx, {
                     type: "line",
                     data: {
                         labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                        datasets: [{ label: "Sales", data: Object.values(response.data), borderColor: "rgba(54, 162, 235)" }],
+                        datasets: [{
+                            label: "Sales",
+                            data: salesData,
+                            borderColor: "rgba(54, 162, 235)",
+                            fill: false,
+                        }],
                     },
-                    options: { responsive: true },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    suggestedMax: maxValue // Adjusted Y-axis max
+                                }
+                            }
+                        }
+                    },
                 });
             }).catch(error => console.error(error));
         },
+        printReport() {
+            axios.get(`/print/consolidated-report`)
+                .then(response => {
+                    const printPath = response.data.path;
+                    window.open(printPath, '_blank');
+                })
+                .catch(error => {
+                    console.error("Error printing appointment:", error.response?.data?.message || error.message);
+                });
+        }
     },
     mounted() {
         this.updateDateRange();
