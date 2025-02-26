@@ -48,7 +48,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
 import Swal from "sweetalert2";
-// import Echo from 'laravel-echo';
 
 export default {
     components: {
@@ -62,6 +61,17 @@ export default {
                 aspectRatio: 1.5,
                 height: "auto",
                 dateClick: this.handleDateClick,
+                events: [], 
+                dayCellDidMount: (info) => {
+                    console.log(info);
+                    
+                    const today = new Date().setHours(0, 0, 0, 0);
+                    const cellDate = new Date(info.date).setHours(0, 0, 0, 0); 
+
+                    if (cellDate < today) {
+                        info.el.classList.add("past-date"); 
+                    }
+                },
             },
             appointmentData: {
                 id: "",
@@ -178,7 +188,6 @@ export default {
                     const eventEndDate = new Date(event.end_date);
                     return clickedDate >= eventStartDate && clickedDate <= eventEndDate;
                 });
-
                 if (clickedEvent && clickedEvent.is_appointment === 1) {
                     Swal.fire(
                         "Warning!",
@@ -194,7 +203,6 @@ export default {
                 console.error("Error fetching events:", error);
             }
         },
-
         async bookAppointment() {
             if (!this.selectedService) {
                 Swal.fire("Error", "Please select a service.", "error");
@@ -249,7 +257,6 @@ export default {
 
                 return response.data.map((appointment) => {
                     const appointmentDate = new Date(appointment.sched_date).setHours(0, 0, 0, 0); 
-
                     return {
                         title: `Appointment for ${appointment.appoint_services?.services_name}`,
                         start: appointment.sched_date,
@@ -264,19 +271,26 @@ export default {
         },
         async displayEvent() {
             try {
-            const response = await axios.get("/user/patient/display/event");
-            return response.data.filter(event => event.slot <= 0).map((event) => ({
-                    id: event.id,
-                    title: event.event_name,
-                    start: event.start_date,
-                    end: event.end_date,
-                    color: event.is_appointment === 1 ? "#FFC107" : "#14A44D",
-                }));
+                const response = await axios.get("/user/patient/display/event");
+                const currentDate = new Date().setHours(0, 0, 0, 0);
+
+                return response.data.map((event) => {
+                    const eventDate = new Date(event.start_date).setHours(0, 0, 0, 0); 
+
+                    return {
+                        id: event.id,
+                        title: event.event_name,
+                        start: event.start_date,
+                        end: event.end_date,
+                        color: eventDate < currentDate ? "#D3D3D3" : (event.is_appointment === 1 ? "#FAA0A0" : "#14A44D"), 
+                    };
+                });
             } catch (error) {
-            console.error("Error fetching events:", error);
-            return [];
+                console.error("Error fetching events:", error);
+                return [];
             }
         },
+
         async loadAllEvents() {
             try {
                 const appointmentEvents = await this.displayAppointment();
@@ -299,30 +313,31 @@ export default {
     },
     mounted() {
         this.displayServices();
-        this.loadAllEvents();
+        this.displayEvent().then(() => {
+            this.loadAllEvents();
+        });
     },
 };
 </script>
 
 
-
-
-
-
 <style scoped>
-.calendar-container {
-    width: 100%;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.fc {
-    width: 100% !important;
-}
-
-@media (max-width: 768px) {
     .calendar-container {
-        padding: 0 1rem;
+        width: 100%;
+        width: 100%;
+        margin: 0 auto;
     }
-}
+    .past-date {
+        background-color: #121111 !important;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+    .fc {
+        width: 100% !important;
+    }
+    @media (max-width: 768px) {
+        .calendar-container {
+            padding: 0 1rem;
+        }
+    }
 </style>
