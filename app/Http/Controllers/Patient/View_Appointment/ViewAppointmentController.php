@@ -14,7 +14,7 @@ class ViewAppointmentController extends Controller
         $data = Appointment::where('patient_id', $userId)
                             ->where('appnt_status', '!=', 'Declined')
                             ->with('appointServices', 'patient')
-                            ->orderBy('id','DESC')
+                            ->orderBy('created_at', 'desc')
                             ->get();
         return $data;
     }

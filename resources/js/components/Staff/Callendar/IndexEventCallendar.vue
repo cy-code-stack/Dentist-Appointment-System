@@ -1,8 +1,6 @@
 <template>
     <div class="container-fluid">
-        <div class="d-flex justify-content-center align-items-center pb-3">
-            <FullCalendar :options="calendarOptions" class="w-100 h-100"/>
-        </div>
+        <FullCalendar :options="calendarOptions"/>
         <button
             class="btn btn-primary btn-lg rounded-circle position-fixed"
             style="min-width: 4.5rem !important; min-height: 4.5rem !important; bottom: 40px; right: 30px; z-index: 999;"
@@ -33,6 +31,7 @@ export default {
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: "dayGridMonth",
+                height: 650,
                 events: [],
                 eventClick: this.handleEventClick,
             },

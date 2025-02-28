@@ -88,7 +88,6 @@
         <!-- Invoice Details -->
         <div class="invoice-details">
             <div class="left">
-                <p><label>Bill to</label></p>
                 <p><label>Name:</label> {{ $patient->firstname }} {{$patient->middle_initial}}. {{$patient->lastname}}</p>
                 <p><label>Email:</label> {{ $patient->email }}</p>
                 <p><label>Service Rendered:</label> {{$services->services_name}}</p>

@@ -99,7 +99,7 @@ class ManageUserController extends Controller
         $search = $request->input('search', '');
 
         $query = User::whereNotIn("role", ['Dentist', 'Assistant'])
-                        ->where('status', '<>', 'archive');
+                        ->where('status', '<>', 'archive')->orderBy('created_at', 'desc');
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {

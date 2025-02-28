@@ -94,9 +94,11 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/user/staff/patient" class="nav-link">
-                                <i class="nav-icon fa-solid fa-people-roof"></i>
-                                <p>Manage Patient</p>
+                            <router-link to="/user/staff/callendar/event" class="nav-link">
+                                <i class="nav-icon fa-solid fa-calendar-check"></i>
+                                <p>
+                                    Calendar View
+                                </p>
                             </router-link>
                         </li>
                         <li class="nav-item">
@@ -108,17 +110,9 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/user/staff/inquiry" class="nav-link">
-                                <i class="nav-icon fa-solid fa-person-circle-question"></i>
-                                <p>
-                                    Patient Inquiries
-                                </p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/user/staff/record" class="nav-link">
-                                <i class="nav-icon fa-solid fa-book-medical"></i>
-                                <p>Appointment History</p>
+                            <router-link to="/user/staff/patient" class="nav-link">
+                                <i class="nav-icon fa-solid fa-people-roof"></i>
+                                <p>Manage Patient</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
@@ -128,18 +122,16 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/user/staff/callendar/event" class="nav-link">
-                                <i class="nav-icon fa-solid fa-calendar-check"></i>
-                                <p>
-                                    Calendar View
-                                </p>
+                            <router-link to="/user/staff/record" class="nav-link">
+                                <i class="nav-icon fa-solid fa-book-medical"></i>
+                                <p>Appointment History</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/user/staff/archieve" class="nav-link">
-                                <i class="nav-icon fa-solid fa-box-archive"></i>
+                            <router-link to="/user/staff/inquiry" class="nav-link">
+                                <i class="nav-icon fa-solid fa-person-circle-question"></i>
                                 <p>
-                                    Archive
+                                    Patient Inquiries
                                 </p>
                             </router-link>
                         </li>
@@ -148,6 +140,14 @@
                                 <i class="nav-icon fa-solid fa-id-badge"></i>
                                 <p>
                                     Profile
+                                </p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/user/staff/archieve" class="nav-link">
+                                <i class="nav-icon fa-solid fa-box-archive"></i>
+                                <p>
+                                    Archive
                                 </p>
                             </router-link>
                         </li>

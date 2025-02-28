@@ -1,9 +1,7 @@
 <template>
     <div class="container-fluid">
-        <h1 class="fw-bold mt-3">Book your appointment</h1>
-        <div class="calendar-container d-flex justify-content-center align-items-center p-1">
-            <FullCalendar :options="calendarOptions" />
-        </div>
+        <h2 class="fw-bold mb-1">Book your appointment</h2>
+        <FullCalendar :options="calendarOptions"/>
         <!-- Modal -->
         <div class="modal fade" id="dateModal" tabindex="-1" aria-labelledby="dateModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -59,6 +57,7 @@ export default {
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: "dayGridMonth",
                 aspectRatio: 1.5,
+                height: '100%',
                 height: "auto",
                 dateClick: this.handleDateClick,
                 events: [], 
