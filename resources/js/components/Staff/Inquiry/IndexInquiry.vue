@@ -1,67 +1,66 @@
 <template>
-    <div class="container-fluid">
-        <p class="fs-5 fw-semibold mb-0 p-2">Patient Inquiries</p>
+    <div class="container-fluid p-4">
+        <p class="fs-4 fw-semibold text-primary mb-3">Patient Inquiries</p>
 
-        <div class="container mt-3">
-            <table class="table text-center mb-1">
-                <thead>
-                    <tr>
-                        <th scope="col">Lastname</th>
-                        <th scope="col">Firstname</th>
-                        <th scope="col">Facebook Link</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                    <tr v-for="items in listofInquiry" :key="items.id">
-                        <td><span class="fs-6 text-break">{{ items.lname }}</span></td>
-                        <td><span class="fs-6 text-break">{{ items.fname }}</span></td>
-                        <td><span class="fs-6 text-break"><a class="text-decoration-none text-black" :href="items.fblink"><small>{{ items.fblink }}</small></a></span></td>
-                        <td>
-                            <div class="text-center d-flex justify-content-center">
-                                <button type="button" class="me-1 rounded-1 btn btn-success btn-sm text-white" @click="ViewInquiryModal(items)">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <i class="fa-solid fa-eye me-2"></i>
-                                        <span>View</span>
+        <div class="card shadow-sm">
+            <div class="card-header bg-white border-bottom">
+                <p class="fs-5 text-secondary mb-0">List of Patient Inquiries</p>
+            </div>
+            <div class="card-body p-3">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped text-center align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Lastname</th>
+                                <th>Firstname</th>
+                                <th>Facebook Link</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="items in listofInquiry" :key="items.id">
+                                <td class="fs-6 text-break">{{ items.lname }}</td>
+                                <td class="fs-6 text-break">{{ items.fname }}</td>
+                                <td class="fs-6 text-break text-truncate">
+                                    <a :href="items.fblink" class="text-decoration-none text-primary" target="_blank">
+                                        <i class="fa-brands fa-facebook me-1"></i> Facebook Profile
+                                    </a>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button type="button" class="btn btn-success btn-sm d-flex align-items-center gap-2" 
+                                            @click="ViewInquiryModal(items)">
+                                            <i class="fa-solid fa-eye"></i> View
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-2" 
+                                            @click="alreadyCatered(items.id)">
+                                            <i class="fa-solid fa-check"></i> Catered
+                                        </button>
                                     </div>
-                                </button>
-                                <button type="button" class="me-1 rounded-1 btn btn-primary btn-sm text-white" @click="alreadyCatered(items.id)">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <i class="fa-solid fa-check me-2"></i>
-                                        <span>Catered in Facebook</span>
-                                    </div>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="container-fluid d-flex justify-content-end align-items-center">
-                <nav>
-                    <ul class="pagination">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav class="d-flex justify-content-end mt-3">
+                    <ul class="pagination gap-2">
                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                            <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)">&laquo;</a>
                         </li>
-                        <li class="page-item" 
-                            v-for="page in totalPages" 
-                            :key="page" 
-                            :class="{ active: currentPage === page }">
+                        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
                             <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                         </li>
                         <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                            <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">&raquo;</a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </div>
-        <view-inquiry-modal :selected_inq = selected_inq @updatedInquiry="displayInquiry"></view-inquiry-modal>
+        <view-inquiry-modal :selected_inq="selected_inq" @updatedInquiry="displayInquiry"></view-inquiry-modal>
     </div>
 </template>
+
 
 
 

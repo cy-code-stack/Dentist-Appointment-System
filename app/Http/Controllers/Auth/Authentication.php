@@ -143,7 +143,7 @@ class Authentication extends Controller
                 Alert::error('Login Failed', 'Your account is not verified. Please enter the otp send to your email.')->persistent(true);
                 return redirect(route('verify'));
             }
-            if ($user->status == 'archive') {
+            if ($user->status == 'banned') {
                 Alert::error('Login Failed', 'Your account is already banned!')->persistent(true);
                 return back();
             }

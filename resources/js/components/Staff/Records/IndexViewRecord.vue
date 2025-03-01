@@ -2,38 +2,48 @@
     <div class="container-fluid py-3">
         <div class="container">
             <div class="d-flex align-items-center justify-content-between mb-3">
-                <h5>Appointment History</h5>
+                <h5 class="fw-bold">Appointment History</h5>
             </div>
+
             <div class="table-responsive">
-                <table class="table table-striped table-hover table-bordered">
-                    <thead>
-                        <th>Appointment No.</th>
-                        <th>Name</th>
-                        <th>Services</th>
-                        <th>Schedule Date</th>
-                        <th>Date Visit</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                <table class="table table-striped table-hover table-bordered text-center">
+                    <thead class="table table-info text-white">
+                        <tr>
+                            <th>Appointment No.</th>
+                            <th>Name</th>
+                            <th>Services</th>
+                            <th>Schedule Date</th>
+                            <th>Date Visit</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in patients" :key="index">
                             <td>{{ item.id }}</td>
                             <td>
-                                {{ item.patient?.firstname }}
-                                {{ item.patient?.middle_initial }}
-                                {{ item.patient?.lastname }}
+                                {{ item.patient?.firstname }} {{ item.patient?.middle_initial }} {{ item.patient?.lastname }}
                             </td>
                             <td>{{ item.appoint_services?.services_name }}</td>
                             <td>{{ formatWordyDate(item.sched_date) }}</td>
-                            <td>{{ formatWordyDate(item.visit_date) }}</td>
-                            <td>{{ item.appnt_status }}</td>
+                            <td>{{ formatWordyDate(item.sched_date) }}</td>
                             <td>
-                                <div class="text-center d-flex align-items-center">
+                                <span
+                                    class="badge"
+                                    :class="{
+                                        'bg-success': item.appnt_status === 'Completed',
+                                        'bg-warning': item.appnt_status === 'Pending',
+                                        'bg-danger': item.appnt_status === 'Cancelled',
+                                    }"
+                                >
+                                    {{ item.appnt_status }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center">
                                     <router-link :to="`/user/staff/record/view/${item.patient?.id}`">
-                                        <button type="button" class="rounded-1 btn btn-primary btn-sm">
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <span>View Form</span>
-                                            </div>
+                                        <button type="button" class="btn btn-primary btn-sm mx-1">
+                                            <i class="fas fa-eye"></i> View Form
                                         </button>
                                     </router-link>
                                 </div>
@@ -41,20 +51,26 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="container-fluid d-flex justify-content-end align-items-center">
+
+                <div class="d-flex justify-content-end align-items-center mt-3">
                     <nav>
-                        <ul class="pagination">
+                        <ul class="pagination mb-0">
                             <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                <a class="page-link" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
+                                <a class="page-link" @click.prevent="changePage(currentPage - 1)">
+                                    <i class="fas fa-angle-left"></i>
                                 </a>
                             </li>
-                            <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
-                                <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
+                            <li
+                                class="page-item"
+                                v-for="page in totalPages"
+                                :key="page"
+                                :class="{ active: currentPage === page }"
+                            >
+                                <a class="page-link" @click.prevent="changePage(page)">{{ page }}</a>
                             </li>
                             <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                <a class="page-link" @click.prevent="changePage(currentPage + 1)" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
+                                <a class="page-link" @click.prevent="changePage(currentPage + 1)">
+                                    <i class="fas fa-angle-right"></i>
                                 </a>
                             </li>
                         </ul>
@@ -81,10 +97,7 @@ export default {
         displayPatients(page = 1) {
             axios
                 .get("/user/staff/display", {
-                    params: {
-                        page: page,
-                        limit: this.perPage,
-                    },
+                    params: { page, limit: this.perPage },
                 })
                 .then((response) => {
                     this.patients = response.data.data;
@@ -111,3 +124,33 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.table th,
+.table td {
+    vertical-align: middle;
+    padding: 12px;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 12px;
+}
+
+.page-link {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.page-item.disabled .page-link {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+</style>

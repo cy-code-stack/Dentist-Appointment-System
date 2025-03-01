@@ -126,7 +126,7 @@
         </table>
 
         <!-- Payment History -->
-        <div class="payment-history">
+        <div class="payment-history" style="margin-bottom: 7rem;">
             <h3>Payment History</h3>
             <table>
                 <thead>
@@ -153,6 +153,14 @@
                 </tbody>
             </table>
         </div>
+        <table class="table table-borderless" style="border: none;">
+            <tbody>
+            <tr class="text-center">
+            <td style="border: none;"><p style="margin-bottom: 3px !important;"><u>{{ Auth::user()->firstname }} {{ Auth::user()->middle_initial }}. {{ Auth::user()->lastname }}</u></p><br>Prepared by</td>
+            <td style="border: none;"><p style="margin-bottom: 3px !important;"><u>Dr. Rene Grace S. Ocon</u></p><br>Approved by</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

@@ -99,7 +99,7 @@ class ManageUserController extends Controller
         $search = $request->input('search', '');
 
         $query = User::whereNotIn("role", ['Dentist', 'Assistant'])
-                        ->where('status', '<>', 'archive')->orderBy('created_at', 'desc');
+                        ->whereNotIn('status', ['archive', 'banned'])->orderBy('created_at', 'desc');
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -180,11 +180,11 @@ class ManageUserController extends Controller
     public function archieveUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $request['status']= 'archive';
+        $request['status']= 'banned';
         $user->update($request->all());
         return response()->json([
             'status' => 'success',
-            'message' => 'User archive successfully',
+            'message' => 'User banned successfully',
         ], 200);
     }
 }

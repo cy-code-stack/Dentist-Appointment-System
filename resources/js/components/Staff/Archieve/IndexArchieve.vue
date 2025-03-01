@@ -1,59 +1,59 @@
 <template>
-    <div class="container-fluid">
-        <p class="fs-5 fw-semibold mb-0 p-2">Archive Page</p>
+    <div class="container-fluid p-4">
+        <p class="fs-4 fw-semibold text-primary mb-3">Archive Page</p>
 
-        <div class="container mt-4">
-            <p class="fs-6 text-black-50 mb-1">List of Banned Patients</p>
-            <table class="table table-hover text-center mb-1">
-                <thead>
-                    <tr>
-                        <th scope="col">Patient No.</th>
-                        <th scope="col">Firstname</th>
-                        <th scope="col">Lastname</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="items in listOfArchieveUser" :key="items.id">
-                        <td>{{ items.id }}</td>
-                        <td>{{ items.firstname }}</td>
-                        <td>{{ items.lastname }}</td>
-                        <td>{{ items.home_address }}</td>
-                        <td>{{ items.email }}</td>
-                        <td><span class="text-danger fw-medium">{{ items.status }}</span></td>
-                        <td>
-                            <div class="text-center d-flex justify-content-center">
-                                <button type="button" class="rounded-1 btn btn-success btn-sm" @click="restoreArchieve(items.id)">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <i class="fa-solid fa-trash-can-arrow-up me-2"></i>
-                                        <span>Restore</span>
-                                    </div>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="container-fluid d-flex justify-content-end align-items-center">
-                <nav>
-                    <ul class="pagination">
+        <!-- Banned Patients Table -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white border-bottom">
+                <p class="fs-5 text-secondary mb-0">List of Banned Patients</p>
+            </div>
+            <div class="card-body p-3">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Patient No.</th>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="items in listOfArchieveUser" :key="items.id">
+                                <td>{{ items.id }}</td>
+                                <td>{{ items.firstname }}</td>
+                                <td>{{ items.lastname }}</td>
+                                <td>{{ items.home_address }}</td>
+                                <td>{{ items.email }}</td>
+                                <td><span class="badge bg-danger">{{ items.status }}</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm d-flex align-items-center gap-2"
+                                        @click="restoreArchieve(items.id)">
+                                        <i class="fa-solid fa-trash-can-arrow-up"></i>
+                                        Restore
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav class="d-flex justify-content-end mt-3">
+                    <ul class="pagination gap-2">
                         <li class="page-item" :class="{ disabled: archiveCurrentPage === 1 }">
-                            <a class="page-link" href="#" @click.prevent="changePage('Archive', archiveCurrentPage - 1)" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
+                            <a class="page-link" href="#" @click.prevent="changePage('Archive', archiveCurrentPage - 1)">
+                                &laquo;
                             </a>
                         </li>
-                        <li class="page-item" 
-                            v-for="page in archiveTotalPages" 
-                            :key="page" 
+                        <li class="page-item" v-for="page in archiveTotalPages" :key="page"
                             :class="{ active: archiveCurrentPage === page }">
                             <a class="page-link" href="#" @click.prevent="changePage('Archive', page)">{{ page }}</a>
                         </li>
                         <li class="page-item" :class="{ disabled: archiveCurrentPage === archiveTotalPages }">
-                            <a class="page-link" href="#" @click.prevent="changePage('Archive', archiveCurrentPage + 1)" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
+                            <a class="page-link" href="#" @click.prevent="changePage('Archive', archiveCurrentPage + 1)">
+                                &raquo;
                             </a>
                         </li>
                     </ul>
@@ -61,47 +61,50 @@
             </div>
         </div>
 
-        <div class="container mt-2">
-            <p class="fs-6 text-black-50 mb-1">List of Declined Appointments</p>
-            <table class="table table-hover text-center mb-1">
-                <thead>
-                    <tr>
-                        <th scope="col">Appointment No.</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Appointment Schedule</th>
-                        <th scope="col">Services</th>
-                        <th scope="col">Reason</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="items in listofDeclinedAppoint" :key="items.id">
-                        <td>{{ items.id }}</td>
-                        <td>{{ items.patient?.firstname }} {{ items.patient?.lastname }}</td>
-                        <td>{{ items.sched_date }} {{ items.sched_time }}</td>
-                        <td>{{ items.appoint_services?.services_name }}</td>
-                        <td class="text-break">{{ items.abort_reason }}</td>
-                        <td><span class="text-danger fw-medium">{{ items.appnt_status }}</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="container-fluid d-flex justify-content-end align-items-center">
-                <nav>
-                    <ul class="pagination">
+        <!-- Declined Appointments Table -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-white border-bottom">
+                <p class="fs-5 text-secondary mb-0">List of Declined Appointments</p>
+            </div>
+            <div class="card-body p-3">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Appointment No.</th>
+                                <th>Name</th>
+                                <th>Appointment Schedule</th>
+                                <th>Services</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="items in listofDeclinedAppoint" :key="items.id">
+                                <td>{{ items.id }}</td>
+                                <td>{{ items.patient?.firstname }} {{ items.patient?.lastname }}</td>
+                                <td>{{ items.sched_date }} {{ items.sched_time }}</td>
+                                <td>{{ items.appoint_services?.services_name }}</td>
+                                <td class="text-break">{{ items.abort_reason }}</td>
+                                <td><span class="badge bg-danger">{{ items.appnt_status }}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav class="d-flex justify-content-end mt-3">
+                    <ul class="pagination gap-2">
                         <li class="page-item" :class="{ disabled: declinedCurrentPage === 1 }">
-                            <a class="page-link" href="#" @click.prevent="changePage('Declined', declinedCurrentPage - 1)" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
+                            <a class="page-link" href="#" @click.prevent="changePage('Declined', declinedCurrentPage - 1)">
+                                &laquo;
                             </a>
                         </li>
-                        <li class="page-item" 
-                            v-for="page in declinedTotalPages" 
-                            :key="page" 
+                        <li class="page-item" v-for="page in declinedTotalPages" :key="page"
                             :class="{ active: declinedCurrentPage === page }">
                             <a class="page-link" href="#" @click.prevent="changePage('Declined', page)">{{ page }}</a>
                         </li>
                         <li class="page-item" :class="{ disabled: declinedCurrentPage === declinedTotalPages }">
-                            <a class="page-link" href="#" @click.prevent="changePage('Declined', declinedCurrentPage + 1)" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
+                            <a class="page-link" href="#" @click.prevent="changePage('Declined', declinedCurrentPage + 1)">
+                                &raquo;
                             </a>
                         </li>
                     </ul>
@@ -110,6 +113,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
 import axios from "axios";

@@ -99,7 +99,7 @@ class ManagePatientController extends Controller
         $search = $request->input('search', '');
 
         $query = User::whereNotIn("role", ['Dentist', 'Assistant'])
-                        ->where('status', '<>', 'archive');
+                        ->whereNotIn('status', ['archive', 'banned']);
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -180,7 +180,7 @@ class ManagePatientController extends Controller
     public function archieveUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $request['status']= 'archive';
+        $request['status']= 'banned';
         $user->update($request->all());
         return response()->json([
             'status' => 'success',
