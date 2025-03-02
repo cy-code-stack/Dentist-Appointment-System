@@ -62,13 +62,19 @@ export default {
                 dateClick: this.handleDateClick,
                 events: [], 
                 dayCellDidMount: (info) => {
-                    console.log(info);
-                    
                     const today = new Date().setHours(0, 0, 0, 0);
-                    const cellDate = new Date(info.date).setHours(0, 0, 0, 0); 
+                    const cellDate = new Date(info.date).setHours(0, 0, 0, 0);
 
+                    // Check if the date is in the past
                     if (cellDate < today) {
-                        info.el.classList.add("past-date"); 
+                        info.el.classList.add("past-date");
+                    }
+
+                    // Check if it's a Sunday (0 = Sunday)
+                    if (info.date.getDay() === 0) {
+                        info.el.classList.add("disabled-day");
+                        info.el.style.pointerEvents = "none";
+                        info.el.style.opacity = "0.5"; 
                     }
                 },
             },
@@ -175,6 +181,13 @@ export default {
             const clickedDate = new Date(info.dateStr);
             this.appointmentData.sched_date = info.dateStr;
             this.filterTimeAppointment();
+
+            // Check if the clicked date is a Sunday (0 = Sunday)
+            if (clickedDate.getDay() === 0) {
+                Swal.fire("Invalid!", "Appointments are not available on Sundays.", "error");
+                return; // Stop further execution
+            }
+            
             if (clickedDate < currentDate) {
                 Swal.fire("Invalid!", "Date is not Available", "error");
                 return;
@@ -321,6 +334,10 @@ export default {
 
 
 <style scoped>
+    .disabled-day {
+        background-color: #efa4aa !important; 
+        color: #721c24 !important;
+    }
     .calendar-container {
         width: 100%;
         width: 100%;
