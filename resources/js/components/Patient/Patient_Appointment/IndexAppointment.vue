@@ -124,29 +124,33 @@ export default {
     },
     cancelAppointment() {
       if (this.appointment.abort_reason.trim() === "") {
-        Swal.fire({ icon: "warning", title: "Oops...", text: "Provide a reason for canceling." });
-        return;
+      Swal.fire({ icon: "warning", title: "Oops...", text: "Provide a reason for canceling." });
+      return;
       }
       Swal.fire({
-        title: "Are you sure?",
-        text: "You are about to cancel this appointment.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, cancel it!",
+      title: "Are you sure?",
+      text: "You are about to cancel this appointment.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
       }).then((result) => {
-        if (result.isConfirmed) {
+      if (result.isConfirmed) {
           axios.put(`/user/patient/appointment/decline/${this.appointment.id}`, {
-            reason: this.appointment.abort_reason,
-          })
-          .then(() => {
-            Swal.fire("Cancelled!", "The appointment has been cancelled.", "success");
-            this.appointment.abort_reason = "";
-            this.displayAppDate();
-          })
-          .catch(() => Swal.fire("Error", "Failed to cancel the appointment.", "error"));
-        }
+          reason: this.appointment.abort_reason,
+        })
+        .then(() => {
+          Swal.fire("Cancelled!", "The appointment has been cancelled.", "success");
+          this.appointment.abort_reason = "";
+          this.displayAppDate();
+          const modal = bootstrap.Modal.getInstance(document.getElementById("cancelModal"));
+          if (modal) {
+            modal.hide();
+          }
+        })
+        .catch(() => Swal.fire("Error", "Failed to cancel the appointment.", "error"));
+      }
       });
     },
     formatDate(dateString) {
@@ -160,6 +164,7 @@ export default {
         "text-danger": status === "Declined",
         "text-info": status === "Pending",
         "text-primary": status === "Payment",
+        "text-danger": status === "Achieve",
       };
     },
     displayAppDate() {
