@@ -102,17 +102,17 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
+                            <router-link to="/user/staff/patient" class="nav-link">
+                                <i class="nav-icon fa-solid fa-people-roof"></i>
+                                <p>Manage Patient</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
                             <router-link to="/user/staff/appointment" class="nav-link">
                                 <i class="nav-icon fa-solid fa-calendar-check"></i>
                                 <p>
                                     Appointments
                                 </p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/user/staff/patient" class="nav-link">
-                                <i class="nav-icon fa-solid fa-people-roof"></i>
-                                <p>Manage Patient</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
