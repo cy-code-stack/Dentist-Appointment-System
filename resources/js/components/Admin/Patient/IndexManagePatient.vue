@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="txt-title mt-2">
-            <p class="fs-5 fw-semibold mb-0">Manage Users</p>
+            <p class="fs-5 fw-semibold mb-0">Manage Patient</p>
         </div>
         <div class="d-flex justify-content-end align-items-center mb-1">
             <div class="select-input d-flex justify-content-end align-items-center" style="width: 50% !important;">
@@ -10,7 +10,7 @@
                 </form>
                 <button class="btn btn-info btn-sm text-white" @click="addUser">
                     <i class="fa-solid fa-plus me-2"></i>
-                    <span>Add User</span>
+                    <span>Add Patient</span>
                 </button>
             </div>
         </div>

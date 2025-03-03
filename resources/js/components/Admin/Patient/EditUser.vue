@@ -5,7 +5,7 @@
                 <div class="modal-body overflow-auto">
                     <div class="container">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="fw-semibold">Edit User Details</h5>
+                            <h5 class="fw-semibold">Edit Patient</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <p class="text-muted">Update the necessary details below.</p>

@@ -6,7 +6,7 @@
                     <div class="container">
                         <form @submit.prevent="submitUser">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="fw-semibold">Add User Details</h5>
+                                <h5 class="fw-semibold">Add Patient</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <p class="text-muted">Fill in the details below to add a new user.</p>

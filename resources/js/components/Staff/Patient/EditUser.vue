@@ -5,7 +5,7 @@
                 <div class="modal-body overflow-auto">
                     <div class="container">
                         <div class="d-flex justify-content-between w-100">
-                            <p class="fs-5 fw-medium">Edit Details</p>
+                            <p class="fs-5 fw-medium">Edit Patient</p>
                             <button
                                 type="button"
                                 class="btn-close btn-black"

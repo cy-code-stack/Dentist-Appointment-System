@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-lg p-2">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-between align-items-center">
-                    <h5 class="modal-title">Add User</h5>
+                    <h5 class="modal-title">Add Patient</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body overflow-auto">
