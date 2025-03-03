@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
-            <p class="fs-5 fw-semibold mb-0 p-2">Patient Appointment</p>
-        <div class="d-flex justify-content-end align-items-center mb-2">
+        <p class="fs-5 fw-semibold mb-0 p-2">Patient Appointment</p>
+        <div class="d-flex justify-content-end align-items-center mb-2 gap-1">
             <div class="sort">
                 <div class="select-input d-flex justify-content-center align-items-center">
                     <form class="d-flex" role="search">
@@ -15,6 +15,10 @@
                     </select>
                 </div>
             </div>
+            <button type="button" class="btn btn-success btn-sm" @click="addWalkInApplicant">
+                <i class="fa-solid fa-plus me-2"></i>
+                <span>Walk-in Applicant</span>
+            </button>
         </div>
         <div class="table-responsive-lg">
             <div class="header d-flex p-2 justify-content-between align-items-center bg-info bg-gradient rounded-1 mb-2">
@@ -128,15 +132,18 @@
             </div>
         </div>
         <abort-patient-modal-vue :selected_abort="selected_abort" @displayAbortApp="displayAppointment"></abort-patient-modal-vue>
+        <walkin-modal @displayWalkInApplicant="displayAppointment"></walkin-modal>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import AbortPatientModalVue from './AbortPatientModal.vue';
+    import WalkinModal from './Modal/WalkinModal.vue';
 export default {
     components:{
         AbortPatientModalVue,
+        WalkinModal,
     },
     data() {
         return {
@@ -198,6 +205,10 @@ export default {
         abortPatient(selected_abort){
             this.selected_abort = selected_abort;
             $('#abort-appointment-modal').modal("show");
+        },
+
+        addWalkInApplicant(){
+            $('#walk-in-patient').modal("show");
         },
     
         approvedAppointment(id) {

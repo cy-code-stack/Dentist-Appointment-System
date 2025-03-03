@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ReschedAppointmentMail;
 use App\Mail\AbortAppointmentMail;
 use App\Models\PatientInformationRecord;
+use App\Models\Services;
 use App\Models\User;
 
 class AppointmentController extends Controller
@@ -34,6 +35,58 @@ class AppointmentController extends Controller
         ]);
     }
 
+    ## Add Walk In
+    public function addWalkInApplicant(Request $request){
+        $validatedData = $request->validate([
+            'patient_id' => 'required|exists:users,id',
+            'services_id' => 'required|exists:services,id',
+            'sched_date' => ['required', 'date'],
+            'sched_time' => 'required|date_format:H:i',
+        ], [
+            'patient_id.required' => 'The patient ID is required.',
+            'patient_id.exists' => 'The selected patient does not exist.',
+            'services_id.required' => 'The service ID is required.',
+            'services_id.exists' => 'The selected service does not exist.',
+            'sched_date.required' => 'The scheduled date is required.',
+            'sched_date.date' => 'The scheduled date must be a valid date.',
+            'sched_time.required' => 'The scheduled time is required.',
+            'sched_time.date_format' => 'The scheduled time must be in the format HH:MM.',
+        ]);
+
+        try {
+            $appointment = Appointment::create($validatedData);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Walk-in applicant created successfully.',
+                'data' => $appointment,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Walk-in applicant creation failed.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    ## Show Patient
+    public function patient(){
+        $user = User::whereNotIn('role', ['Assistant', 'Dentist'])->get();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Patient Displayed Successfully',
+            'data' => $user,
+        ], 200);
+    }
+
+    public function service(){
+        $service = Services::where('serv_status', 'Verified')->get();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Patient Services Successfully',
+            'data' => $service,
+        ], 200);
+    }
     /**
      * Display the specified resource.
      */

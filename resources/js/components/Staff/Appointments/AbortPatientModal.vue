@@ -21,7 +21,7 @@
                                 </div>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="form-label">Reason for Abortion</label>
+                                <label class="form-label">Reason</label>
                                 <textarea class="form-control" v-model="abortApp.abort_reason" placeholder="Please state your reason"></textarea>
                             </div>
                             <div v-if="errors.abort_reason" class="text-danger mb-3">
