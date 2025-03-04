@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Staff\Profile;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AssistantProfileController extends Controller
@@ -52,8 +52,7 @@ class AssistantProfileController extends Controller
 
     public function displayProfile(){
         $profileUser = User::where('id',  Auth::user()->id)
-                        ->where('status', '=', 'verified')
-                        ->where('is_verified', '<>', 0)
+                        ->where('is_verified', 1)
                         ->first();
         
         return response()->json([
