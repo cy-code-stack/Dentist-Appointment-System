@@ -59,11 +59,11 @@
                         <div class="text-center justify-content-center col-lg-2">
                             <p :class="{
                                 'fs-6 fw-medium mb-0 text-warning': appoint.PendingApproval, 
-                                'fs-6 fw-medium mb-0 text-info': appoint.Approved, 
+                                'fs-6 fw-medium mb-0 text-success': appoint.Approved, 
                                 'fs-6 fw-medium mb-0 text-primary': appoint.Pending, 
-                                'fs-6 fw-medium mb-0 text-success': appoint.Completed, 
+                                'fs-6 fw-medium mb-0 text-info': appoint.Completed, 
                                 'fs-6 fw-medium mb-0 text-danger': appoint.Declined,
-                                'fs-6 fw-medium mb-0 text-info': appoint.Payment,
+                                'fs-6 fw-medium mb-0 text-warning': appoint.Payment,
                             }">
                                 {{ appoint.appnt_status }}
                             </p>

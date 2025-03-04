@@ -110,9 +110,10 @@
                                     <div class="text-center justify-content-center col-lg-3 rounded-1" 
                                             :class="{
                                                 'text-warning': item.appnt_status === 'Pending',
-                                                'text-success': item.appnt_status === 'Approved',
-                                                'text-danger': item.appnt_status === 'Declined',
-                                                'text-success': item.appnt_status === 'Completed'
+                                                'text-info':    item.appnt_status === 'Approved',
+                                                'text-danger':  item.appnt_status === 'Declined',
+                                                'text-success': item.appnt_status === 'Completed',
+                                                'text-warning': item.appnt_status === 'Pending Approval'
                                             }">
                                         <p class="fs-6 fw-medium mb-0">{{ item.appnt_status }}</p>
                                     </div>
