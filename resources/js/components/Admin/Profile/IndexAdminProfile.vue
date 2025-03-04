@@ -1,186 +1,109 @@
 <template>
-    <div class="container-fluid">
-        <div class="wrapper">
-            <div class="d-flex flex-column p-3 align-items-center">
-                <div class="card p-2">
-                    <div class="card-title">
-                        <p class="fs-4 fw-semibold mb-1 ms-2">Personal Information</p>
-                        <div class="d-flex align-items-center">
-                            <div class="col col-lg-3 d-flex flex-column justify-content-center align-items-center">
-                                <div class="image-container mb-2">
-                                    <img :src="profileImageSrc || defaultImagePath" name="profile_img" class="img-fluid rounded-5" alt="profile image" />
-                                </div>
-                                <div class="active-btn d-flex" v-if="personalDetails">
-                                    <button @click="triggerFileInput" class="btn btn-primary me-2 text-white">
-                                        <i class="fa-solid fa-upload me-2"></i>
-                                        <span>Upload</span>
-                                    </button>
-                                    <input type="file" ref="fileInput" @change="handleFileChange" style="display: none;"/>
-                                    
-                                    <button class="btn btn-danger text-white" @click="removeImage" v-if="isImageUploaded">
-                                        <i class="fa-solid fa-trash me-2"></i>
-                                        <span>Remove</span>
-                                    </button>
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm p-4">
+                    <h4 class="fw-bold mb-3 text-primary">Personal Information</h4>
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 text-center">
+                            <div class="mb-3 position-relative">
+                                <img :src="profileImageSrc || defaultImagePath" 
+                                     class="img-fluid rounded-circle border shadow-sm" 
+                                     alt="profile image" 
+                                     style="width: 130px; height: 130px; object-fit: cover;" />
+                                <div class="mt-3">
+                                    <button class="btn btn-sm btn-outline-primary me-2" @click="triggerFileInput">Upload</button>
+                                    <button class="btn btn-sm btn-outline-danger" v-if="isImageUploaded" @click="removeImage">Remove</button>
+                                    <input type="file" ref="fileInput" @change="handleFileChange" class="d-none" />
                                 </div>
                             </div>
-                            <div class="col col-lg-9">
-                                <div class="d-flex mb-2">
-                                    <div class="w-100 me-2">
-                                        <input type="text" name="firstname" class="form-control" v-model="profileInfo.firstname" :disabled="!personalDetails">
-                                    </div>
-                                    <div class="w-100 me-2">
-                                        <input type="text" name="lastname" class="form-control" v-model="profileInfo.lastname" :disabled="!personalDetails">
-                                    </div>
-                                    <div class="w-100 me-2">
-                                        <input type="text" name="middle_initial" class="form-control" v-model="profileInfo.middle_initial" :disabled="!personalDetails">
-                                    </div>
-                                    <div class="w-100">
-                                        <input type="text" name="age" class="form-control" v-model="profileInfo.age" :disabled="!personalDetails">
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control shadow-sm" v-model="profileInfo.firstname" :disabled="!personalDetails">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control shadow-sm" v-model="profileInfo.lastname" :disabled="!personalDetails">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Middle Initial</label>
+                                    <input type="text" class="form-control shadow-sm" v-model="profileInfo.middle_initial" :disabled="!personalDetails">
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <label class="form-label">Home Address</label>
+                                    <input type="text" class="form-control shadow-sm" v-model="profileInfo.home_address" :disabled="!personalDetails">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" class="form-control shadow-sm" v-model="profileInfo.email" :disabled="!personalDetails">
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone Number</label>
+                                    <div class="input-group shadow-sm">
+                                        <span class="input-group-text bg-light">+63</span>
+                                        <input type="text" class="form-control" v-model="profileInfo.phone_number" :disabled="!personalDetails">
                                     </div>
                                 </div>
-                                <div class="d-flex mb-2">
-                                    <div class="w-100 me-2">
-                                        <input type="text" name="home_address" class="form-control" v-model="profileInfo.home_address" :disabled="!personalDetails">
-                                    </div>
-                                    <div class="w-100 me-2">
-                                        <input type="email" name="email" class="form-control" v-model="profileInfo.email" :disabled="!personalDetails">
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="input-group">
-                                            <span class="input-group-text">+63</span>
-                                            <input type="text" name="phone_number" class="form-control" v-model="profileInfo.phone_number" :disabled="!personalDetails">
-                                        </div>
-                                    </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Occupation</label>
+                                    <input type="text" class="form-control shadow-sm" v-model="profileInfo.occupation" :disabled="!personalDetails">
                                 </div>
-                                <div class="d-flex mb-4">
-                                    <div class="w-100 me-2">
-                                        <input type="text" name="occupation" class="form-control" v-model="profileInfo.occupation" :disabled="!personalDetails">
-                                    </div>
-                                    <div class="w-100 me-2">
-                                        <select class="form-control" name="marital_status" aria-label="marital_status" v-model="profileInfo.marital_status" :disabled="!personalDetails">
-                                            <option disabled value="">Marital Status*</option>
-                                            <option value="Single">Single</option>
-                                            <option value="Married">Married</option>
-                                            <option value="Widow">Widow</option>
-                                            <option value="Prefer not to Say">Prefer not to say</option>
-                                        </select>
-                                    </div>
-                                    <div class="w-100 me-2">
-                                        <select class="form-control" name="sex" aria-label="sex" v-model="profileInfo.sex" :disabled="!personalDetails">
-                                            <option disabled value="">Gender*</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Prefer not to Say">Prefer not to say</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <label class="form-label">Marital Status</label>
+                                    <select class="form-select shadow-sm" v-model="profileInfo.marital_status" :disabled="!personalDetails">
+                                        <option disabled value="">Select</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Widow">Widow</option>
+                                        <option value="Prefer not to Say">Prefer not to say</option>
+                                    </select>
                                 </div>
-                                <div  class="active-btn d-flex justify-content-end">
-                                    <button class="btn btn-primary me-2 text-white" @click="toggleDetailsEdit">
-                                        <i class="fa-solid fa-pen-to-square me-2"></i>
-                                        <span>Edit Personal Information</span>
-                                    </button>
-                                    <button @click="updateProfile(profileInfo.id)" class="btn btn-success text-white" :disabled="!personalDetails">
-                                        <i class="fa-solid fa-floppy-disk me-2"></i>
-                                        <span>Save Changes</span>
-                                    </button>
+                                <div class="col-md-6">
+                                    <label class="form-label">Gender</label>
+                                    <select class="form-select shadow-sm" v-model="profileInfo.sex" :disabled="!personalDetails">
+                                        <option disabled value="">Select</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Prefer not to Say">Prefer not to say</option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-3">
+                                <button class="btn btn-outline-primary me-2 shadow-sm" @click="toggleDetailsEdit">Edit</button>
+                                <button class="btn btn-success shadow-sm" @click="updateProfile(profileInfo.id)" :disabled="!personalDetails">Save</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="pass-cont">
-                    <div class="row justify-content-between align-items-start">
-                        <div class="col-lg-7">
-                            <div class="card p-3 equal-height">
-                                <div class="card-content">
-                                    <p class="fs-5 fw-semibold mb-2">Change Password</p>
-                                    <div class="row mb-3">
-                                        <div class="col-12 mb-2">
-                                            <input 
-                                                type="password" 
-                                                v-model="oldPassword" 
-                                                class="form-control" 
-                                                name="old_password" 
-                                                placeholder="Old Password" 
-                                                :disabled="!passDetails"
-                                            />
-                                            <div v-if="errors.old_password" class="text-danger">
-                                                <span><small>{{ errors.old_password[0] }}</small></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mb-2">
-                                            <input 
-                                                type="password" 
-                                                v-model="newPassword" 
-                                                class="form-control" 
-                                                name="password" 
-                                                placeholder="New Password" 
-                                                :disabled="!passDetails"
-                                            />
-                                            <div v-if="errors.password" class="text-danger">
-                                                <span><small>{{ errors.password[0] }}</small></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mb-3">
-                                            <input 
-                                                type="password" 
-                                                v-model="confirmPassword" 
-                                                class="form-control"
-                                                name="password_confirmation"
-                                                placeholder="Confirm your Password" 
-                                                :disabled="!passDetails"
-                                            />
-                                            <div v-if="errors.password_confirmation" class="text-danger">
-                                                <span><small>{{ errors.password_confirmation[0] }}</small></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button 
-                                            class="btn btn-primary me-2 text-white" 
-                                            @click="togglePassEdit"
-                                        >
-                                            <i class="fa-solid fa-lock me-2"></i>
-                                            <span>Change Password</span>
-                                        </button>
-                                        <button 
-                                            class="btn btn-success text-white" 
-                                            @click="changePassword"
-                                            :disabled="!passDetails || errors.new_password || errors.new_password_confirmation"
-                                        >
-                                            <i class="fa-solid fa-floppy-disk me-2"></i>
-                                            <span>Save Changes</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="card shadow-sm p-4 mt-4">
+                    <h4 class="fw-bold mb-3 text-primary">Change Password</h4>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Old Password</label>
+                            <input type="password" class="form-control shadow-sm" v-model="oldPassword" :disabled="!passDetails">
                         </div>
-
-                        <!-- Delete Account Section -->
-                        <div class="col-lg-5">
-                            <div class="card p-3 equal-height">
-                                <div class="card-content">
-                                    <p class="fs-5 fw-medium mb-2">Delete your account</p>
-                                    <p class="fs-6 text-black-50 text-justify mb-1">
-                                        Permanently remove your Personal Account and all
-                                        of its associated content from this application.
-                                        This action cannot be undone, so please proceed
-                                        with caution. Once initiated, all data tied to
-                                        your account, including personal information and
-                                        interactions will be irretrievably deleted from
-                                        our system. We advise thorough consideration
-                                        before proceeding with this irreversible action.
-                                    </p>
-                                    <div class="d-flex justify-content-end" @click="destroyUser">
-                                        <button class="btn btn-danger text-white">
-                                            <i class="fa-solid fa-trash me-2"></i>
-                                            <span>Delete your account</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-6">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control shadow-sm" v-model="newPassword" :disabled="!passDetails">
                         </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control shadow-sm" v-model="confirmPassword" :disabled="!passDetails">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        <button class="btn btn-outline-primary me-2 shadow-sm" @click="togglePassEdit">Edit</button>
+                        <button class="btn btn-success shadow-sm" @click="changePassword" :disabled="!passDetails">Save</button>
                     </div>
                 </div>
             </div>
@@ -423,5 +346,23 @@ export default {
 
 
 <style scoped>
-    @import '/resources/css/Admin/profile.css'
+    .card {
+        border-radius: 12px;
+        background: #ffffff;
+    }
+    .form-control, .form-select {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 10px;
+    }
+    .btn {
+        border-radius: 8px;
+    }
+    .input-group-text {
+        border-radius: 8px 0 0 8px;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
 </style>
