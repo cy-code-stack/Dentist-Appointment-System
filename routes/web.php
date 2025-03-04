@@ -245,12 +245,12 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
         Route::get('/user/staff/diagnostic/{id}', [PatientRecordController::class, 'showDiagnostic']);
 
         ## Start of Profile Section
-        Route::post('/user/assistant/profile/upload', [AssistantProfileController::class, 'uploadImage']);
-        Route::get('/user/assistant/profile/display', [AssistantProfileController::class,'displayProfile']);
+        Route::post('/user/staff/profile/upload', [AssistantProfileController::class, 'uploadImage']);
+        Route::get('/user/staff/profile/display', [AssistantProfileController::class,'displayProfile']);
         Route::put('/user/staff/profile/update/{id}', [AssistantProfileController::class,'updateAssistantProfile']);
-        Route::delete('/user/assistant/profile/removeAvatar', [AssistantProfileController::class,'removeAvatar']);
-        Route::post('/user/assistant/profile/passChange', [AssistantProfileController::class,'changePassword']);
-        Route::delete('/user/assistant/profile/destroy', [AssistantProfileController::class,'destroyUserCred']);
+        Route::delete('/user/staff/profile/removeAvatar', [AssistantProfileController::class,'removeAvatar']);
+        Route::post('/user/staff/profile/passChange', [AssistantProfileController::class,'changePassword']);
+        Route::delete('/user/staff/profile/destroy', [AssistantProfileController::class,'destroyUserCred']);
     });
 });
 

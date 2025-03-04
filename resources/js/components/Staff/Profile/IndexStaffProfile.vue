@@ -219,7 +219,7 @@ export default {
                 const formData = new FormData();
                 formData.append('profile_img', imgFile)
 
-                axios.post('/user/assistant/profile/upload', formData)
+                axios.post('/user/staff/profile/upload', formData)
                     .then((data)=>{
                         Swal.fire({
                             icon: 'success',
@@ -242,12 +242,12 @@ export default {
         },
 
         displayProfile(){
-            axios.get('/user/assistant/profile/display')
+            axios.get('/user/staff/profile/display')
                 .then((response)=>{
                     this.assistantProfile = response.data.data;
                 }).catch((e)=>{
                     console.log(e);
-                });
+            });
         },
 
         changePass(){
@@ -257,7 +257,7 @@ export default {
                 password_confirmation: this.confirmPassword
             };
 
-            axios.post('/user/assistant/profile/passChange', data)
+            axios.post('/user/staff/profile/passChange', data)
                 .then(()=>{
                     this.oldPassword = '',
                     this.newPassword = '',
@@ -295,7 +295,7 @@ export default {
                 confirmButtonText: "Yes, remove it!"
             }).then(result => {
                 if (result.isConfirmed) {
-                    axios.delete('/user/assistant/profile/removeAvatar')
+                    axios.delete('/user/staff/profile/removeAvatar')
                         .then(() => {
                             this.assistantProfile.profile_img = '';
                             this.$refs.fileInput.value = '';
@@ -354,7 +354,7 @@ export default {
                 confirmButtonText: "Yes, remove it!"
             }).then(result => {
                 if (result.isConfirmed) {
-                    axios.delete('/user/assistant/profile/destroy')
+                    axios.delete('/user/staff/profile/destroy')
                         .then(() => {
                             Swal.fire({
                                 icon: 'success',
