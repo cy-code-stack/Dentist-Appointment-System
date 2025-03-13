@@ -29,8 +29,7 @@ class StoreDiseaseImg extends Command
      */
     public function handle()
     {
-        $folderPath = storage_path('app/public/child_missing');
-        $files = Storage::files('public/child_missing');
+        $files = Storage::files('public/child_root');
 
         foreach ($files as $file) {
             $fileName = basename($file);
@@ -39,7 +38,7 @@ class StoreDiseaseImg extends Command
             ChildDisease::create([
                 'teeth_number' => $teeth->id,  
                 'disease_img_url' => $fileName,  
-                'disease_name' => 'Missing'
+                'disease_name' => 'Root Fragment'
             ]);
         }
         $this->info('Disease names stored successfully.');
