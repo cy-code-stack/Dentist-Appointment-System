@@ -26,14 +26,26 @@ class ManagePatientController extends Controller
         // Validate the incoming request
         $request->validate([
             'firstname' => 'required',
+            'middle_initial' => 'required',
             'lastname' => 'required',
             'home_address' => 'required',
+            'occupation' => 'required',
+            'birthdate' => 'required',
+            'age' => ['required', 'numeric'],
+            'sex' => 'required',
+            'marital_status' => 'required',
             'phone_number' => ['required', 'numeric', 'digits_between:1,11'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
         ], [
             'firstname.required' => 'Please enter your firstname.',
+            'middle_initial.required' => 'Please enter your middle initial.',
             'lastname.required' => 'Please enter your lastname.',
             'home_address.required' => 'Please enter your home address.',
+            'occupation.required' => 'Please enter your occupation.',
+            'birthdate.required' => 'Please enter your birthdate.',
+            'age.required' => 'Please enter your age.',
+            'age.numeric' => 'Age must contain only numbers',
+            'sex.required' => 'Please select your gender',
             'phone_number.required' => 'Please enter your Phone Number.',
             'phone_number.numeric' => 'Phone number must contain only numbers.',
             'phone_number.digits_between' => 'Phone number must be between 1 and 11 digits long.',
@@ -43,10 +55,10 @@ class ManagePatientController extends Controller
             'email.unique' => 'This email address is already taken.',
         ]);
     
-        // Store the plain password temporarily
+        ## Store the plain password temporarily
         $plainPassword = $request->password;
     
-        // Prepare the data for user creation
+        ## Prepare the data for user creation
         $data = $request->all();
         $data['password'] = Hash::make($plainPassword);
         $data['status'] = 'verified';
@@ -99,7 +111,8 @@ class ManagePatientController extends Controller
         $search = $request->input('search', '');
 
         $query = User::whereNotIn("role", ['Dentist', 'Assistant'])
-                        ->whereNotIn('status', ['archive', 'banned']);
+                        ->whereNotIn('status', ['archive', 'banned'])
+                        ->orderBy('created_at', 'desc');
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {

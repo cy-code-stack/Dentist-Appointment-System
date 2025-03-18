@@ -131,7 +131,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
 
         ## Manage Patient
         Route::get('/user/admin/patient/display', [ManagePatientController::class, 'showUser']);
-        Route::post('user/admin/patient/add', [ManagePatientController::class,'storeUser']);
+        Route::post('/user/admin/patient/add', [ManagePatientController::class,'storeUser']);
         Route::put('/user/admin/patient/verify/{id}', [ManagePatientController::class,'verifyUser']);
         Route::put('/user/admin/patient/update/{id}', [ManagePatientController::class,'updateUser']);
         Route::put('/user/admin/patient/archieve/{id}' , [ManagePatientController::class,'archieveUser']);

@@ -113,7 +113,7 @@
         </div>
         <view-user-modal :selected_user="selected_user" @displayVerifiedUsers="displayUsers"></view-user-modal>
         <add-modal-vue @displayUsers="displayUsers"></add-modal-vue>
-        <edit-user-vue :edited_select_user="edited_select_user" @updatedUsers=" displayUsers"></edit-user-vue>
+        <edit-user-vue :edited_select_user="edited_select_user" @updatedUsers="displayUsers"></edit-user-vue>
     </div>
 </template>
 
