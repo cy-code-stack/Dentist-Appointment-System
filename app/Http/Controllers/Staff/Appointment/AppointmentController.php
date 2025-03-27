@@ -37,7 +37,7 @@ class AppointmentController extends Controller
 
     ## Add Walk In
     public function addWalkInApplicant(Request $request){
-        $validatedData = $request->validate([
+        $request->validate([
             'patient_id' => 'required|exists:users,id',
             'services_id' => 'required|exists:services,id',
             'sched_date' => ['required', 'date'],
@@ -54,7 +54,9 @@ class AppointmentController extends Controller
         ]);
 
         try {
-            $appointment = Appointment::create($validatedData);
+            $data = $request->all();
+            $data['type'] = 'Walk-in';
+            $appointment = Appointment::create($data);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Walk-in applicant created successfully.',

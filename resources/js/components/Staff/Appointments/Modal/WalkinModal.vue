@@ -75,8 +75,23 @@ export default {
     mounted() {
         this.fetchPatients();
         this.fetchServices();
+        this.setCurrentDateTime();
     },
     methods: {
+        setCurrentDateTime() {
+            const now = new Date();
+
+            // Get current date
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); 
+            const day = String(now.getDate()).padStart(2, '0');
+            this.data.sched_date = `${year}-${month}-${day}`;
+
+            // Get current time in am and pm format
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            this.data.sched_time = `${hours}:${minutes}`;
+        },
         async fetchPatients() {
             try {
                 const response = await axios.get("/user/staff/patient/show");

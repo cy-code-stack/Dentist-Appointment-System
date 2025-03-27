@@ -27,6 +27,7 @@
                         <th>Fee</th>
                         <th>Remaining Balance</th>
                         <th>Status</th>
+                        <th>Comment</th>
                         <th>Actions</th>
                    </thead>
                    <tbody>
@@ -38,6 +39,7 @@
                         <td>{{ item.fee }}</td>
                         <td>{{ item.balance }}</td>
                         <td>{{ item.status }}</td>
+                        <td>{{ item.comment }}</td>
                         <td>
                             <div class="text-center d-flex align-items-center">
                                 <router-link :to="{  path: `/user/staff/add/payment/${item.id}`,  query: { fee: item.fee}  }">
@@ -88,6 +90,10 @@
                                 <label for="fee" class="form-label">Fee</label>
                                 <input type="number" id="fee" v-model="newTooth.fee" class="form-control">
                             </div>
+                            <div class="mb-3">
+                                <label for="fee" class="form-label">Comment</label>
+                                <textarea class="form-control" v-model="newTooth.comment" placeholder="Add your comment" rows="3"></textarea>
+                            </div>
                             <button type="submit" class="btn btn-primary float-right">Save</button>
                         </form>
                     </div>
@@ -111,6 +117,7 @@ export default {
                 tooth: '',
                 surface: '',
                 fee: null,
+                comment: '',
             },
             selectedService: null,
             service: [],
