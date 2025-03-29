@@ -61,7 +61,7 @@ class StaffController extends Controller
         $page = $request->input('page', 1);
         $status = $request->input('status');
 
-        $query = Appointment::with('patient', 'appointServices');
+        $query = Appointment::with('patient', 'appointServices')->orderBy('sched_date', 'desc');
 
         if ($status) {
             $query->where('appnt_status', $status);

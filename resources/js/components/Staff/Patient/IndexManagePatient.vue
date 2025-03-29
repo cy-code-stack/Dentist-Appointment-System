@@ -5,7 +5,7 @@
         </div>
         <div class="d-flex justify-content-end align-items-center mb-1">
             <div class="select-input d-flex justify-content-end align-items-center" style="width: 50% !important;">
-                <form class=" me-2" role="search" style="width: 40% !important;">
+                <form class="me-2" role="search" style="width: 40% !important;">
                     <input class="form-control form-control-sm" v-model="searchQuery" type="search" placeholder="Search" aria-label="Search">
                 </form>
                 <button class="btn btn-info btn-sm text-white" @click="addUser">
@@ -15,79 +15,46 @@
             </div>
         </div>
         <div class="table-responsive-lg">
-            <div class="header d-flex p-2 justify-content-between align-items-center bg-info bg-gradient rounded-1 mb-2">
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Firstname</p>
-                </div>
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Lastname</p>
-                </div>
-                <div class="text-center col-lg-3">
-                    <p class="fs-6 fw-semibold mb-0">Email</p>
-                </div>
-                <div class="text-center col-lg-1">
-                    <p class="fs-6 fw-semibold mb-0">Role</p>
-                </div>
-                <div class="text-center col-lg-4">
-                    <p class="fs-6 fw-semibold mb-0">Actions</p>
-                </div>
-            </div>
-            <div class="main-table-body">
-                <div class="table-row card mb-2" v-for="user in listofUsers" :key="user.id">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">{{ user.firstname }}</p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">{{ user.lastname }}</p>
-                        </div>
-                        <div class="text-center col-lg-3">
-                            <p class="fs-6 mb-0 fw-medium text-black-50 text-center">{{ user.email }}</p>
-                        </div>
-                        <div class="text-center col-lg-1">
-                            <p :class="{'fs-6 fw-semibold mb-0 text-primary': user.assistant, 'fs-6 fw-semibold mb-0 text-success': user.patient}">
-                                {{ user.role }}
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center col-lg-4 gap-1">
-                            <button type="button" class="rounded-1 btn btn-info btn-sm text-white" v-if="user.verified" @click="editUser(user)"> 
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-user-pen me-2"></i>
-                                    <span>Edit</span>
-                                </div>
+            <table class="table table-striped table-bordered">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th class="text-center">Firstname</th>
+                        <th class="text-center">Lastname</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Role</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="user in listofUsers" :key="user.id">
+                        <td class="text-center">{{ user.firstname }}</td>
+                        <td class="text-center">{{ user.lastname }}</td>
+                        <td class="text-center">{{ user.email }}</td>
+                        <td class="text-center" :class="{'text-primary': user.assistant, 'text-success': user.patient}">{{ user.role }}</td>
+                        <td class="text-center d-flex justify-content-center gap-1">
+                            <button type="button" class="btn btn-sm btn-info text-white" v-if="user.verified" @click="editUser(user)">
+                                <i class="fa-solid fa-user-pen me-2"></i>Edit
                             </button>
-                            <button type="button" class="rounded-1 btn btn-success btn-sm text-white" v-if="!user.verified" @click="verifyUser(user)">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    <span>View</span>
-                                </div>
+                            <button type="button" class="btn btn-success btn-sm text-white" v-if="!user.verified" @click="verifyUser(user)">
+                                <i class="fa-solid fa-eye me-2"></i>View
                             </button>
-                            <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="deleteUser(user.id)">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-ban me-2"></i>
-                                    <span>Banned</span>
-                                </div>
+                            <button type="button" class="btn btn-danger btn-sm" @click="deleteUser(user.id)">
+                                <i class="fa-solid fa-ban me-2"></i>Banned
                             </button>
                             <router-link :to="`/user/staff/history/${user.id}`">
-                                <button type="button" class="rounded-1 btn btn-success btn-sm text-white">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <i class="fa-regular fa-file me-2"></i>
-                                        <span>History</span>
-                                    </div>
+                                <button type="button" class="btn btn-warning btn-sm text-white">
+                                    <i class="fa-regular fa-file me-2"></i>History
                                 </button>
                             </router-link>
                             <router-link :to="`/user/staff/payment/history/${user.id}`">
-                                <button type="button" class="rounded-1 btn btn-primary btn-sm text-white">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <i class="fa-solid fa-peso-sign me-2"></i>
-                                        <span>Payment History</span>
-                                    </div>
+                                <button type="button" class="btn btn-primary btn-sm text-white">
+                                    <i class="fa-solid fa-peso-sign me-2"></i>Payment History
                                 </button>
                             </router-link>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="container-fluid d-flex justify-content-end align-items-center">
                 <nav>
                     <ul class="pagination">
@@ -96,10 +63,7 @@
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item" 
-                            v-for="page in totalPages" 
-                            :key="page" 
-                            :class="{ active: currentPage === page }">
+                        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
                             <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                         </li>
                         <li class="page-item" :class="{ disabled: currentPage === totalPages }">

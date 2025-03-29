@@ -35,7 +35,7 @@
                             <p class="fs-6 fw-medium mb-0 text-success">{{ item.appnt_status }}</p>
                         </div>
                         <div class="text-center d-flex justify-content-center col-lg-1">
-                            <button class="btn btn-success btn-sm" type="button" @click="printInvoice(item.id)">
+                            <button class="btn btn-primary btn-sm" type="button" @click="printInvoice(item.id)">
                                 <i class="fa-solid fa-print me-2"></i>Invoice
                             </button>
                         </div>

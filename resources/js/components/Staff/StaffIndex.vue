@@ -102,7 +102,7 @@
                                         <p class="fs-6 mb-0 fw-medium text-black-50">{{ item.patient?.firstname }} {{ item.patient?.middle_initial }} {{ item.patient?.lastname }}</p>
                                     </div>
                                     <div class="text-center col-lg-3">
-                                        <p class="fs-6 mb-0 fw-medium text-black-50">{{ formatWordyDate(item.sched_date) }} - {{ item.sched_time }}</p>
+                                        <p class="fs-6 mb-0 fw-medium text-black-50">{{ formatWordyDate(item.sched_date) }} - {{ formatTime(item.sched_time) }}</p>
                                     </div>
                                     <div class="text-center col-lg-3">
                                         <p class="fs-6 mb-0 fw-medium text-black-50">{{ item.appoint_services?.services_name }}</p>
@@ -167,6 +167,13 @@ export default {
         };
     },
     methods: {
+        formatTime(timeString) {
+            if (!timeString) return '';
+            const [hours, minutes] = timeString.split(':').map(Number);
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12; 
+            return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+        },
         fetchCount(url, targetProperty) {
             axios.get(url)
                 .then((response) => {

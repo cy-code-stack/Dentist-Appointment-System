@@ -15,9 +15,9 @@
                     </select>
                 </div>
             </div>
-            <button type="button" class="btn btn-success btn-sm" @click="addWalkInApplicant">
+            <button type="button" class="btn btn-sm btn-primary" @click="addWalkInApplicant">
                 <i class="fa-solid fa-plus me-2"></i>
-                <span>Walk-in Applicant</span>
+                <small>Walk-in Applicant</small>
             </button>
         </div>
         <div class="table-responsive-lg">
@@ -37,7 +37,7 @@
                         <td><span>{{ appoint?.type || 'Walk-in' }}</span></td>
                         <td>{{ appoint?.patient?.firstname }} {{ appoint?.patient?.lastname }}</td>
                         <td>
-                            Date: {{ formatDate(appoint.sched_date) }} <br> Time: {{ appoint.sched_time }}
+                            Date: {{ formatDate(appoint.sched_date) }} <br> Time: {{ formatTime(appoint.sched_time) }}
                         </td>
                         <td>{{ appoint?.appoint_services?.services_name }}</td>
                         <td :class="{
@@ -58,11 +58,11 @@
                                     </button>
                                 </router-link>
                                 <router-link :to="`/user/staff/appointment/resched/${appoint.id}`" v-if="appoint.appnt_status !== 'Pending Approval' && appoint.appnt_status !== 'Payment'">
-                                    <button class="btn btn-success btn-sm">
+                                    <button class="btn btn-primary btn-sm">
                                         <i class="fa-solid fa-calendar-check me-1"></i> Reschedule
                                     </button>
                                 </router-link>
-                                <button class="btn btn-success btn-sm" v-if="appoint.appnt_status === 'Pending Approval'" @click="approvedAppointment(appoint.id)">
+                                <button class="btn btn-primary btn-sm" v-if="appoint.appnt_status === 'Pending Approval'" @click="approvedAppointment(appoint.id)">
                                     Approve
                                 </button>
                                 <button class="btn btn-danger btn-sm" v-if="appoint.appnt_status !== 'Pending Approval' && appoint.appnt_status !== 'Payment'" @click="abortPatient(appoint)">
@@ -131,6 +131,13 @@ export default {
                 month: 'long', 
                 day: 'numeric' 
             }).format(date);
+        },
+        formatTime(timeString) {
+            if (!timeString) return '';
+            const [hours, minutes] = timeString.split(':').map(Number);
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12; 
+            return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
         },
         displayAppointment(page = 1, status = null, query = ''){
             axios.get('/user/staff/appointment/display', {
