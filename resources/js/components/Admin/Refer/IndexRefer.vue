@@ -1,116 +1,70 @@
 <template>
-    <div>
     <div class="container-fluid">
         <div class="txt-title mt-2">
             <p class="fs-5 fw-semibold text-black mb-0">Transaction</p>
         </div>
         <div class="d-flex justify-content-end align-items-center mb-2">
             <div class="sort">
-                <div class="select-input d-flex justify-content-center align-items-center">
-                    <form class="d-flex" role="search">
-                        <input class="form-control form-control-sm me-2" v-model="searchQuery" type="search" placeholder="Search" aria-label="Search">
-                    </form>
-                </div>
+                <form class="d-flex" role="search">
+                    <input class="form-control form-control-sm me-2" v-model="searchQuery" type="search" placeholder="Search" aria-label="Search">
+                </form>
             </div>
         </div>
         <div class="table-responsive-lg">
-            <div
-                class="header d-flex p-2 justify-content-between align-items-center bg-info bg-gradient rounded-1 mb-2"
-            >
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Name</p>
-                </div>
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Appointment Schedule</p>
-                </div>
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Services</p>
-                </div>
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Status</p>
-                </div>
-                <div class="text-center col-lg-2">
-                    <p class="fs-6 fw-semibold mb-0">Actions</p>
-                </div>
-            </div>
-            <div class="main-table-body">
-                <div class="table-row card mb-2" v-for="item in listofVerfiedPatients" :key="item.id">
-                    <div class="d-flex p-2 justify-content-between align-items-center bg-light bg-gradient rounded-1">
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               {{ item.patient?.firstname }} {{ item?.patient?.lastname }}
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                               {{ formatDate(item.sched_date) }} <br> {{ item.sched_time }}
-                            </p>
-                        </div>
-                        <div class="text-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-black-50">
-                                {{ item.appoint_services?.services_name }}
-                            </p>
-                        </div>
-                        <div
-                            class="text-center justify-content-center col-lg-2">
-                            <p class="fs-6 mb-0 fw-medium text-primary">
-                                {{ item.appnt_status }}
-                            </p>
-                        </div>
-                        <div class="text-center d-flex justify-content-center align-items-center col-lg-2">
+            <table class="table table-striped table-bordered">
+                <thead class="bg-info bg-gradient text-center">
+                    <tr>
+                        <th>Name</th>
+                        <th>Appointment Schedule</th>
+                        <th>Services</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in listofVerfiedPatients" :key="item.id">
+                        <td class="text-center">{{ item.patient?.firstname }} {{ item?.patient?.lastname }}</td>
+                        <td class="text-center">{{ formatDate(item.sched_date) }} <br> {{ formatTime(item.sched_time) }}</td>
+                        <td class="text-center">{{ item.appoint_services?.services_name }}</td>
+                        <td class="text-center text-primary">{{ item.appnt_status }}</td>
+                        <td class="text-center">
                             <router-link :to="`/user/admin/view/${item.id}`">
-                                <button v-if="item.appnt_status === 'Pending'" type="button" class="me-1 rounded-1 btn btn-info text-white btn-sm">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <i class="fa-solid fa-eye me-2"></i>
-                                        <span>View</span>
-                                    </div>
+                                <button v-if="item.appnt_status === 'Pending'" class="btn btn-info btn-sm text-white me-1">
+                                    <i class="fa-solid fa-eye me-2"></i> View
                                 </button>
                             </router-link>
                             <router-link :to="`/user/admin/payment/${item.patient?.id}`">
-                                <button v-if="item.appnt_status === 'Payment' || item.appnt_status === 'Not yet Paid'" type="button" class="me-1 rounded-1 btn btn-primary text-white btn-sm">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <span class="me-2">Payment</span>
-                                        <i class="fa-solid fa-circle-arrow-right"></i>
-                                    </div>
+                                <button v-if="item.appnt_status === 'Payment' || item.appnt_status === 'Not yet Paid'" class="btn btn-primary btn-sm text-white me-1">
+                                    <span class="me-2">Payment</span> <i class="fa-solid fa-circle-arrow-right"></i>
                                 </button>
                             </router-link>
-                            <button type="button" class="rounded-1 btn btn-danger btn-sm" @click="archiveReferPatients(item.id)">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fa-solid fa-box-archive me-2"></i>
-                                    <span>Archive</span>
-                                </div>
+                            <button class="btn btn-danger btn-sm" @click="archiveReferPatients(item.id)">
+                                <i class="fa-solid fa-box-archive me-2"></i> Archive
                             </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid d-flex justify-content-end align-items-center">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
                 <nav>
                     <ul class="pagination">
                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                            <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)">&laquo;</a>
                         </li>
-                        <li class="page-item" 
-                            v-for="page in totalPages" 
-                            :key="page" 
-                            :class="{ active: currentPage === page }">
+                        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
                             <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                         </li>
                         <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                            <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
+                            <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">&raquo;</a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </div>
+        <add-payment-modal :payment_user="payment_user" @displayPayment="diplayVerfiedPatients"></add-payment-modal>
     </div>
-    <add-payment-modal :payment_user="payment_user" @displayPayment="diplayVerfiedPatients"></add-payment-modal>
-</div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -139,6 +93,13 @@ export default {
                 month: 'long', 
                 day: 'numeric' 
             }).format(date);
+        },
+        formatTime(timeString) {
+            if (!timeString) return '';
+            const [hours, minutes] = timeString.split(':').map(Number);
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12; 
+            return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
         },
         diplayVerfiedPatients(page = 1) {
             axios
