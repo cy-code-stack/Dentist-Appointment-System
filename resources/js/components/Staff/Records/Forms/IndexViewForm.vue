@@ -303,7 +303,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end gap-2">
-                    <button type="button" class="rounded-1 btn btn-success text-white" @click="printAppointment(transData.id)">
+                    <button type="button" class="rounded-1 btn btn-info text-white" @click="printAppointment(transData.id)">
                         <div class="d-flex justify-content-center align-items-center">
                             <i class="fa-solid fa-print me-2"></i>
                             <span>Print</span>

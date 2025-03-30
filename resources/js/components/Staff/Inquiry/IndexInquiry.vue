@@ -23,14 +23,14 @@
                                 <td class="fs-6 text-break">{{ items.fname }}</td>
                                 <td class="fs-6 text-break text-truncate">
                                     <a :href="items.fblink" class="text-decoration-none text-primary" target="_blank">
-                                        <i class="fa-brands fa-facebook me-1"></i> Facebook Profile
+                                        <i class="fa-brands fa-facebook me-1"></i> <span class="fs-6">Facebook</span>
                                     </a>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
-                                        <button type="button" class="btn btn-success btn-sm d-flex align-items-center gap-2" 
+                                        <button type="button" class="btn btn-info btn-sm d-flex align-items-center gap-2" 
                                             @click="ViewInquiryModal(items)">
-                                            <i class="fa-solid fa-eye"></i> View
+                                            <i class="fa-solid fa-eye"></i> Reply
                                         </button>
                                         <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-2" 
                                             @click="alreadyCatered(items.id)">

@@ -91,15 +91,15 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/user/admin/patient" class="nav-link">
-                                <i class="nav-icon fa-solid fa-people-roof"></i>
-                                <p>Manage Patient</p>
+                            <router-link to="/user/admin/calendar" class="nav-link">
+                                <i class="nav-icon fa-solid fa-calendar-check"></i>
+                                <p>Calendar View</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/user/admin/staff" class="nav-link">
-                                <i class="nav-icon fa-solid fa-clipboard-user"></i>
-                                <p>Manage Staff</p>
+                            <router-link to="/user/admin/patient" class="nav-link">
+                                <i class="nav-icon fa-solid fa-people-roof"></i>
+                                <p>Manage Patient</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
@@ -109,31 +109,27 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/user/admin/calendar" class="nav-link">
-                                <i class="nav-icon fa-solid fa-calendar-check"></i>
-                                <p>Calendar View</p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
                             <router-link to="/user/admin/services" class="nav-link">
                                 <i class="nav-icon fa-solid fa-list-check"></i>
                                 <p>Manage Services</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
+                            <router-link to="/user/admin/staff" class="nav-link">
+                                <i class="nav-icon fa-solid fa-clipboard-user"></i>
+                                <p>Manage Staff</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
                             <router-link to="/user/admin/profile" class="nav-link">
                                 <i class="nav-icon fa-solid fa-id-badge"></i>
-                                <p>
-                                    Profile
-                                </p>
+                                <p>Profile</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
                             <router-link to="/user/admin/archive" class="nav-link">
                                 <i class="nav-icon fa-solid fa-box-archive"></i>
-                                <p>
-                                    Archive
-                                </p>
+                                <p>Archive</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
