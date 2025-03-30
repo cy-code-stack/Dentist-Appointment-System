@@ -75,7 +75,8 @@ class DiagnosticController extends Controller
             '*.information_id' => 'nullable|integer',
             '*.teeth_id' => 'nullable|integer',
             '*.disease_id' => 'nullable|integer',
-            '*.comments' => 'nullable|string',  
+            '*.comments' => 'nullable|string', 
+            '*.created_at' => 'nullable|date', 
         ]);
 
         $savedData = []; 
@@ -87,6 +88,7 @@ class DiagnosticController extends Controller
                     'teeth_id' => $data['teeth_id'],
                     'disease_id' => $data['disease_id'],
                     'comments' => $data['comments'],
+                    'created_at' => $data['created_at'],
                 ],
             );
         }
