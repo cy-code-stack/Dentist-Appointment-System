@@ -19,9 +19,10 @@ class DiagnosticController extends Controller
                 ->get();
         if($teeths->count() < 1){
             for ($x = 1; $x <= 32; $x++) {
-                PatientDiagnostic::create([
+                PatientDiagnostic::updateOrCreate([
                     'patient_information_id' => $patientInfo?->id,
                     'teeth_id' => $x,
+                    'created_at' => null,
                 ]);
             }
             $teeths = PatientDiagnostic::with('teeth.diseases', 'teethDisease')
@@ -49,7 +50,8 @@ class DiagnosticController extends Controller
                 ])->first()->update(
                 [
                     'disease_id'=>$value['disease_id'],
-                    'comments'=>$value['comments']
+                    'comments'=>$value['comments'],
+                    'created_at'=>$value['created_at'],
                 ]);
         }
 

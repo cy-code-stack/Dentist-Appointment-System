@@ -103,7 +103,7 @@
                                 <tr v-for="(tooth, index) in firstColumn" :key="index">
                                     <td class="text-center fs-6 fw-semibold">{{ tooth.teeth_number }}</td>
                                     <td>
-                                        <input class="form-control form-control-sm mb-2" type="date" v-model="currentDate">
+                                        <input class="form-control form-control-sm mb-2" type="date" v-model="tooth.created_at">
                                         <textarea class="form-control" rows="3" placeholder="Add your comments here" v-model="tooth.comments"></textarea>
                                     </td>
                                 </tr>
@@ -124,7 +124,7 @@
                                 <tr v-for="(tooth, index) in secondColumn" :key="index">
                                     <td class="text-center fs-6 fw-semibold">{{ tooth.teeth_number }}</td>
                                     <td>
-                                        <input class="form-control form-control-sm mb-2" type="date" v-model="currentDate">
+                                        <input class="form-control form-control-sm mb-2" type="date" v-model="tooth.created_at">
                                         <textarea class="form-control" rows="3" placeholder="Add your comments here" v-model="tooth.comments"></textarea>
                                     </td>
                                 </tr>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-center">
-                    <button class="btn btn-success" @click="submitForm">Submit</button>
+                    <button class="btn btn-primary" @click="submitForm">Submit</button>
                 </div>
             </div>
     </div>
@@ -148,7 +148,7 @@ export default {
             adultTeeth: [],
             selectedDiseaseImage: null,
             teethData: {},
-            currentDate: new Date().toISOString().split("T")[0],
+            created_at: null,
             patientInformationId: null,
         };
     },
@@ -186,12 +186,20 @@ export default {
                         selectedDiseaseImage: tooth.teeth_disease ? this.getDiseaseUrl(tooth.teeth_disease.disease_img_url) : null,
                         teeth_number: tooth.teeth.teeth_number,
                         comments: tooth.comments || '', 
-                        created_at: this.currentDate,
+                        created_at: this.formatDate(tooth.created_at),
                     }));
+
                 })
                 .catch(error => {
                     console.error('Error fetching diagnostics:', error);
                 });
+        },
+
+        formatDate(date) {
+            if (!date) return '';
+            const d = new Date(date);
+            if (isNaN(d)) return '';
+            return d.toISOString().split('T')[0];
         },
 
         getUrlId(){
@@ -207,11 +215,11 @@ export default {
             return `/storage/adult_disease/${diseaseName}`;
         },
         changeImage(tooth, diseaseName) {
-            tooth.selectedDiseaseImage = this.getDiseaseUrl(diseaseName);
-            const selectedDisease = tooth.teeth.diseases.find(disease => disease.disease_img_url === diseaseName);
-            if (selectedDisease) {
-            tooth.teeth_disease = selectedDisease;
-            tooth.disease_id = selectedDisease.id;
+                tooth.selectedDiseaseImage = this.getDiseaseUrl(diseaseName);
+                const selectedDisease = tooth.teeth.diseases.find(disease => disease.disease_img_url === diseaseName);
+                if (selectedDisease) {
+                tooth.teeth_disease = selectedDisease;
+                tooth.disease_id = selectedDisease.id;
             }
         },
 
@@ -221,7 +229,7 @@ export default {
                 disease_id: tooth.teeth_disease ? tooth.teeth_disease.id : null,
                 comments: tooth.comments || null,
                 patient_information_id: this.getUrlId(),
-                created_at: this.currentDate,
+                created_at: tooth.created_at,
             }));
             const id = this.getUrlId();
             console.log(this.teethData);
