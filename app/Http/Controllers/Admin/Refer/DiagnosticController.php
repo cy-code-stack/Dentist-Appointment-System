@@ -33,9 +33,26 @@ class DiagnosticController extends Controller
     }
     
 
-    public function childIndex(){
-        $childTeeth = ChildTeeth::with('diseases')->get();
-        return response()->json($childTeeth);
+    public function childIndex($id){
+        $patientInfo = PatientInformationRecord::find($id);
+        $teeths = ChildDiagnostic::with('teeth.diseases', 'disease')
+                    ->where('information_id', $patientInfo?->id)
+                    ->get();
+
+        if($teeths->count() < 1){
+            for ($x = 1; $x <= 20; $x++) {
+                ChildDiagnostic::updateOrCreate([
+                    'information_id' => $patientInfo?->id,
+                    'teeth_id' => $x,
+                    'created_at' => null,
+                ]);
+            }
+            $teeths = ChildDiagnostic::with('teeth.diseases', 'disease')
+                ->where('information_id', $patientInfo?->id)
+                ->get();
+        }
+
+        return response()->json($teeths);
     }
 
     
@@ -71,34 +88,35 @@ class DiagnosticController extends Controller
     }   
 
 
-    public function storeChild(Request $request)
+    public function storeChild(Request $request, $id)
     {
-        $validData = $request->validate([
-            '*.information_id' => 'nullable|integer',
-            '*.teeth_id' => 'nullable|integer',
-            '*.disease_id' => 'nullable|integer',
-            '*.comments' => 'nullable|string', 
-            '*.created_at' => 'nullable|date', 
-        ]);
+        foreach ($request->all() as $value) {
 
-        $savedData = []; 
-
-        foreach ($validData as $data) {
-            $savedData[] = ChildDiagnostic::create(
+            ChildDiagnostic::where(
                 [
-                    'information_id' => $data['information_id'],
-                    'teeth_id' => $data['teeth_id'],
-                    'disease_id' => $data['disease_id'],
-                    'comments' => $data['comments'],
-                    'created_at' => $data['created_at'],
-                ],
-            );
+                    'information_id'=>$value['information_id'],
+                    'teeth_id'=>$value['teeth_id']
+                ])->first()->update(
+                [
+                    'disease_id'=>$value['disease_id'],
+                    'comments'=>$value['comments'],
+                    'created_at'=>$value['created_at'],
+                ]);
+
         }
 
+        $record = PatientInformationRecord::with('appointment')
+            ->where('id', $id)
+            ->first();
+
+        if ($record && $record->appointment) {
+            $record->appointment->update([
+                'appnt_status' => 'Payment'
+            ]);
+        }
 
         return response()->json([
             'message' => 'Child  Diagnostics saved successfully',
-            'data' => $savedData
         ], 200);
     }
 

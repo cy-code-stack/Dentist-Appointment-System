@@ -3,18 +3,18 @@
         <p class="fs-5 fw-medium text-primary">Diagnostics</p>
             <div class="d-flex flex-column align-items-center mb-1">
                     <div class="d-flex justify-content-center w-100">
-                        <!-- Teeth 18 to 11 -->
+                        <!-- Teeth 55 to 51 -->
                         <div v-for="(tooth, index) in firstHalf" :key="index" class="p-1 position-relative me-4">
                             <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                                 {{ tooth.teeth_number }}
                             </div>
-                            <img :src="tooth.selectedDiseaseImage || getImageUrl(tooth.teeth_url)" height="50" alt="Teeth Image">
+                            <img :src="tooth.teeth.diseases.disease_img_url ? getDiseaseUrl(tooth.teeth.diseases.disease_img_url) : getImageUrl(tooth.teeth.teeth_url)" height="50" alt="Teeth Image">
                             <div class="dropdown d-flex justify-content-end align-items-center">
                                 <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <small>Condition</small>
                                 </div>
                                 <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
-                                    <li v-for="disease in tooth.diseases" :key="disease.id" class="d-flex align-items-center">
+                                    <li v-for="disease in tooth.teeth.diseases" :key="disease.id" class="d-flex align-items-center">
                                         <img :src="getDiseaseUrl(disease.disease_img_url)" alt="Disease Image" width="30" height="30">
                                         <a class="dropdown-item fs-6 m-0" @click="changeImage(tooth, disease.disease_img_url)">
                                             {{ disease.disease_name }}
@@ -24,16 +24,16 @@
                             </div>
                         </div>
 
-                        <!-- Teeth 21 to 28 -->
+                        <!-- Teeth 61 to 65 -->
                         <div v-for="(tooth, index) in secondHalf" :key="index" class="p-1 position-relative me-4">
                             <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                                 {{ tooth.teeth_number }}
                             </div>
-                            <img :src="tooth.selectedDiseaseImage || getImageUrl(tooth.teeth_url)" height="50" alt="Teeth Image">
+                            <img :src="tooth.teeth_disease ? getDiseaseUrl(tooth.teeth_disease.disease_img_url) : getImageUrl(tooth.teeth.teeth_url)" height="50" alt="Teeth Image">
                             <div class="dropdown d-flex justify-content-end align-items-center">
                                 <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Condition</small></div>
                                 <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
-                                    <li v-for="disease in tooth.diseases" :key="disease.id" class="d-flex align-items-center">
+                                    <li v-for="disease in tooth.teeth.diseases" :key="disease.id" class="d-flex align-items-center">
                                         <img :src="getDiseaseUrl(disease.disease_img_url)" alt="Disease Image" width="30" height="30">
                                         <a class="dropdown-item fs-6 m-0" @click="changeImage(tooth, disease.disease_img_url)">
                                             {{ disease.disease_name }}
@@ -46,16 +46,16 @@
 
                     <!-- Second row -->
                     <div class="d-flex justify-content-center w-100">
-                        <!-- Teeth 48 to 41 -->
+                        <!-- Teeth 75 to 71 -->
                         <div v-for="(tooth, index) in thirdHalf" :key="index" class="p-1 position-relative me-4">
                             <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                                 {{ tooth.teeth_number }}
                             </div>
-                            <img :src="tooth.selectedDiseaseImage || getImageUrl(tooth.teeth_url)" height="50" alt="Teeth Image">
+                            <img :src="tooth.teeth_disease ? getDiseaseUrl(tooth.teeth_disease.disease_img_url) : getImageUrl(tooth.teeth.teeth_url)" height="50" alt="Teeth Image">
                             <div class="dropdown d-flex justify-content-end align-items-center">
                                 <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Condition</small></div>
                                 <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
-                                    <li v-for="disease in tooth.diseases" :key="disease.id" class="d-flex align-items-center">
+                                    <li v-for="disease in tooth.teeth.diseases" :key="disease.id" class="d-flex align-items-center">
                                         <img :src="getDiseaseUrl(disease.disease_img_url)" alt="Disease Image" width="30" height="30">
                                         <a class="dropdown-item fs-6 m-0" @click="changeImage(tooth, disease.disease_img_url)">
                                             {{ disease.disease_name }}
@@ -65,16 +65,16 @@
                             </div>
                         </div>
 
-                        <!-- Teeth 31 to 38 -->
+                        <!-- Teeth 81 to 85 -->
                         <div v-for="(tooth, index) in fourthHalf" :key="index" class="p-1 position-relative me-4">
                             <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                                 {{ tooth.teeth_number }}
                             </div>
-                            <img :src="tooth.selectedDiseaseImage || getImageUrl(tooth.teeth_url)" height="50" alt="Teeth Image">
+                            <img :src="tooth.teeth_disease ? getDiseaseUrl(tooth.teeth_disease.disease_img_url) : getImageUrl(tooth.teeth.teeth_url)" height="50" alt="Teeth Image">
                             <div class="dropdown d-flex justify-content-end align-items-center">
                                 <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>Condition</small></div>
                                 <ul class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
-                                    <li v-for="disease in tooth.diseases" :key="disease.id" class="d-flex align-items-center">
+                                    <li v-for="disease in tooth.teeth.diseases" :key="disease.id" class="d-flex align-items-center">
                                         <img :src="getDiseaseUrl(disease.disease_img_url)" alt="Disease Image" width="30" height="30">
                                         <a class="dropdown-item fs-6 m-0" @click="changeImage(tooth, disease.disease_img_url)">
                                             {{ disease.disease_name }}
@@ -102,7 +102,7 @@
                                 <tr v-for="(tooth, index) in firstColumn" :key="index">
                                     <td class="text-center fs-6 fw-semibold">{{ tooth.teeth_number }}</td>
                                     <td>
-                                        <input class="form-control form-control-sm mb-2" type="date" v-model="currentDate">
+                                        <input class="form-control form-control-sm mb-2" type="date" v-model="tooth.created_at">
                                         <textarea class="comment-input form-control" v-model="tooth.comments"></textarea>
                                     </td>
                                 </tr>
@@ -123,7 +123,7 @@
                                 <tr v-for="(tooth, index) in secondColumn" :key="index">
                                     <td class="text-center fs-6 fw-semibold">{{ tooth.teeth_number }}</td>
                                     <td>
-                                        <input class="form-control form-control-sm mb-2" type="date" v-model="currentDate">
+                                        <input class="form-control form-control-sm mb-2" type="date" v-model="tooth.created_at">
                                         <textarea class="comment-input form-control" v-model="tooth.comments"></textarea>
                                     </td>
                                 </tr>
@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-center mb-2">
-                    <button class="btn btn-sm btn-success" @click="submitForm">Submit</button>
+                    <button class="btn btn-sm btn-primary" @click="submitForm">Submit</button>
                 </div>
             </div>
 </template>
@@ -146,7 +146,7 @@ export default {
             childTeeth: [],
             selectedDiseaseImage: null, 
             teethData: {},
-            currentDate: new Date().toISOString().split("T")[0],
+            created_at: null,
             patientInformationId: null,
         };
     },
@@ -172,17 +172,34 @@ export default {
     },
     methods: {
         fetchDiagnostics() {
-            axios.get('/admin/patients/child')
+            const recordId = this.$route.params.id;
+            if (!recordId) {
+                console.error('Patient ID not found in route params.');
+                return;
+            }
+            axios.get(`/admin/patients/child/${recordId}`)
                 .then(response => {
                     this.childTeeth = response.data.map(tooth => ({
                         ...tooth,
-                        selectedDiseaseImage: null,
+                        selectedDiseaseImage: tooth.teeth_disease ? this.getDiseaseUrl(tooth.teeth_disease.disease_img_url) : null,
+                        teeth_number: tooth.teeth.teeth_number,
                         comments: tooth.comments || '', 
+                        created_at: this.formatDate(tooth.created_at),
                     }));
+
+                    console.log(response);
+                    
                 })
                 .catch(error => {
                     console.error('Error fetching diagnostics:', error);
                 });
+        },
+
+        formatDate(date) {
+            if (!date) return '';
+            const d = new Date(date);
+            if (isNaN(d)) return '';
+            return d.toISOString().split('T')[0];
         },
 
         getUrlId(){
@@ -206,12 +223,12 @@ export default {
                 teeth_id: tooth.id,
                 disease_id: tooth.disease_id || null, 
                 comments: tooth.comments || null, 
-                created_at: this.currentDate,
                 information_id: this.getUrlId(),
+                created_at: tooth.created_at,
             }));
 
             console.log(this.teethData); 
-            axios.post('/admin/patients/child/store', this.teethData)
+            axios.post(`/admin/patients/child/store/${id}`, this.teethData)
                 .then(response => {
                     this.patientInformationId = response.data.id;
                     Swal.fire({

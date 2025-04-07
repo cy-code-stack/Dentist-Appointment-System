@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Age</label>
-                                <input type="text" class="form-control" v-model="user.age" readonly/>
+                                <input type="text" class="form-control" v-model="user.age"/>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Gender</label>
