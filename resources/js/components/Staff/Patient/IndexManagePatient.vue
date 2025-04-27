@@ -103,6 +103,11 @@ export default {
             searchQuery: '',
         };
     },
+    watch: {
+        searchQuery(newQuery) {
+            this.displayUsers(1, newQuery);
+        }
+    },
     methods: {
         displayUsers(page = 1, query = '') {
             axios.get("/user/staff/manage/user", {

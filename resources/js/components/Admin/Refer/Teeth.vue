@@ -103,7 +103,6 @@
                                 <tr v-for="(tooth, index) in firstColumn" :key="index">
                                     <td class="text-center fs-6 fw-semibold">{{ tooth.teeth_number }}</td>
                                     <td>
-                                        <input class="form-control form-control-sm mb-2" type="date" v-model="tooth.created_at">
                                         <textarea class="form-control" rows="3" placeholder="Add your comments here" v-model="tooth.comments"></textarea>
                                     </td>
                                 </tr>
@@ -124,7 +123,6 @@
                                 <tr v-for="(tooth, index) in secondColumn" :key="index">
                                     <td class="text-center fs-6 fw-semibold">{{ tooth.teeth_number }}</td>
                                     <td>
-                                        <input class="form-control form-control-sm mb-2" type="date" v-model="tooth.created_at">
                                         <textarea class="form-control" rows="3" placeholder="Add your comments here" v-model="tooth.comments"></textarea>
                                     </td>
                                 </tr>

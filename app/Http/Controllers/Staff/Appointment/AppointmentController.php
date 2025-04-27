@@ -99,7 +99,8 @@ class AppointmentController extends Controller
         $status = $request->input('status');
         $search = $request->input('search', '');
 
-        $query = Appointment::with('patient', 'appointServices')->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Completed'])->orderBy('created_at', 'desc');
+        $query = Appointment::with('patient', 'appointServices')
+            ->orderBy('created_at', 'desc');
 
         if ($status) {
             $query->where('appnt_status', $status);
@@ -109,14 +110,16 @@ class AppointmentController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->whereHas('patient', function ($subQuery) use ($search) {
                     $subQuery->where('firstname', 'LIKE', "%{$search}%")
-                             ->orWhere('lastname', 'LIKE', "%{$search}%");
-                })
-                ->orWhere('appnt_status', 'LIKE', "%{$search}%");
+                            ->orWhere('lastname', 'LIKE', "%{$search}%")
+                            ->orWhereRaw("CONCAT(firstname, ' ', lastname) LIKE ?", ["%{$search}%"]);
+                });
             });
+        } else {
+            $query->whereNotIn('appnt_status', ['Pending', 'Declined', 'Archive', 'Completed']);
         }
 
         $records = $query->paginate($limit, ['*'], 'page', $page);
-                        
+
         return response()->json([
             'status' => 'success',
             'data' => $records->items(),

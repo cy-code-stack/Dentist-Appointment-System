@@ -43,7 +43,7 @@ class PatientController extends Controller
 
         $appoint = $request->all();
         $appoint['patient_id'] = Auth::user()->id;
-        $appoint['type']  = 'Online';
+        $appoint['type']  = 'Online Appointment';
         $data = Appointment::create($appoint);
 
         $user_data = Appointment::with('patient', 'appointServices')->where('id', $data->id)->first();

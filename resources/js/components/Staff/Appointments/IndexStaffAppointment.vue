@@ -35,7 +35,7 @@
                 <tbody>
                     <tr v-for="appoint in listofAppointment" :key="appoint.id" class="text-center align-middle">
                         <td><span>{{ appoint?.type || 'Walk-in' }}</span></td>
-                        <td>{{ appoint?.patient?.firstname }} {{ appoint?.patient?.lastname }}</td>
+                        <td>{{ appoint.patient_name }}</td>
                         <td>
                             Date: {{ formatDate(appoint.sched_date) }} <br> Time: {{ formatTime(appoint.sched_time) }}
                         </td>
@@ -122,6 +122,11 @@ export default {
             searchQuery: '',
         };
     },
+    watch: {
+        searchQuery(newQuery) {
+            this.displayAppointment(1, null, newQuery);
+        }
+    },
     methods:{
         formatDate(dateString) {
             if (!dateString) return '';
@@ -150,8 +155,9 @@ export default {
             }).then((response)=>{
                 this.currentPage = response.data.meta.current_page;
                 this.totalPages = response.data.meta.last_page;
-                this.listofAppointment = response.data.data.map((appoint)=> ({
+                this.listofAppointment = response.data.data.map((appoint) => ({
                     ...appoint,
+                    patient_name: appoint.patient ? `${appoint.patient.firstname} ${appoint.patient.lastname}` : 'No Name',
                     PendingApproval: appoint.appnt_status === "Pending Approval",
                     Approved: appoint.appnt_status === "Approved",
                     Pending: appoint.appnt_status === "Pending",

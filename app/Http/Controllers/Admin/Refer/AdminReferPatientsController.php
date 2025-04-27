@@ -16,17 +16,20 @@ class AdminReferPatientsController extends Controller
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $search = $request->input('search', '');
-        $query = Appointment::whereNotIn('appnt_status', ['Archive', 'Approved', 'Pending Approval', 'Declined', 'Completed'])
-                                ->with('appointServices', 'patient')
-                                ->orderBy('created_at', 'desc');
+
+        $query = Appointment::with('patient', 'appointServices')
+            ->orderBy('created_at', 'desc');
+
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->whereHas('patient', function ($subQuery) use ($search) {
                     $subQuery->where('firstname', 'LIKE', "%{$search}%")
-                                ->orWhere('lastname', 'LIKE', "%{$search}%");
-                })
-                ->orWhere('appnt_status', 'LIKE', "%{$search}%");
+                            ->orWhere('lastname', 'LIKE', "%{$search}%")
+                            ->orWhereRaw("CONCAT(firstname, ' ', lastname) LIKE ?", ["%{$search}%"]);
+                });
             });
+        } else {
+            $query->whereIn('appnt_status', ['Pending', 'Payment']);
         }
 
         $records = $query->paginate($limit, ['*'], 'page', $page);

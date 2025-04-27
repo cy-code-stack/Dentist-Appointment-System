@@ -83,7 +83,11 @@ export default {
             searchQuery: '',
         };
     },
-
+    watch: {
+        searchQuery(newQuery) {
+            this.diplayVerfiedPatients(1, newQuery);
+        }
+    },
     methods:{
         formatDate(dateString) {
             if (!dateString) return '';
@@ -101,13 +105,13 @@ export default {
             const formattedHours = hours % 12 || 12; 
             return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
         },
-        diplayVerfiedPatients(page = 1) {
+        diplayVerfiedPatients(page = 1, query = '') {
             axios
                 .get('/admin/patients/refer', {
                     params: {
                         page: page,
                         limit: this.perPage,
-                        search: this.searchQuery,
+                        search: query,
                     },
                 })
                 .then((response) => {
