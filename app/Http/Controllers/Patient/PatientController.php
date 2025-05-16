@@ -20,6 +20,7 @@ class PatientController extends Controller
     public function __construct(){
         $this->middleware('auth');
     }
+    
     public function indexPatient(){
         $user = Auth::user();
         $notifications = $user->notifications()->latest()->get();
