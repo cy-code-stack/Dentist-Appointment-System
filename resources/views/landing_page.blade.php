@@ -152,7 +152,6 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Oral Prophylaxis Cleaning</h5>
                             <p class="card-text text-muted">Thorough cleaning of teeth to remove plaque and tartar buildup, promoting oral hygiene and preventing gum disease.</p>
-                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -162,7 +161,6 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Tooth Restoration</h5>
                             <p class="card-text text-muted">Restoration of damaged or decayed teeth using durable and natural-looking materials to restore functionality and aesthetics.</p>
-                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -172,7 +170,6 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Tooth Extraction</h5>
                             <p class="card-text text-muted">Safe and professional removal of damaged or problematic teeth to alleviate pain and prevent further oral health issues.</p>
-                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -182,7 +179,6 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Orthodontics Treatment</h5>
                             <p class="card-text text-muted">Correction of teeth alignment issues using advanced orthodontic techniques to enhance both oral function and appearance.</p>
-                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -195,7 +191,6 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Root Canal Treatment</h5>
                             <p class="card-text text-muted">Specialized treatment to save and repair infected or damaged teeth, typically completed within 2 to 3 hours for efficient and effective care.</p>
-                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -205,7 +200,6 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Jacket Crowns</h5>
                             <p class="card-text text-muted">Custom-made crowns to cover and protect damaged teeth, restoring their shape, size, and strength.</p>
-                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -215,7 +209,6 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Teeth Whitening</h5>
                             <p class="card-text text-muted">Professional teeth whitening services to brighten and enhance the appearance of teeth, improving confidence and self-esteem.</p>
-                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
@@ -225,7 +218,6 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">Tooth Cleaning</h5>
                             <p class="card-text text-muted">Regular dental cleaning to remove plaque and stains, ensuring optimal oral health and a fresh, clean smile.</p>
-                            <p class="card-text fw-medium">Price Starts 700 pesos only</p>
                         </div>
                     </div>
                 </div>
