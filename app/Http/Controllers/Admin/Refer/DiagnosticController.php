@@ -92,16 +92,21 @@ class DiagnosticController extends Controller
     {
         foreach ($request->all() as $value) {
 
-            ChildDiagnostic::where(
+            $diagnostic = ChildDiagnostic::where(
                 [
                     'information_id'=>$value['information_id'],
                     'teeth_id'=>$value['teeth_id']
-                ])->first()->update(
-                [
-                    'disease_id'=>$value['disease_id'],
-                    'comments'=>$value['comments'],
-                    'created_at'=>$value['created_at'],
-                ]);
+                ])->first();
+
+            if ($diagnostic) {
+                $diagnostic->update(
+                    [
+                        'disease_id'=>$value['disease_id'],
+                        'comments'=>$value['comments'],
+                        'created_at'=>$value['created_at'],
+                    ]
+                );
+            }
 
         }
 

@@ -230,7 +230,6 @@ export default {
                 created_at: tooth.created_at,
             }));
             const id = this.getUrlId();
-            console.log(this.teethData);
             axios.put(`/admin/patients/diagnostic/store/${id}`, this.teethData)
                 .then(response => {
                     this.patientInformationId = response.data.id;

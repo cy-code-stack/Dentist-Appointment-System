@@ -81,7 +81,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="tooth" class="form-label">Tooth</label>
-                                <input type="text" id="tooth" v-model="newTooth.tooth" class="form-control">
+                                <input type="text" id="tooth" v-model="newTooth.tooth" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <label for="surface" class="form-label">Surface</label>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="fee" class="form-label">Fee</label>
-                                <input type="number" id="fee" v-model="newTooth.fee" class="form-control">
+                                <input type="number" id="fee" v-model="newTooth.fee" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <label for="fee" class="form-label">Comment</label>

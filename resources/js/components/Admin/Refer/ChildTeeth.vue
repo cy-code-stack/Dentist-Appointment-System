@@ -8,7 +8,7 @@
                             <div class="banner bg-primary rounded-5 p-1 text-white position-absolute top-0 start-100 translate-middle">
                                 {{ tooth.teeth_number }}
                             </div>
-                            <img :src="tooth.teeth.diseases.disease_img_url ? getDiseaseUrl(tooth.teeth.diseases.disease_img_url) : getImageUrl(tooth.teeth.teeth_url)" height="50" alt="Teeth Image">
+                            <img :src="tooth.teeth_disease ? getDiseaseUrl(tooth.teeth_disease.disease_img_url) : getImageUrl(tooth.teeth.teeth_url)" height="50" alt="Teeth Image">
                             <div class="dropdown d-flex justify-content-end align-items-center">
                                 <div class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <small>Condition</small>
@@ -213,8 +213,12 @@ export default {
             return `/storage/child_disease/${diseaseName}`;
         },
         changeImage(tooth, diseaseName) {
-            tooth.selectedDiseaseImage = this.getDiseaseUrl(diseaseName);
-            tooth.disease_id = tooth.diseases.find(disease => disease.disease_img_url === diseaseName).id;
+                tooth.selectedDiseaseImage = this.getDiseaseUrl(diseaseName);
+                const selectedDisease = tooth.teeth.diseases.find(disease => disease.disease_img_url === diseaseName);
+                if (selectedDisease) {
+                tooth.teeth_disease = selectedDisease;
+                tooth.disease_id = selectedDisease.id;
+            }
         },
         submitForm() {
             this.teethData = this.childTeeth.map(tooth => ({
@@ -224,9 +228,8 @@ export default {
                 information_id: this.getUrlId(),
                 created_at: tooth.created_at,
             }));
-
-            console.log(this.teethData); 
-            axios.post(`/admin/patients/child/store/${id}`, this.teethData)
+            const id = this.getUrlId();
+            axios.put(`/admin/patients/child/store/${id}`, this.teethData)
                 .then(response => {
                     this.patientInformationId = response.data.id;
                     Swal.fire({

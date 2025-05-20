@@ -25,14 +25,14 @@
                                     </div>
                                     <div class="form-group w-100">
                                         <label class="form-label">Amount Paid</label>
-                                        <input type="number" class="form-control" v-model="data.paid"/>
+                                        <input type="number" class="form-control" v-model="data.paid" required/>
                                     </div>
                                 </div>
                                 <p class="fw-medium fs-4 mb-1">Mode of Payment</p>
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="form-group w-100 me-2">
                                         <label class="form-label">Method</label>
-                                        <select class="form-control" v-model="data.payment_method">
+                                        <select class="form-control" v-model="data.payment_method" required>
                                             <option selected disabled>Choose</option>
                                             <option value="G-cash">G-cash</option>
                                             <option value="Cash">Cash</option>

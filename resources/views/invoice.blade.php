@@ -95,8 +95,8 @@
                 <p><label>Phone:</label> {{'0' . $patient->phone_number}}</p>
             </div>
             <div class="right">
-                <p><label>Marital Status:</label> {{ $patient->occupation }}</p>
-                <p><label>Occupation:</label> {{ $patient->marital_status }}</p>
+                <p><label>Marital Status:</label> {{ $patient->marital_status }}</p>
+                <p><label>Occupation:</label> {{ $patient->occupation }}</p>
                 <p><label>Gender:</label> {{ $patient->sex }}</p>
                 <p><label>Invoice No:</label> {{$invoiceId}}</p>
                 <p><label>Date:</label> {{ now()->format('F j, Y') }}</p>
