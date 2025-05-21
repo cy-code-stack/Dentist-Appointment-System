@@ -20,6 +20,7 @@ class PrintController extends Controller
         $data = [
             'invoiceId' => $appointment->id,
             'services' => $appointment->appointServices,
+            'appointment_date' => \Carbon\Carbon::parse($appointment->sched_date)->format('F j, Y'),
             'patient' => $appointment->patient,
             'paymentAppointments' => $appointment->payment->where('user_id', $appointment->patient->id)->each(fn($item)=>$item->items),
         ];

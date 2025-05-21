@@ -99,7 +99,7 @@
                 <p><label>Occupation:</label> {{ $patient->occupation }}</p>
                 <p><label>Gender:</label> {{ $patient->sex }}</p>
                 <p><label>Invoice No:</label> {{$invoiceId}}</p>
-                <p><label>Date:</label> {{ now()->format('F j, Y') }}</p>
+                <p><label>Date:</label> {{ $appointment_date }}</p>
             </div>
         </div>
 

@@ -19,7 +19,7 @@ class PaymentAppointment extends Model
         });
     }
     public function appointment(){
-        return $this->belongsTo(Appointment::class, 'appointment_id');
+        return $this->belongsTo(Appointment::class, 'user_id', 'patient_id');
     }
 
     public function user(){

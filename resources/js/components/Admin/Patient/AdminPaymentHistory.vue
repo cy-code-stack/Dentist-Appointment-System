@@ -16,7 +16,7 @@
                    </thead>
                    <tbody>
                     <tr v-for="(item, index) in patientHistory" :key="index">
-                        <td>{{ formatWordyDate(item.created_at) }}</td>
+                        <td>{{ formatWordyDate(item.appointment?.sched_date) }}</td>
                         <td>{{ item.services?.services_name }}</td>
                         <td>{{ item.tooth }}</td>
                         <td>{{ item.surface }}</td>
