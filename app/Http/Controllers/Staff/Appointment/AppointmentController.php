@@ -55,8 +55,8 @@ class AppointmentController extends Controller
 
         try {
             $data = $request->all();
-            $data['type'] = 'Walk-in';
             $appointment = Appointment::create($data);
+            $appointment->type = 'Walk-in';
             return response()->json([
                 'status' => 'success',
                 'message' => 'Walk-in applicant created successfully.',
