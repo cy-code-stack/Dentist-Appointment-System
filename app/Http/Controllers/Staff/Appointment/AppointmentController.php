@@ -35,6 +35,38 @@ class AppointmentController extends Controller
         ]);
     }
 
+    public function getDailyAppointments(Request $request)
+    {
+        $date = $request->input('date', now()->format('Y-m-d'));
+        $appointments = Appointment::with('patient', 'appointServices')
+            ->whereDate('sched_date', $date)
+            ->orderBy('sched_time', 'asc')
+            ->get()
+            ->map(function ($appointment) {
+                return [
+                    'id' => $appointment->id,
+                    'patient_name' => $appointment->patient->firstname . ' ' . $appointment->patient->lastname,
+                    'sched_time' => $appointment->sched_time,
+                    'services' => $appointment->appointServices?->services_name,
+                    'status' => $appointment->appnt_status,
+                    'type' => $appointment->type,
+                    'amount' => $appointment->appointServices?->price,
+                ];
+            });
+
+        if ($appointments->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No appointments found for the selected date.',
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $appointments,
+        ], 200);
+    }
+
     ## Add Walk In
     public function addWalkInApplicant(Request $request){
         $request->validate([

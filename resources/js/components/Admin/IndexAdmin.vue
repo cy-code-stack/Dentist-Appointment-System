@@ -61,8 +61,8 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-center">
             <div class="col col-lg-12">
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="rounded-1 btn btn-success text-white" @click="printReport()">
+                <div class="d-flex justify-content-end p-3">
+                    <button type="button" class="rounded-1 btn btn-primary text-white" @click="printReport()">
                         <div class="d-flex justify-content-center align-items-center">
                             <i class="fa-solid fa-print me-2"></i>
                             <span>Print</span>
@@ -81,6 +81,47 @@
                                         <option value="weekly">Weekly</option>
                                         <option value="monthly">Monthly</option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4" v-if="selectedFilter === 'daily'">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Today's Appointments</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Appointment No.</th>
+                                                    <th>Appointment Type</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Service</th>
+                                                    <th>Appointment Time</th>
+                                                    <th>Status</th>
+                                                    <th>Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="table-row text-center" v-for="appointment in dailyAppointments" :key="appointment.id">
+                                                    <td>{{ appointment.id }}</td>
+                                                    <td>{{ appointment.type ?? "Walk-in"}}</td>
+                                                    <td>{{ appointment.patient_name }}</td>
+                                                    <td>{{ appointment.services }}</td>
+                                                    <td>{{ formatTime(appointment.sched_time) }}</td>
+                                                    <td>{{ appointment.status }}</td>
+                                                    <td>₱{{ appointment.amount }}</td>
+                                                </tr>
+                                                <tr v-if="dailyAppointments.length === 0">
+                                                    <td colspan="7" class="text-center">No appointments for today</td>
+                                                </tr>
+                                                <tr class="table-row table-active text-center">
+                                                    <td colspan="6" class="text-end fw-bold">Total:</td>
+                                                    <td class="fw-bold">{{ formatCurrency(dailyTotal.amount) }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
@@ -120,9 +161,9 @@ import Chart from "chart.js/auto";
 export default {
     data() {
         return {
-            selectedFilter: "monthly",
-            startDate: "",
-            endDate: "",
+            selectedFilter: "daily",
+            // startDate: "",
+            // endDate: "",
             barChart: null,
             pieChart: null,
             lineChart: null,
@@ -131,9 +172,24 @@ export default {
             serviceCount: 0,
             transactionCount: 0,
             assistantCount: 0,
+            dailyAppointments: [], 
         };
     },
+    computed: {
+        dailyTotal() {
+            // Calculate the total amount for daily appointments
+            const amount = this.dailyAppointments.reduce((sum, appt) => {
+                const val = Number(appt.amount) || 0;
+                return sum + val;
+            }, 0);
+            return { amount };
+        }
+    },
     methods: {
+        formatCurrency(value) {
+            if (typeof value !== 'number') value = Number(value) || 0;
+            return value.toLocaleString('en-PH', { style: 'currency', currency: 'PHP', minimumFractionDigits: 2 }).replace('PHP', '₱');
+        },
         displayPatientCount(){
             axios.get('/user/admin/patient/patientCount').then((response)=>{
                 this.patientCount = response.data.data;
@@ -141,6 +197,24 @@ export default {
                 console.log(error);
             });
         },
+
+        fetchDailyAppointments() {
+            if (this.selectedFilter === 'daily') {
+                axios.get('/user/admin/appointment/daily')
+                .then(response => {
+                    this.dailyAppointments = response.data.data;
+                }).catch(error => {
+                    console.error("Error fetching daily appointments:", error);
+                });
+            }
+        },
+
+        formatTime(timeString) {
+            if (!timeString) return '';
+            const time = new Date(`2000-01-01T${timeString}`);
+            return time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        },
+
         displayServicesCount(){
             axios.get('/user/admin/services/adminCountServices').then((response)=>{
                 this.serviceCount = response.data.data;
@@ -318,6 +392,7 @@ export default {
         this.displayServicesCount();
         this.displayTransactionCount();
         this.displayAssistantCount();
+        this.fetchDailyAppointments();
     },
 };
 </script>

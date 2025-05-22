@@ -121,6 +121,7 @@ Route::middleware(['preventBackHistory', 'auth'])->group(function () {
         Route::get('/user/admin/services/adminCountServices', [AdminDashboardController::class, 'countServices']);
         Route::get('/user/admin/transtraction/adminTransactionCount', [AdminDashboardController::class, 'countTransaction']);
         Route::get('/user/admin/assistant/assistantCount', [AdminDashboardController::class, 'assistantCount']);
+        Route::get('/user/admin/appointment/daily', [AppointmentController::class, 'getDailyAppointments']);
 
         ## Manage Staff
         Route::get('/user/admin/manage/user', [ManageStaffController::class, 'showUser']);
