@@ -17,8 +17,24 @@ class PatientRecordController extends Controller
     {
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
+        $search = $request->input('search', '');
 
-        $query = Appointment::where('appnt_status', 'Completed')->with('appointServices', 'patient')->orderBy('created_at', 'desc');
+        $query = Appointment::where('appnt_status', 'Completed')
+            ->with(['appointServices', 'patient'])
+            ->orderBy('created_at', 'desc');
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('patient', function ($subQuery) use ($search) {
+                    $subQuery->where('firstname', 'like', "%{$search}%")
+                            ->orWhere('lastname', 'like', "%{$search}%")
+                            ->orWhereRaw("CONCAT(firstname, ' ', lastname) LIKE ?", ["%{$search}%"]);
+                })
+                ->orWhereHas('appointServices', function ($subQuery) use ($search) {
+                    $subQuery->where('services_name', 'like', "%{$search}%");
+                });
+            });
+        }
 
         $records = $query->paginate($limit, ['*'], 'page', $page);
 
@@ -32,6 +48,7 @@ class PatientRecordController extends Controller
             ],
         ], 200);
     }
+
 
     /**
      * Store a newly created resource in storage.

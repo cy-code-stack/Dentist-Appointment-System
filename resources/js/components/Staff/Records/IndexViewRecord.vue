@@ -1,13 +1,16 @@
 <template>
-    <div class="container-fluid py-3">
-        <div class="container">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <h5 class="fw-bold">Appointment History</h5>
+    <div class="container-fluid py-3 bg-light min-vh-100">
+        <div class="container bg-white rounded shadow-sm p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h5 class="fw-bold text-primary mb-0">Appointment History</h5>
+                <div style="width: 300px;">
+                    <input class="form-control form-control-sm" v-model="searchQuery" type="search" placeholder="Search" aria-label="Search">
+                </div>
             </div>
 
             <div class="table-responsive">
-                <table class="table table-striped table-hover table-bordered text-center">
-                    <thead class="table table-info text-white">
+                <table class="table table-bordered table-hover align-middle text-center">
+                    <thead class="table-info text-white">
                         <tr>
                             <th>Appointment No.</th>
                             <th>Name</th>
@@ -29,10 +32,10 @@
                             <td>{{ formatWordyDate(item.sched_date) }}</td>
                             <td>
                                 <span
-                                    class="badge"
+                                    class="badge px-3 py-2"
                                     :class="{
                                         'bg-success': item.appnt_status === 'Completed',
-                                        'bg-warning': item.appnt_status === 'Pending',
+                                        'bg-warning text-dark': item.appnt_status === 'Pending',
                                         'bg-danger': item.appnt_status === 'Cancelled',
                                     }"
                                 >
@@ -40,46 +43,48 @@
                                 </span>
                             </td>
                             <td>
-                                <div class="d-flex justify-content-center">
-                                    <router-link :to="`/user/staff/record/view/${item.patient?.id}`">
-                                        <button type="button" class="btn btn-primary btn-sm mx-1">
-                                            <i class="fas fa-eye"></i> View Form
-                                        </button>
-                                    </router-link>
-                                </div>
+                                <router-link :to="`/user/staff/record/view/${item.patient?.id}`">
+                                    <button type="button" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-eye me-1"></i> View Form
+                                    </button>
+                                </router-link>
                             </td>
+                        </tr>
+                        <tr v-if="patients.length === 0">
+                            <td colspan="7" class="text-muted py-4">No records found.</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
 
-                <div class="d-flex justify-content-end align-items-center mt-3">
-                    <nav>
-                        <ul class="pagination mb-0">
-                            <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                <a class="page-link" @click.prevent="changePage(currentPage - 1)">
-                                    <i class="fas fa-angle-left"></i>
-                                </a>
-                            </li>
-                            <li
-                                class="page-item"
-                                v-for="page in totalPages"
-                                :key="page"
-                                :class="{ active: currentPage === page }"
-                            >
-                                <a class="page-link" @click.prevent="changePage(page)">{{ page }}</a>
-                            </li>
-                            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                <a class="page-link" @click.prevent="changePage(currentPage + 1)">
-                                    <i class="fas fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+            <div class="d-flex justify-content-end align-items-center mt-3">
+                <nav>
+                    <ul class="pagination mb-0">
+                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                            <a class="page-link" @click.prevent="changePage(currentPage - 1)">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </li>
+                        <li
+                            class="page-item"
+                            v-for="page in totalPages"
+                            :key="page"
+                            :class="{ active: currentPage === page }"
+                        >
+                            <a class="page-link" @click.prevent="changePage(page)">{{ page }}</a>
+                        </li>
+                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                            <a class="page-link" @click.prevent="changePage(currentPage + 1)">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -91,13 +96,22 @@ export default {
             currentPage: 1,
             totalPages: 1,
             perPage: 10,
+            searchQuery: '',
         };
     },
+    watch: {
+        searchQuery(newQuery) {
+            this.displayPatients(1, newQuery);
+        }
+    },
     methods: {
-        displayPatients(page = 1) {
-            axios
-                .get("/user/staff/display", {
-                    params: { page, limit: this.perPage },
+        displayPatients(page = 1, query = '') {
+            axios.get("/user/staff/display", {
+                    params: { 
+                        page, 
+                        limit: this.perPage,
+                        search: query,
+                    },
                 })
                 .then((response) => {
                     this.patients = response.data.data;
@@ -126,31 +140,36 @@ export default {
 </script>
 
 <style scoped>
+
 .table th,
 .table td {
-    vertical-align: middle;
-    padding: 12px;
+    padding: 0.75rem;
 }
 
 .badge {
-    font-size: 0.9rem;
-    padding: 5px 10px;
-    border-radius: 12px;
+    font-size: 0.875rem;
+    border-radius: 20px;
+}
+
+.table thead th {
+    vertical-align: middle;
+    font-weight: 600;
+    font-size: 0.95rem;
 }
 
 .page-link {
-    color: #007bff;
     cursor: pointer;
 }
 
 .page-item.active .page-link {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: white;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #fff;
 }
 
 .page-item.disabled .page-link {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.5;
 }
+
 </style>

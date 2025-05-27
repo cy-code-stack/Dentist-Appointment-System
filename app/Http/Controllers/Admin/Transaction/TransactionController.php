@@ -31,9 +31,18 @@ class TransactionController extends Controller
     {
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
+        $search = $request->input('search', '');
 
-
-        $query = Appointment::where('appnt_status', 'Completed')->with('patient', 'appointServices')->orderBy('created_at', 'desc');
+        $query = Appointment::where('appnt_status', 'Completed')
+            ->with('patient', 'appointServices')
+            ->when($search, function ($q) use ($search) {
+                $q->whereHas('patient', function ($q2) use ($search) {
+                    $q2->where('firstname', 'like', "%{$search}%")
+                    ->orWhere('lastname', 'like', "%{$search}%")
+                    ->orWhereRaw("CONCAT(firstname, ' ', lastname) LIKE ?", ["%{$search}%"]);
+                });
+            })
+            ->orderBy('created_at', 'desc');
 
         $records = $query->paginate($limit, ['*'], 'page', $page);
 
@@ -47,6 +56,7 @@ class TransactionController extends Controller
             ],
         ], 200);
     }
+
 
     /**
      * Update the specified resource in storage.
