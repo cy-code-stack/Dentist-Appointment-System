@@ -347,6 +347,7 @@ export default {
                         options: {
                             responsive: true,
                             maintainAspectRatio: true,
+                            scales: { y: { beginAtZero: true, suggestedMax: 20 } },
                         },
                     });
                 })
@@ -358,7 +359,7 @@ export default {
                 params: { start_date: this.startDate, end_date: this.endDate },
             }).then((response) => {
                 const salesData = Object.values(response.data);
-                const maxValue = Math.max(...salesData) * 1.5; // Increase max value by 50%
+                const maxValue = Math.max(...salesData) * 1.5; 
 
                 this.lineChart = new Chart(ctx, {
                     type: "line",
