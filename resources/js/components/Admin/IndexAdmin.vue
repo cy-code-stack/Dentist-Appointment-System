@@ -329,18 +329,28 @@ export default {
         },
 
         createBarChart(ctx) {
-            axios.get('/user/admin/count', {
-                params: { start_date: this.startDate, end_date: this.endDate },
-            }).then((response) => {
-                this.barChart = new Chart(ctx, {
-                    type: "bar",
-                    data: {
-                        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                        datasets: [{ label: "Patient Catered", data: Object.values(response.data) + 5, backgroundColor: "rgba(13, 110, 253)" }],
-                    },
-                    options: { responsive: true, maintainAspectRatio: true },
-                });
-            }).catch(error => console.error(error));
+            axios.get('/user/admin/count')
+                .then((response) => {
+                    this.barChart = new Chart(ctx, {
+                        type: "bar",
+                        data: {
+                            labels: [
+                                "January", "February", "March", "April", "May", "June",
+                                "July", "August", "September", "October", "November", "December"
+                            ],
+                            datasets: [{
+                                label: "Patient Catered",
+                                data: Object.values(response.data),
+                                backgroundColor: "rgba(13, 110, 253)",
+                            }],
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                        },
+                    });
+                })
+                .catch(error => console.error(error));
         },
 
         createLineChart(ctx) {
