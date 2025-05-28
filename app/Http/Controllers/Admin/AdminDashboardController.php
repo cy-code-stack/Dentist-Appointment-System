@@ -23,15 +23,17 @@ class AdminDashboardController extends Controller
     }
 
     
-    public function countPatient(){
+    public function countPatient()
+    {
         $records = DB::table('appointment as ap')
-            ->select(DB::raw('MONTH(ap.sched_date) as month'),DB::raw('COUNT(*) as count'))
-            ->groupBy('month')
+            ->select(DB::raw('MONTH(ap.sched_date) as month'), DB::raw('COUNT(*) as count'))
+            ->whereNotNull('ap.sched_date')
+            ->groupBy(DB::raw('MONTH(ap.sched_date)'))
             ->get();
 
-        $data = array_fill(1,12,0);
+        $data = array_fill(1, 12, 0);
 
-        foreach($records as $record){
+        foreach ($records as $record) {
             $data[intval($record->month)] = $record->count;
         }
 
