@@ -25,7 +25,7 @@ class AdminDashboardController extends Controller
     
     public function countPatient(){
         $records = DB::table('appointment as ap')
-            ->select(DB::raw('DATE_FORMAT(ap.created_at, "%m") as month'),DB::raw('COUNT(*) as count'))
+            ->select(DB::raw('DATE_FORMAT(ap.sched_date, "%m") as month'),DB::raw('COUNT(*) as count'))
             ->groupBy('month')
             ->get();
 

@@ -132,7 +132,7 @@
                                     <canvas id="barPieChart" class="chart"></canvas>
                                 </div>
                                 <div class="d-flex flex-column w-100">
-                                    <p class="fs-4 fw-semibold mb-1">Catered Patient</p>
+                                    <p class="fs-4 fw-semibold mb-1">Patient Catered</p>
                                     <canvas id="barChart" class="chart"></canvas>
                                 </div>
                             </div>
